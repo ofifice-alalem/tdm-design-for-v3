@@ -25,10 +25,10 @@ export default function CreateInvoicePage() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start w-full h-full min-h-0">
+        <div className="flex flex-col lg:flex-row gap-6 items-start w-full h-full min-h-0 pb-32 lg:pb-0">
 
         {/* ── Main column: products ── */}
-        <div className="flex-1 min-w-0 flex flex-col gap-6">
+        <div className="flex-1 min-w-0 flex flex-col gap-6 w-full">
 
           <SpatialCard title="المنتجات المحددة" icon={<Box className="w-5 h-5" />}>
             <div className="flex flex-col gap-4">
@@ -43,7 +43,7 @@ export default function CreateInvoicePage() {
                 selectOptions={['كابل الشحن السريع', 'مقابس باور بانك']}
               />
 
-              <button className="w-full h-14 rounded-[20px] bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2">
+              <button className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2">
                 <Plus className="w-5 h-5" />
                 إضافة سطر منتج جديد
               </button>
@@ -61,49 +61,55 @@ export default function CreateInvoicePage() {
             options={['المتجر الرئيسي - بغداد', 'فرع الكرادة', 'فرع المنصور', 'فرع الزعفرانية']}
           />
 
-          {/* Invoice Summary */}
-          <div className="bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[30px] border border-black/5 dark:border-white/5 p-7 shadow-sm transition-colors duration-500">
-            <div className="flex items-center gap-2 mb-5">
-              <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
-              <h3 className="text-[15px] font-black text-slate-800 dark:text-white tracking-wide">ملخص الفاتورة</h3>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <SummaryRow label="عدد البضاعة" value="0" unit="" />
-              <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
-              <SummaryRow label="تخفيض المنتجات" value="0.00" unit="دينار" isDiscount />
-              <SummaryRow label="تخفيض الفاتورة" value="0.00" unit="دينار" isDiscount />
-
-              <div className="border-t border-black/8 dark:border-white/8 my-3" />
-
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-black text-slate-700 dark:text-white/80">المجموع النهائي</span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-black text-primary">0.00</span>
-                  <span className="text-base font-bold text-slate-400 dark:text-white/40">دينار</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Detailed Notes */}
           <SpatialCard title="ملاحظات تفصيلية" icon={<FileText className="w-5 h-5" />}>
             <textarea
-              className="spatial-input w-full min-h-[140px] resize-none rounded-[20px] p-5 text-sm font-bold mt-2"
+              className="spatial-input w-full min-h-[140px] lg:min-h-[180px] resize-none rounded-[20px] p-5 text-sm font-bold mt-2"
               placeholder="أضف أي تفاصيل أو تعليمات شحن أو ملاحظات..."
             />
           </SpatialCard>
 
-          {/* Submit Button */}
-          <button className="spatial-button w-full h-16 rounded-[24px] flex items-center justify-center gap-2 text-lg shadow-[0_10px_30px_rgba(0,102,255,0.4)]">
-            إنشاء الفاتورة النهائي
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-            </svg>
-          </button>
-          <p className="text-center text-slate-400 dark:text-white/30 text-xs font-bold -mt-2">
-            بالنقر هنا سيتم اعتماد الفاتورة فوراً في النظام.
-          </p>
+          {/* Invoice Summary & Submit - Sticky on Mobile */}
+          <div className="
+            flex flex-col gap-4 
+            max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:z-[100]
+            max-lg:bg-white/95 max-lg:dark:bg-slate-900/95 max-lg:p-4 
+            max-lg:pb-4
+            max-lg:shadow-[0_-20px_40px_rgba(0,0,0,0.1)]
+            max-lg:backdrop-blur-xl
+            max-lg:rounded-[32px_32px_0px_0px] max-lg:border-t max-lg:border-black/5
+          ">
+            {/* Summary - simplified on mobile trigger or mini view? */}
+            <div className="bg-black/5 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-black/5 dark:border-white/5 p-4 lg:p-7 transition-all">
+              {/* Header - hide on mobile to save space */}
+              <div className="hidden lg:flex items-center gap-2 mb-5">
+                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
+                <h3 className="text-[15px] font-black text-slate-800 dark:text-white tracking-wide">ملخص الفاتورة</h3>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <div className="lg:block hidden">
+                   <SummaryRow label="عدد البضاعة" value="0" unit="" />
+                   <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
+                </div>
+                
+                {/* On mobile, show only final total and mini summary */}
+                <div className="flex items-center justify-between lg:mt-3">
+                  <span className="text-[14px] lg:text-[15px] font-black text-slate-700 dark:text-white/80">المجموع النهائي</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl lg:text-3xl font-black text-primary">0.00</span>
+                    <span className="text-xs lg:text-base font-bold text-slate-400 dark:text-white/40">دينار</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button className="spatial-button w-full h-14 lg:h-16 rounded-[20px] lg:rounded-[24px] flex items-center justify-center gap-2 text-base lg:text-lg shadow-[0_10px_30px_rgba(0,102,255,0.4)]">
+              إنشاء الفاتورة
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
 
         </aside>
       </div>

@@ -22,12 +22,14 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
   return (
     <aside
       className={`
-        ${isOpen ? 'w-64' : 'w-[88px]'}
+        ${isOpen ? 'w-64 translate-x-0' : 'w-[88px] max-lg:translate-x-full'}
+        max-lg:fixed max-lg:right-0 max-lg:top-0 max-lg:bottom-0 max-lg:h-screen max-lg:shadow-2xl
         transition-all duration-500 overflow-hidden
         border-l border-black/5 dark:border-white/[0.08]
-        flex flex-col py-8 self-stretch
-        bg-white/20 dark:bg-white/[0.02]
-        relative z-50 shrink-0
+        flex flex-col py-8
+        bg-white/90 dark:bg-slate-900/90 lg:bg-white/20 lg:dark:bg-white/[0.02]
+        backdrop-blur-2xl lg:backdrop-blur-none
+        relative z-[999] shrink-0 self-stretch
       `}
     >
       {/* ── Logo & Toggle ── */}
