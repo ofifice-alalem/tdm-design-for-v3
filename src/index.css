@@ -1,89 +1,130 @@
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource/tajawal/400.css";
+@import "@fontsource/tajawal/500.css";
+@import "@fontsource/tajawal/700.css";
+@import "@fontsource/tajawal/800.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif
-  }
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0)
+    /* Spatial UI - Light Mode */
+    --background: 240 5% 96%; 
+    --foreground: 240 10% 10%;
+    
+    --card: 0 0% 100%; 
+    --card-foreground: 240 10% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    
+    --primary: 217 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 4% 90%; 
+    --secondary-foreground: 240 10% 10%;
+    
+    --muted: 240 4% 90%;
+    --muted-foreground: 240 5% 45%;
+    
+    --accent: 217 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%; 
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 217 100% 50%;
+    
+    --radius: 1.5rem;
   }
+
   .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0)
+    /* Spatial UI / VisionOS Style Theme - Dark Mode */
+    --background: 0 0% 0%; 
+    --foreground: 0 0% 98%;
+    
+    --card: 240 5% 15%; 
+    --card-foreground: 0 0% 100%;
+    
+    --popover: 240 5% 15%;
+    --popover-foreground: 0 0% 100%;
+    
+    --primary: 217 100% 50%; 
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 4% 20%; 
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 4% 20%;
+    --muted-foreground: 240 5% 65%;
+    
+    --accent: 217 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 100% 65%; 
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 100%;
+    --input: 0 0% 100%;
+    --ring: 217 100% 50%;
   }
-  * {
-    @apply border-border outline-ring/50;
-  }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    direction: rtl;
+    color: hsl(var(--foreground));
+    font-family: 'Tajawal', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.5s ease-in-out;
   }
+
   html {
-    @apply font-sans;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Vite/React root must also fill the viewport */
+  #root {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .body-bg-dark {
+    background: radial-gradient(circle at 50% 0%, #2a2a35 0%, #0d0d12 100%) !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+  }
+  
+  .body-bg-light {
+    background: radial-gradient(circle at 50% 0%, #f0f4f8 0%, #d9e2ec 100%) !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+  }
+
+  .spatial-window {
+    @apply bg-white/40 dark:bg-slate-900/40 backdrop-blur-[80px] border border-black/5 dark:border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.1)] dark:shadow-[0_40px_100px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-[40px] overflow-hidden transition-colors duration-500 h-full;
+  }
+
+  
+  .spatial-card {
+    @apply bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/[0.08] backdrop-blur-3xl rounded-[30px] border border-black/5 dark:border-white/[0.08] hover:border-black/10 dark:hover:border-white/[0.15] shadow-lg transition-all duration-300;
+  }
+
+  .spatial-input {
+    @apply bg-black/5 dark:bg-black/20 hover:bg-black/10 dark:hover:bg-black/30 border border-black/10 dark:border-white/10 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-white/40 focus:bg-white dark:focus:bg-black/40 focus:ring-1 focus:ring-primary/50 dark:focus:ring-white/20 focus:border-primary/50 dark:focus:border-white/30 transition-all duration-200 outline-none;
+  }
+  
+  .spatial-button {
+    @apply bg-primary hover:bg-blue-500 text-white rounded-[20px] shadow-[0_4px_15px_rgba(0,102,255,0.4)] transition-all font-bold;
+  }
+  
+  .spatial-icon-btn {
+    @apply w-12 h-12 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/15 border border-transparent dark:border-white/10 text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white transition-all shadow-sm;
   }
 }

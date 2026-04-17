@@ -1,0 +1,117 @@
+import { NavLink } from 'react-router-dom';
+import {
+  Home, Receipt, ShoppingCart, Users, LayoutGrid, Power,
+  PanelRightClose, PanelRightOpen,
+} from 'lucide-react';
+
+interface AppSidebarProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+/* ── مسارات التنقل مع الصفحات الفعلية ── */
+const navItems = [
+  { icon: <Home className="w-5 h-5" />,         label: 'الرئيسية',         to: '/' },
+  { icon: <Receipt className="w-5 h-5" />,       label: 'إنشاء فاتورة',     to: '/invoice/create' },
+  { icon: <ShoppingCart className="w-5 h-5" />,  label: 'طلب بضاعة',        to: '/order/new' },
+  { icon: <Users className="w-5 h-5" />,         label: 'العملاء',           to: '/customers' },
+  { icon: <LayoutGrid className="w-5 h-5" />,    label: 'المخزون',           to: '/inventory' },
+];
+
+export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
+  return (
+    <aside
+      className={`
+        ${isOpen ? 'w-64' : 'w-[88px]'}
+        transition-all duration-500 overflow-hidden
+        border-l border-black/5 dark:border-white/[0.08]
+        flex flex-col py-8 self-stretch
+        bg-white/20 dark:bg-white/[0.02]
+        relative z-50 shrink-0
+      `}
+    >
+      {/* ── Logo & Toggle ── */}
+      <div className={`flex items-center w-full mb-8 ${isOpen ? 'justify-between px-5' : 'justify-center'}`}>
+        {isOpen && (
+          <div className="flex items-center gap-3 animate-in fade-in">
+            <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-xl flex items-center justify-center font-bold text-lg tracking-tighter text-slate-800 dark:text-white shadow-inner">
+              M<span className="text-primary">+</span>
+            </div>
+            <span className="text-xl font-black text-slate-800 dark:text-white whitespace-nowrap">
+              منصة نون
+            </span>
+          </div>
+        )}
+        <button
+          onClick={onToggle}
+          className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-white/50 hover:text-slate-800 dark:hover:text-white transition-all focus:outline-none"
+          title={isOpen ? 'طي القائمة' : 'توسيع القائمة'}
+        >
+          {isOpen ? <PanelRightClose className="w-5 h-5" /> : <PanelRightOpen className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* ── Navigation Links ── */}
+      <nav className="flex-1 flex flex-col gap-2 w-full px-4">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/'}
+            className={({ isActive }) => `
+              flex items-center w-full p-2 rounded-[20px] transition-all duration-200 group
+              ${!isOpen ? 'justify-center' : ''}
+              ${isActive
+                ? 'bg-primary shadow-[0_4px_20px_rgba(0,102,255,0.35)]'
+                : 'hover:bg-black/5 dark:hover:bg-white/5'
+              }
+            `}
+          >
+            {({ isActive }) => (
+              <>
+                <div className={`
+                  w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center transition-all
+                  ${isActive
+                    ? 'bg-white/20 text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]'
+                    : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-white/50 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:text-primary shadow-sm'
+                  }
+                `}>
+                  {item.icon}
+                </div>
+                {isOpen && (
+                  <span className={`
+                    text-[15px] font-bold mr-4 whitespace-nowrap animate-in fade-in
+                    ${isActive
+                      ? 'text-white drop-shadow-sm'
+                      : 'text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white'
+                    }
+                  `}>
+                    {item.label}
+                  </span>
+                )}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* ── Logout ── */}
+      <div className="px-4 w-full mt-auto pt-4 border-t border-black/5 dark:border-white/5">
+        <button className={`
+          flex items-center w-full p-2 rounded-[20px] transition-all duration-200 group
+          ${!isOpen ? 'justify-center' : ''}
+          hover:bg-red-500/10
+        `}>
+          <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-red-500/5 text-red-400 group-hover:bg-red-500 group-hover:text-white transition-all">
+            <Power className="w-5 h-5" />
+          </div>
+          {isOpen && (
+            <span className="text-[15px] font-bold text-red-400 group-hover:text-red-500 mr-4 whitespace-nowrap animate-in fade-in">
+              تسجيل الخروج
+            </span>
+          )}
+        </button>
+      </div>
+    </aside>
+  );
+}
