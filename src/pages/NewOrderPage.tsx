@@ -93,11 +93,7 @@ export default function NewOrderPage() {
             </SpatialCard>
 
             {/* Summary */}
-            <div className="bg-black/5 dark:bg-white/5 rounded-[24px] border border-black/5 dark:border-white/5 p-5 flex flex-col gap-3">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
-                <h3 className="text-[15px] font-black text-slate-800 dark:text-white">ملخص الطلب</h3>
-              </div>
+            <SpatialCard title="ملخص الطلب">
               <div className="flex items-center justify-between py-2.5 border-b border-black/5 dark:border-white/5">
                 <span className="text-[14px] font-bold text-slate-500 dark:text-white/50">عدد الأصناف</span>
                 <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{totalTypes}</span>
@@ -106,7 +102,7 @@ export default function NewOrderPage() {
                 <span className="text-[14px] font-bold text-slate-500 dark:text-white/50">إجمالي عدد البضاعة</span>
                 <span className="text-[15px] font-black text-primary">{totalQty}</span>
               </div>
-            </div>
+            </SpatialCard>
 
             {/* Action Buttons */}
             <div className="
