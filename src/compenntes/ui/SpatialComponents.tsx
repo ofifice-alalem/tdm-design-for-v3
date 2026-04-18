@@ -9,6 +9,7 @@ export function SpatialCard({
   children,
   action,
   headerDot = true,
+  hideHeader = false,
   className = "",
 }: {
   title: string;
@@ -16,25 +17,28 @@ export function SpatialCard({
   children: React.ReactNode;
   action?: React.ReactNode;
   headerDot?: boolean;
+  hideHeader?: boolean;
   className?: string;
 }) {
   return (
     <div className={`spatial-card ${className}`}>
       <div className="p-6 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            {headerDot && (
-              <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
-            )}
-            {icon && (
-              <div className="text-slate-500 dark:text-white/70">{icon}</div>
-            )}
-            <h2 className="text-[17px] font-bold text-slate-800 dark:text-white tracking-wide transition-colors">
-              {title}
-            </h2>
+        {!hideHeader && (
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              {headerDot && (
+                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
+              )}
+              {icon && (
+                <div className="text-slate-500 dark:text-white/70">{icon}</div>
+              )}
+              <h2 className="text-[17px] font-bold text-slate-800 dark:text-white tracking-wide transition-colors">
+                {title}
+              </h2>
+            </div>
+            {action && <div>{action}</div>}
           </div>
-          {action && <div>{action}</div>}
-        </div>
+        )}
         <div className="flex-1 flex flex-col">{children}</div>
       </div>
     </div>
@@ -58,7 +62,7 @@ export function ModernInput({
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {label && (
-        <label className="text-xs font-bold text-slate-500 dark:text-white/50 uppercase tracking-widest">
+        <label className="text-xs font-bold text-slate-700 dark:text-white/75 uppercase tracking-widest">
           {label}
         </label>
       )}
@@ -119,7 +123,7 @@ export function ModernSelect({
   return (
     <div className={`flex flex-col gap-2 ${className}`} ref={ref}>
       {label && (
-        <label className="text-xs font-bold text-slate-500 dark:text-white/50 uppercase tracking-widest">
+        <label className="text-xs font-bold text-slate-700 dark:text-white/75 uppercase tracking-widest">
           {label}
         </label>
       )}
@@ -134,7 +138,7 @@ export function ModernSelect({
             ${isOpen ? 'ring-2 ring-primary/40 border-primary/50 dark:border-primary/40 bg-white dark:bg-black/40' : ''}
           `}
         >
-          <span className={selected ? 'text-slate-800 dark:text-white' : 'text-slate-400 dark:text-white/40'}>
+          <span className={selected ? 'text-slate-800 dark:text-white' : 'text-slate-600 dark:text-white/60'}>
             {selected || placeholder}
           </span>
           <div

@@ -1,4 +1,4 @@
-import { ArrowRight, Package, Send, X } from 'lucide-react';
+import { ArrowRight, Package, Send, X, Trash2 } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
@@ -40,15 +40,8 @@ export default function NewOrderPage() {
                 اختر المنتجات والكميات المطلوبة
               </p>
 
-              <div className="flex flex-col gap-5">
-                {/* Product Request Row Component (Enhanced for mobile inside the map or direct) */}
+              <div className="flex flex-col gap-4">
                 <ProductRequestRow index={1} />
-
-                {/* Divider */}
-                <div className="py-1">
-                  <div className="h-px bg-black/8 dark:bg-white/8 w-full" />
-                </div>
-
                 <ProductRequestRow index={2} />
               </div>
 
@@ -115,7 +108,13 @@ export default function NewOrderPage() {
 /* ── Single product request row ── */
 function ProductRequestRow({ index }: { index: number }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
+      <div className="flex justify-between items-center">
+        <h3 className="text-slate-800 dark:text-white font-bold text-base">المنتج {index}</h3>
+        <button className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
+          <Trash2 className="w-4 h-4" />
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
         <ModernSelect
           label="المنتج"

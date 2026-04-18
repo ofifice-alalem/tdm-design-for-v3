@@ -1,4 +1,4 @@
-import { Trash2, Plus, Box, FileText, ArrowRight } from 'lucide-react';
+import { Trash2, Plus, FileText, ArrowRight } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
@@ -30,7 +30,7 @@ export default function CreateInvoicePage() {
         {/* ── Main column: products ── */}
         <div className="flex-1 min-w-0 flex flex-col gap-6 w-full">
 
-          <SpatialCard title="المنتجات المحددة" icon={<Box className="w-5 h-5" />}>
+          <SpatialCard title="" hideHeader>
             <div className="flex flex-col gap-4">
 
               <ProductRow
@@ -64,7 +64,7 @@ export default function CreateInvoicePage() {
           {/* Detailed Notes */}
           <SpatialCard title="ملاحظات تفصيلية" icon={<FileText className="w-5 h-5" />}>
             <textarea
-              className="spatial-input w-full min-h-[140px] lg:min-h-[180px] resize-none rounded-[20px] p-5 text-sm font-bold mt-2"
+              className="spatial-input w-full min-h-[100px] lg:min-h-[120px] resize-none rounded-[20px] p-5 text-sm font-bold"
               placeholder="أضف أي تفاصيل أو تعليمات شحن أو ملاحظات..."
             />
           </SpatialCard>
@@ -89,8 +89,10 @@ export default function CreateInvoicePage() {
 
               <div className="flex flex-col gap-1">
                 <div className="lg:block hidden">
-                   <SummaryRow label="عدد البضاعة" value="0" unit="" />
-                   <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
+                  <SummaryRow label="عدد البضاعة" value="0" unit="" />
+                  <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
+                  <SummaryRow label="تخفيض المنتجات" value="0.00" unit="دينار" isDiscount />
+                  <SummaryRow label="تخفيض الفاتورة" value="0.00" unit="دينار" isDiscount />
                 </div>
                 
                 {/* On mobile, show only final total and mini summary */}
@@ -124,7 +126,7 @@ function ProductRow({ title, selectOptions }: { title: string; selectOptions: st
     <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
       <div className="flex justify-between items-center">
         <h3 className="text-slate-800 dark:text-white font-bold text-base">{title}</h3>
-        <button className="w-9 h-9 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center">
+        <button className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>

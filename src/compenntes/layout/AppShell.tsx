@@ -56,7 +56,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="h-[100dvh] w-screen flex items-center justify-center p-0 lg:p-6 transition-colors duration-500 overflow-hidden bg-slate-100 dark:bg-slate-950 lg:bg-transparent">
       
       {/* Frosted-glass application window — fills available space */}
-      <div className="spatial-window w-full h-full flex relative overflow-hidden lg:rounded-[40px] !rounded-none border-none lg:border">
+      <div className="spatial-window w-full h-full flex relative overflow-hidden rounded-[40px]">
 
         {/* Mobile Overlay for Sidebar */}
         {isSidebarOpen && (
@@ -73,7 +73,7 @@ export function AppShell({ children }: AppShellProps) {
         />
 
         {/* ── Content area ── */}
-        <div className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 overflow-y-auto min-w-0 h-full relative">
+        <div className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 overflow-y-auto min-w-0 h-full relative custom-scroll">
           
           {/* Top Nav (Modified for mobile) */}
           <div className="lg:hidden flex items-center mb-6">
