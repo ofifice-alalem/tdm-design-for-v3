@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
-/* ─────────────────────────────────────────
-   SpatialCard — بطاقة زجاجية قابلة لإعادة الاستخدام
-───────────────────────────────────────── */
 export function SpatialCard({
   title,
   icon,
@@ -45,9 +43,6 @@ export function SpatialCard({
   );
 }
 
-/* ─────────────────────────────────────────
-   ModernInput — حقل إدخال انسيابي
-───────────────────────────────────────── */
 export function ModernInput({
   label,
   type = 'text',
@@ -75,9 +70,6 @@ export function ModernInput({
   );
 }
 
-/* ─────────────────────────────────────────
-   ModernSelect — قائمة منسدلة مخصصة بالكامل
-───────────────────────────────────────── */
 export function ModernSelect({
   label,
   options,
@@ -92,12 +84,20 @@ export function ModernSelect({
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('');
   const [search, setSearch] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // Close on outside click
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   useEffect(() => {
     function handleClick(e: MouseEvent) {
+      if (isMobile) return;
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setIsOpen(false);
         setSearch('');
@@ -105,9 +105,8 @@ export function ModernSelect({
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
+  }, [isMobile]);
 
-  // Auto-focus search when opened
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => searchRef.current?.focus(), 50);
@@ -118,6 +117,70 @@ export function ModernSelect({
 
   const filtered = options.filter((o) =>
     o.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const optionsList = (size: 'sm' | 'lg') => (
+    <ul className={`overflow-y-auto p-2 ${size === 'sm' ? 'max-h-52' : 'flex-1'}`}>
+      {filtered.length === 0 ? (
+        <li className="px-4 py-4 text-center text-sm font-bold text-slate-400 dark:text-white/30">
+          لا توجد نتائج
+        </li>
+      ) : (
+        filtered.map((opt) => (
+          <li
+            key={opt}
+            onClick={() => { setSelected(opt); setIsOpen(false); setSearch(''); }}
+            className={`
+              flex items-center gap-3 px-4 rounded-[14px] cursor-pointer
+              font-bold transition-all duration-150 mb-1
+              ${size === 'lg' ? 'py-4 text-[16px]' : 'py-3 text-[15px]'}
+              ${selected === opt
+                ? 'bg-primary text-white shadow-[0_4px_14px_rgba(0,102,255,0.35)]'
+                : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white'
+              }
+            `}
+          >
+            <span className={`shrink-0 rounded-full border-2 flex items-center justify-center transition-all
+              ${size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}
+              ${selected === opt ? 'border-white bg-white/30' : 'border-slate-300 dark:border-white/20'}`}>
+              {selected === opt && (
+                <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                  <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </span>
+            {opt}
+          </li>
+        ))
+      )}
+    </ul>
+  );
+
+  const searchInput = (
+    <div className="relative">
+      <svg
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/40 pointer-events-none"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+      </svg>
+      <input
+        ref={searchRef}
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="بحث سريع..."
+        className="
+          w-full rounded-[14px] pr-11 pl-4
+          bg-black/5 dark:bg-white/5
+          border border-transparent focus:border-primary/30
+          font-bold text-slate-700 dark:text-white
+          placeholder:text-slate-400 dark:placeholder:text-white/30
+          outline-none transition-all h-11 text-[14px]
+        "
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
   );
 
   return (
@@ -151,8 +214,8 @@ export function ModernSelect({
           </div>
         </div>
 
-        {/* Dropdown Panel */}
-        {isOpen && (
+        {/* Desktop Dropdown */}
+        {isOpen && !isMobile && (
           <div className="
             absolute z-[200] top-full mt-2 w-full
             rounded-[24px] overflow-hidden
@@ -162,73 +225,31 @@ export function ModernSelect({
             backdrop-blur-2xl
             animate-in fade-in zoom-in-95 duration-200
           ">
-
-            {/* Search Input */}
-            <div className="p-3 border-b border-black/5 dark:border-white/5">
-              <div className="relative">
-                <svg
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/40 pointer-events-none"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                </svg>
-                <input
-                  ref={searchRef}
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="بحث سريع..."
-                  className="
-                    w-full h-11 rounded-[14px] pr-11 pl-4
-                    bg-black/5 dark:bg-white/5
-                    border border-transparent focus:border-primary/30
-                    text-[14px] font-bold text-slate-700 dark:text-white
-                    placeholder:text-slate-400 dark:placeholder:text-white/30
-                    outline-none transition-all
-                  "
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </div>
-            </div>
-
-            {/* Options List */}
-            <ul className="max-h-52 overflow-y-auto p-2">
-              {filtered.length === 0 ? (
-                <li className="px-4 py-4 text-center text-sm font-bold text-slate-400 dark:text-white/30">
-                  لا توجد نتائج
-                </li>
-              ) : (
-                filtered.map((opt) => (
-                  <li
-                    key={opt}
-                    onClick={() => { setSelected(opt); setIsOpen(false); }}
-                    className={`
-                      flex items-center gap-3 px-4 py-3 rounded-[14px] cursor-pointer
-                      text-[15px] font-bold transition-all duration-150
-                      ${selected === opt
-                        ? 'bg-primary text-white shadow-[0_4px_14px_rgba(0,102,255,0.35)]'
-                        : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white'
-                      }
-                    `}
-                  >
-                    {/* Checkmark for selected */}
-                    <span className={`w-4 h-4 shrink-0 rounded-full border-2 flex items-center justify-center transition-all
-                      ${selected === opt ? 'border-white bg-white/30' : 'border-slate-300 dark:border-white/20'}`}>
-                      {selected === opt && (
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                    </span>
-                    {opt}
-                  </li>
-                ))
-              )}
-            </ul>
+            <div className="p-3 border-b border-black/5 dark:border-white/5">{searchInput}</div>
+            {optionsList('sm')}
           </div>
+        )}
+
+        {/* Mobile Modal - rendered via portal to escape overflow:hidden parents */}
+        {isOpen && isMobile && createPortal(
+          <div className="fixed inset-0 z-[500] flex flex-col bg-white dark:bg-[#18181d] animate-in fade-in duration-200">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/5 shrink-0">
+              <span className="text-base font-black text-slate-800 dark:text-white">{label}</span>
+              <button
+                onClick={() => { setIsOpen(false); setSearch(''); }}
+                className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/60"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 border-b border-black/5 dark:border-white/5 shrink-0">{searchInput}</div>
+            <div className="overflow-y-auto flex-1">{optionsList('lg')}</div>
+          </div>,
+          document.body
         )}
       </div>
     </div>
   );
 }
-

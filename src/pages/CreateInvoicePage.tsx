@@ -27,6 +27,14 @@ export default function CreateInvoicePage() {
 
         <div className="flex flex-col lg:flex-row gap-6 items-start w-full h-full min-h-0 pb-32 lg:pb-0">
 
+        {/* Store Selector - mobile only */}
+        <div className="lg:hidden w-full">
+          <ModernSelect
+            label="اختيار المتجر"
+            options={['المتجر الرئيسي - بغداد', 'فرع الكرادة', 'فرع المنصور', 'فرع الزعفرانية']}
+          />
+        </div>
+
         {/* ── Main column: products ── */}
         <div className="flex-1 min-w-0 flex flex-col gap-6 w-full">
 
@@ -55,11 +63,13 @@ export default function CreateInvoicePage() {
         {/* ── Sidebar column: store + summary + notes + submit ── */}
         <aside className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-5">
 
-          {/* Store Selector */}
-          <ModernSelect
-            label="اختيار المتجر"
-            options={['المتجر الرئيسي - بغداد', 'فرع الكرادة', 'فرع المنصور', 'فرع الزعفرانية']}
-          />
+          {/* Store Selector - desktop only */}
+          <div className="hidden lg:block">
+            <ModernSelect
+              label="اختيار المتجر"
+              options={['المتجر الرئيسي - بغداد', 'فرع الكرادة', 'فرع المنصور', 'فرع الزعفرانية']}
+            />
+          </div>
 
           {/* Detailed Notes */}
           <SpatialCard title="ملاحظات تفصيلية" icon={<FileText className="w-5 h-5" />}>
