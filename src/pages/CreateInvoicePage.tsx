@@ -36,6 +36,8 @@ export default function CreateInvoicePage() {
   const updateItem = (id: number, patch: Partial<ProductItem>) =>
     setItems((p) => p.map((x) => (x.id === id ? { ...x, ...patch } : x)));
 
+  const selectedNames = items.map((x) => x.name).filter(Boolean);
+
   const totalQty = useMemo(() => items.reduce((s, x) => {
     const gifts = x.giftRule ? Math.floor(x.qty / x.giftRule.buyQty) * x.giftRule.freeQty : 0;
     return s + x.qty + gifts;
@@ -85,13 +87,15 @@ export default function CreateInvoicePage() {
                     key={item.id}
                     title={`المنتج ${i + 1}`}
                     item={item}
+                    availableOptions={PRODUCTS.filter((p) => p.name === item.name || !selectedNames.includes(p.name))}
                     onRemove={() => removeItem(item.id)}
                     onChange={(patch) => updateItem(item.id, patch)}
                   />
                 ))}
                 <button
                   onClick={addItem}
-                  className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2">
+                  disabled={items.filter(x => x.name).length >= PRODUCTS.length}
+                  className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2 disabled:opacity-40 disabled:pointer-events-none">
                   <Plus className="w-5 h-5" />
                   إضافة سطر منتج جديد
                 </button>
@@ -100,7 +104,7 @@ export default function CreateInvoicePage() {
           </div>
 
           {/* ── Sidebar column ── */}
-          <aside className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-5">
+          <aside className="w-full lg:w-[400px] xl:w-[440px] shrink-0 flex flex-col gap-5 lg:sticky lg:top-0 lg:self-start">
 
             <div className="hidden lg:block">
               <ModernSelect label="اختيار المتجر" options={['المتجر الرئيسي - طرابلس', 'فرع بنغازي', 'فرع مصراتة']} />
@@ -186,9 +190,10 @@ export default function CreateInvoicePage() {
 }
 
 /* ── Product row ── */
-function ProductRow({ title, item, onRemove, onChange }: {
+function ProductRow({ title, item, availableOptions, onRemove, onChange }: {
   title: string;
   item: ProductItem;
+  availableOptions: typeof PRODUCTS;
   onRemove: () => void;
   onChange: (patch: Partial<ProductItem>) => void;
 }) {
@@ -211,7 +216,7 @@ function ProductRow({ title, item, onRemove, onChange }: {
       </div>
       <ModernSelect
         label="اسم الصنف"
-        options={PRODUCTS.map((p) => ({
+        options={availableOptions.map((p) => ({
           label: p.name,
           meta: p.price % 1 === 0
             ? p.price.toLocaleString('en-US') + ' د'
