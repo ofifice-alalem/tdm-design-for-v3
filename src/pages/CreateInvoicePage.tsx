@@ -1,4 +1,4 @@
-import { Trash2, Plus, FileText, ArrowRight } from 'lucide-react';
+import { Trash2, Plus, FileText, ArrowRight, ReceiptText } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
@@ -83,43 +83,52 @@ export default function CreateInvoicePage() {
           <div className="
             flex flex-col gap-4 
             max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:z-[100]
-            max-lg:bg-white/95 max-lg:dark:bg-slate-900/95 max-lg:p-4 
-            max-lg:pb-4
-            max-lg:shadow-[0_-20px_40px_rgba(0,0,0,0.1)]
+            max-lg:bg-white/95 max-lg:dark:bg-slate-900/95
+            max-lg:px-5 max-lg:py-4
+            max-lg:shadow-[0_-1px_0_rgba(0,0,0,0.06),0_-20px_40px_rgba(0,0,0,0.08)]
             max-lg:backdrop-blur-xl
-            max-lg:rounded-[32px_32px_0px_0px] max-lg:border-t max-lg:border-black/5
+            max-lg:rounded-t-[24px]
+            max-lg:border-t max-lg:border-black/8 max-lg:dark:border-white/8
           ">
-            {/* Summary - simplified on mobile trigger or mini view? */}
-            <div className="bg-black/5 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-black/5 dark:border-white/5 p-4 lg:p-7 transition-all">
-              {/* Header - hide on mobile to save space */}
-              <div className="hidden lg:flex items-center gap-2 mb-5">
+            {/* Mobile: single row — total + create button */}
+            <div className="lg:hidden flex items-center justify-between gap-3">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">المجموع النهائي</span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-black text-primary">0.00</span>
+                  <span className="text-xs font-bold text-slate-400 dark:text-white/40">دينار</span>
+                </div>
+              </div>
+              <button className="spatial-button h-12 px-6 rounded-[20px] flex items-center gap-2.5 text-[15px] font-black shadow-[0_6px_24px_rgba(0,102,255,0.45)]">
+                <ReceiptText className="w-4 h-4" />
+                إنشاء الفاتورة
+              </button>
+            </div>
+
+            {/* Desktop: full summary card + button */}
+            <div className="hidden lg:block bg-black/5 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-black/5 dark:border-white/5 p-7 transition-all">
+              <div className="flex items-center gap-2 mb-5">
                 <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
                 <h3 className="text-[15px] font-black text-slate-800 dark:text-white tracking-wide">ملخص الفاتورة</h3>
               </div>
-
               <div className="flex flex-col gap-1">
-                <div className="lg:block hidden">
-                  <SummaryRow label="عدد البضاعة" value="0" unit="" />
-                  <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
-                  <SummaryRow label="تخفيض المنتجات" value="0.00" unit="دينار" isDiscount />
-                  <SummaryRow label="تخفيض الفاتورة" value="0.00" unit="دينار" isDiscount />
-                </div>
-                
-                {/* On mobile, show only final total and mini summary */}
-                <div className="flex items-center justify-between lg:mt-3">
-                  <span className="text-[14px] lg:text-[15px] font-black text-slate-700 dark:text-white/80">المجموع النهائي</span>
+                <SummaryRow label="عدد البضاعة" value="0" unit="" />
+                <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
+                <SummaryRow label="تخفيض المنتجات" value="0.00" unit="دينار" isDiscount />
+                <SummaryRow label="تخفيض الفاتورة" value="0.00" unit="دينار" isDiscount />
+                <div className="flex items-center justify-between mt-3">
+                  <span className="text-[15px] font-black text-slate-700 dark:text-white/80">المجموع النهائي</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl lg:text-3xl font-black text-primary">0.00</span>
-                    <span className="text-xs lg:text-base font-bold text-slate-400 dark:text-white/40">دينار</span>
+                    <span className="text-3xl font-black text-primary">0.00</span>
+                    <span className="text-base font-bold text-slate-400 dark:text-white/40">دينار</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button className="spatial-button w-full h-14 lg:h-16 rounded-[20px] lg:rounded-[24px] flex items-center justify-center gap-2 text-base lg:text-lg shadow-[0_10px_30px_rgba(0,102,255,0.4)]">
+            <button className="hidden lg:flex spatial-button w-full h-16 rounded-[24px] items-center justify-center gap-2.5 text-lg shadow-[0_10px_30px_rgba(0,102,255,0.4)]">
+              <ReceiptText className="w-5 h-5" />
               إنشاء الفاتورة
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
           </div>
 
@@ -141,10 +150,11 @@ function ProductRow({ title, selectOptions }: { title: string; selectOptions: st
         </button>
       </div>
       <ModernSelect label="اسم الصنف" options={selectOptions} />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-4">
         <ModernInput label="الكمية" type="number" placeholder="0" />
         <ModernInput label="هدية" type="number" placeholder="0" />
         <ModernInput label="سعر الوحدة" type="number" placeholder="0.00" />
+        <ModernInput label="الإجمالي" type="number" placeholder="0.00" className="col-span-3 lg:col-span-1 opacity-60 pointer-events-none" />
       </div>
     </div>
   );

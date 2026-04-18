@@ -56,7 +56,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="h-[100dvh] w-screen flex items-center justify-center p-0 lg:p-6 transition-colors duration-500 overflow-hidden bg-slate-100 dark:bg-slate-950 lg:bg-transparent">
       
       {/* Frosted-glass application window — fills available space */}
-      <div className="spatial-window w-full h-full flex relative overflow-hidden rounded-[40px]">
+      <div className="spatial-window w-full h-full flex relative rounded-none lg:rounded-[40px]">
 
         {/* Mobile Overlay for Sidebar */}
         {isSidebarOpen && (
