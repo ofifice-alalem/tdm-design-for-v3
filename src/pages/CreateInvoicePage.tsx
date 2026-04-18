@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import { Trash2, Plus, FileText, ArrowRight, ReceiptText } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 export default function CreateInvoicePage() {
+  const [products, setProducts] = useState([
+    { id: 1 },
+    { id: 2 },
+  ]);
+
+  const addProduct = () => setProducts((p) => [...p, { id: Date.now() }]);
+  const removeProduct = (id: number) => setProducts((p) => p.filter((x) => x.id !== id));
   return (
     <AppShell>
       <div className="flex flex-col gap-6 h-full">
@@ -41,17 +49,18 @@ export default function CreateInvoicePage() {
           <SpatialCard title="" hideHeader>
             <div className="flex flex-col gap-4">
 
-              <ProductRow
-                title="المنتج الأول"
-                selectOptions={['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز']}
-              />
+              {products.map((p, i) => (
+                <ProductRow
+                  key={p.id}
+                  title={`المنتج ${i + 1}`}
+                  selectOptions={['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز', 'كابل الشحن السريع', 'مقابس باور بانك']}
+                  onRemove={() => removeProduct(p.id)}
+                />
+              ))}
 
-              <ProductRow
-                title="المنتج الثاني"
-                selectOptions={['كابل الشحن السريع', 'مقابس باور بانك']}
-              />
-
-              <button className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2">
+              <button
+                onClick={addProduct}
+                className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2">
                 <Plus className="w-5 h-5" />
                 إضافة سطر منتج جديد
               </button>
@@ -152,12 +161,14 @@ export default function CreateInvoicePage() {
 }
 
 /* ── Product row ── */
-function ProductRow({ title, selectOptions }: { title: string; selectOptions: string[] }) {
+function ProductRow({ title, selectOptions, onRemove }: { title: string; selectOptions: string[]; onRemove: () => void }) {
   return (
     <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
       <div className="flex justify-between items-center">
         <h3 className="text-slate-800 dark:text-white font-bold text-base">{title}</h3>
-        <button className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
+        <button
+          onClick={onRemove}
+          className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>

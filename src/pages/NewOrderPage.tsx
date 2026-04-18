@@ -1,9 +1,13 @@
-import { ArrowRight, Package, Send, X, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Send, X, Trash2 } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 
 export default function NewOrderPage() {
+  const [products, setProducts] = useState([{ id: 1 }, { id: 2 }]);
+  const addProduct = () => setProducts((p) => [...p, { id: Date.now() }]);
+  const removeProduct = (id: number) => setProducts((p) => p.filter((x) => x.id !== id));
   return (
     <AppShell>
       <div className="flex flex-col gap-6 h-full">
@@ -32,21 +36,24 @@ export default function NewOrderPage() {
           {/* ── Right Section: Products ── */}
           <div className="flex-1 min-w-0 flex flex-col gap-6">
             <SpatialCard
-              title="المنتجات المطلوبة"
-              icon={<Package className="w-5 h-5" />}
+              title=""
+              hideHeader
               className="flex-none lg:flex-1"
             >
-              <p className="text-xs lg:text-sm font-bold text-slate-400 dark:text-white/40 mb-6 -mt-2">
-                اختر المنتجات والكميات المطلوبة
-              </p>
 
               <div className="flex flex-col gap-4">
-                <ProductRequestRow index={1} />
-                <ProductRequestRow index={2} />
+                {products.map((p, i) => (
+                  <ProductRequestRow
+                    key={p.id}
+                    index={i + 1}
+                    onRemove={() => removeProduct(p.id)}
+                  />
+                ))}
               </div>
 
-              {/* Add another product */}
-              <button className="mt-5 w-full h-13 py-3.5 rounded-[18px] bg-black/3 dark:bg-white/3 hover:bg-black/8 dark:hover:bg-white/8 border border-dashed border-black/15 dark:border-white/15 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
+              <button
+                onClick={addProduct}
+                className="mt-5 w-full h-13 py-3.5 rounded-[18px] bg-black/3 dark:bg-white/3 hover:bg-black/8 dark:hover:bg-white/8 border border-dashed border-black/15 dark:border-white/15 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
                 <span className="text-lg">+</span> إضافة منتج آخر
               </button>
             </SpatialCard>
@@ -58,7 +65,7 @@ export default function NewOrderPage() {
           </div>
 
           {/* ── Left Section: Notes + Actions ── */}
-          <div className="w-full lg:w-[360px] xl:w-[400px] shrink-0 flex flex-col gap-5">
+          <div className="w-full lg:w-[360px] xl:w-[400px] shrink-0 flex flex-col gap-5 lg:sticky lg:top-0 lg:self-start">
 
             {/* Notes */}
             <SpatialCard title="ملاحظات" headerDot={false} className="flex-none lg:flex-1">
@@ -67,7 +74,7 @@ export default function NewOrderPage() {
               </label>
               <textarea
                 placeholder="أضف أي ملاحظات أو تعليمات إضافية للطلب..."
-                className="spatial-input w-full min-h-[120px] lg:flex-1 resize-none rounded-[20px] p-5 text-sm font-bold transition-all"
+                className="spatial-input w-full min-h-[400px] resize-none rounded-[20px] p-5 text-sm font-bold transition-all"
               />
             </SpatialCard>
 
@@ -106,12 +113,14 @@ export default function NewOrderPage() {
 }
 
 /* ── Single product request row ── */
-function ProductRequestRow({ index }: { index: number }) {
+function ProductRequestRow({ index, onRemove }: { index: number; onRemove: () => void }) {
   return (
     <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
       <div className="flex justify-between items-center">
         <h3 className="text-slate-800 dark:text-white font-bold text-base">المنتج {index}</h3>
-        <button className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
+        <button
+          onClick={onRemove}
+          className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
