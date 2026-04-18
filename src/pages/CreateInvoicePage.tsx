@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Trash2, Plus, FileText, ArrowRight, ReceiptText } from 'lucide-react';
+import { Plus, FileText, ArrowRight, ReceiptText } from 'lucide-react';
+import { ProductRowShell } from '../compenntes/ui/ProductRowShell';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
@@ -207,13 +208,7 @@ function ProductRow({ title, item, availableOptions, onRemove, onChange }: {
   const autoGift = item.giftRule ? Math.floor(item.qty / item.giftRule.buyQty) * item.giftRule.freeQty : 0;
 
   return (
-    <div className="bg-black/5 dark:bg-black/20 p-4 lg:p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-3 lg:gap-4 transition-colors duration-500">
-      <div className="flex justify-between items-center">
-        <h3 className="text-slate-800 dark:text-white font-bold text-base">{title}</h3>
-        <button onClick={onRemove} className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
-          <Trash2 className="w-4 h-4" />
-        </button>
-      </div>
+    <ProductRowShell title={title} onRemove={onRemove}>
       <ModernSelect
         label="اسم الصنف"
         options={availableOptions.map((p) => ({
@@ -248,7 +243,7 @@ function ProductRow({ title, item, availableOptions, onRemove, onChange }: {
           value={total > 0 ? fmt(total) : ''}
           className="col-span-3 lg:col-span-1 opacity-60 pointer-events-none" />
       </div>
-    </div>
+    </ProductRowShell>
   );
 }
 

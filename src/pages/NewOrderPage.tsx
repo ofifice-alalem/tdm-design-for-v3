@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowRight, Send, X, Trash2 } from 'lucide-react';
+import { ArrowRight, Send, X } from 'lucide-react';
+import { ProductRowShell } from '../compenntes/ui/ProductRowShell';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
@@ -151,15 +152,7 @@ function ProductRequestRow({ index, onRemove, onQtyChange, onNameChange, availab
   currentName: string;
 }) {
   return (
-    <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
-      <div className="flex justify-between items-center">
-        <h3 className="text-slate-800 dark:text-white font-bold text-base">المنتج {index}</h3>
-        <button
-          onClick={onRemove}
-          className="w-9 h-9 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center border border-red-500/30">
-          <Trash2 className="w-4 h-4" />
-        </button>
-      </div>
+    <ProductRowShell title={`المنتج ${index}`} onRemove={onRemove}>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
         <ModernSelect
           label="المنتج"
@@ -171,6 +164,6 @@ function ProductRequestRow({ index, onRemove, onQtyChange, onNameChange, availab
         <ModernInput label="الكمية" type="number" placeholder="0"
           onChange={(v) => onQtyChange(Number(v) || 0)} />
       </div>
-    </div>
+    </ProductRowShell>
   );
 }
