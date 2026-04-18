@@ -79,6 +79,18 @@ export default function CreateInvoicePage() {
             />
           </SpatialCard>
 
+          {/* Summary - mobile only, shown in page flow */}
+          <div className="lg:hidden bg-black/5 dark:bg-white/5 rounded-[24px] border border-black/5 dark:border-white/5 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
+              <h3 className="text-[15px] font-black text-slate-800 dark:text-white">ملخص الفاتورة</h3>
+            </div>
+            <SummaryRow label="عدد البضاعة" value="0" unit="" />
+            <SummaryRow label="السعر الكلي" value="0.00" unit="دينار" />
+            <SummaryRow label="تخفيض المنتجات" value="0.00" unit="دينار" isDiscount />
+            <SummaryRow label="تخفيض الفاتورة" value="0.00" unit="دينار" isDiscount />
+          </div>
+
           {/* Invoice Summary & Submit - Sticky on Mobile */}
           <div className="
             flex flex-col gap-4 
