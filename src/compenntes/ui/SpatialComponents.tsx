@@ -48,11 +48,15 @@ export function ModernInput({
   type = 'text',
   placeholder,
   className = '',
+  value,
+  onChange,
 }: {
   label: string;
   type?: string;
   placeholder?: string;
   className?: string;
+  value?: string;
+  onChange?: (v: string) => void;
 }) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -64,6 +68,7 @@ export function ModernInput({
       <input
         type={type}
         placeholder={placeholder}
+        {...(value !== undefined ? { value, onChange: (e) => onChange?.(e.target.value) } : {})}
         className="spatial-input h-14 rounded-[20px] px-5 text-[15px] font-bold w-full"
       />
     </div>
@@ -75,11 +80,13 @@ export function ModernSelect({
   options,
   className = '',
   placeholder = 'اختر...',
+  onSelect,
 }: {
   label: string;
-  options: string[];
+  options: string[] | { label: string; meta?: string }[];
   className?: string;
   placeholder?: string;
+  onSelect?: (value: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('');
@@ -87,6 +94,16 @@ export function ModernSelect({
   const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  const normalized = (options as (string | { label: string; meta?: string })[]).map((o) =>
+    typeof o === 'string' ? { label: o, meta: undefined } : o
+  );
+
+  function formatPrice(price: number) {
+    return price % 1 === 0
+      ? price.toLocaleString('en-US')
+      : price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -115,8 +132,8 @@ export function ModernSelect({
     }
   }, [isOpen]);
 
-  const filtered = options.filter((o) =>
-    o.toLowerCase().includes(search.toLowerCase())
+  const filtered = normalized.filter((o) =>
+    o.label.toLowerCase().includes(search.toLowerCase())
   );
 
   const optionsList = (size: 'sm' | 'lg') => (
@@ -126,31 +143,44 @@ export function ModernSelect({
           لا توجد نتائج
         </li>
       ) : (
-        filtered.map((opt) => (
-          <li
-            key={opt}
-            onClick={() => { setSelected(opt); setIsOpen(false); setSearch(''); }}
-            className={`
-              flex items-center gap-3 px-4 rounded-[14px] cursor-pointer
-              font-bold transition-all duration-150 mb-1
-              ${size === 'lg' ? 'py-4 text-[16px]' : 'py-3 text-[15px]'}
-              ${selected === opt
-                ? 'bg-primary text-white shadow-[0_4px_14px_rgba(0,102,255,0.35)]'
-                : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white'
-              }
-            `}
-          >
-            <span className={`shrink-0 rounded-full border-2 flex items-center justify-center transition-all
-              ${size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}
-              ${selected === opt ? 'border-white bg-white/30' : 'border-slate-300 dark:border-white/20'}`}>
-              {selected === opt && (
-                <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                  <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+        filtered.map((opt, idx) => (
+          <div key={opt.label}>
+            <li
+              onClick={() => { setSelected(opt.label); onSelect?.(opt.label); setIsOpen(false); setSearch(''); }}
+              className={`
+                flex items-center justify-between gap-3 px-4 rounded-[14px] cursor-pointer
+                font-bold transition-all duration-150
+                ${size === 'lg' ? 'py-4 text-[16px]' : 'py-3 text-[15px]'}
+                ${selected === opt.label
+                  ? 'bg-primary text-white shadow-[0_4px_14px_rgba(0,102,255,0.35)]'
+                  : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white'
+                }
+              `}
+            >
+              <div className="flex items-center gap-3">
+                <span className={`shrink-0 rounded-full border-2 flex items-center justify-center transition-all
+                  ${size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}
+                  ${selected === opt.label ? 'border-white bg-white/30' : 'border-slate-300 dark:border-white/20'}`}>
+                  {selected === opt.label && (
+                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                      <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </span>
+                {opt.label}
+              </div>
+              {opt.meta && (
+                <span className={`text-[14px] font-black shrink-0 px-3 py-1.5 rounded-xl ${
+                  selected === opt.label
+                    ? 'bg-white/25 text-white'
+                    : 'bg-primary text-white'
+                }`}>{opt.meta}</span>
               )}
-            </span>
-            {opt}
-          </li>
+            </li>
+            {idx < filtered.length - 1 && (
+              <div className="h-px bg-black/5 dark:bg-white/5 my-1 mx-2" />
+            )}
+          </div>
         ))
       )}
     </ul>

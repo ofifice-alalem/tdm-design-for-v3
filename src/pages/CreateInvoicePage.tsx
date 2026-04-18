@@ -53,7 +53,6 @@ export default function CreateInvoicePage() {
                 <ProductRow
                   key={p.id}
                   title={`المنتج ${i + 1}`}
-                  selectOptions={['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز', 'كابل الشحن السريع', 'مقابس باور بانك']}
                   onRemove={() => removeProduct(p.id)}
                 />
               ))}
@@ -161,9 +160,30 @@ export default function CreateInvoicePage() {
 }
 
 /* ── Product row ── */
-function ProductRow({ title, selectOptions, onRemove }: { title: string; selectOptions: string[]; onRemove: () => void }) {
+const PRODUCTS = [
+  { name: 'آيفون 15 برو ماكس', price: 1850 },
+  { name: 'ماك بوك اير M3', price: 2100 },
+  { name: 'سماعات ايربودز', price: 320 },
+  { name: 'كابل الشحن السريع', price: 25 },
+  { name: 'مقابس باور بانك', price: 85 },
+];
+
+function ProductRow({ title, onRemove }: { title: string; onRemove: () => void }) {
+  const [unitPrice, setUnitPrice] = useState('');
+
+  function handleSelect(name: string) {
+    const found = PRODUCTS.find((p) => p.name === name);
+    if (found) {
+      const price = found.price;
+      setUnitPrice(price % 1 === 0
+        ? price.toLocaleString('en-US')
+        : price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      );
+    }
+  }
+
   return (
-    <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
+    <div className="bg-black/5 dark:bg-black/20 p-4 lg:p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-3 lg:gap-4 transition-colors duration-500">
       <div className="flex justify-between items-center">
         <h3 className="text-slate-800 dark:text-white font-bold text-base">{title}</h3>
         <button
@@ -172,11 +192,20 @@ function ProductRow({ title, selectOptions, onRemove }: { title: string; selectO
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
-      <ModernSelect label="اسم الصنف" options={selectOptions} />
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-4">
+      <ModernSelect
+        label="اسم الصنف"
+        options={PRODUCTS.map((p) => ({
+    label: p.name,
+    meta: p.price % 1 === 0
+      ? p.price.toLocaleString('en-US') + ' د'
+      : p.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' د'
+  }))}
+        onSelect={handleSelect}
+      />
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
         <ModernInput label="الكمية" type="number" placeholder="0" />
         <ModernInput label="هدية" type="number" placeholder="0" />
-        <ModernInput label="سعر الوحدة" type="number" placeholder="0.00" />
+        <ModernInput label="سعر الوحدة" type="text" placeholder="0.00" value={unitPrice} className="opacity-70 pointer-events-none" />
         <ModernInput label="الإجمالي" type="number" placeholder="0.00" className="col-span-3 lg:col-span-1 opacity-60 pointer-events-none" />
       </div>
     </div>
