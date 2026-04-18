@@ -68,7 +68,8 @@ export function ModernInput({
       <input
         type={type}
         placeholder={placeholder}
-        {...(value !== undefined ? { value, onChange: (e) => onChange?.(e.target.value) } : {})}
+        {...(value !== undefined ? { value } : {})}
+        onChange={(e) => onChange?.(e.target.value)}
         className="spatial-input h-14 rounded-[20px] px-5 text-[15px] font-bold w-full"
       />
     </div>
@@ -83,7 +84,7 @@ export function ModernSelect({
   onSelect,
 }: {
   label: string;
-  options: string[] | { label: string; meta?: string }[];
+  options: string[] | { label: string; meta?: string; badge?: string }[];
   className?: string;
   placeholder?: string;
   onSelect?: (value: string) => void;
@@ -95,8 +96,8 @@ export function ModernSelect({
   const ref = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const normalized = (options as (string | { label: string; meta?: string })[]).map((o) =>
-    typeof o === 'string' ? { label: o, meta: undefined } : o
+  const normalized = (options as (string | { label: string; meta?: string; badge?: string })[]).map((o) =>
+    typeof o === 'string' ? { label: o, meta: undefined, badge: undefined } : o
   );
 
   function formatPrice(price: number) {
@@ -167,6 +168,7 @@ export function ModernSelect({
                     </svg>
                   )}
                 </span>
+                {opt.badge && <span className="text-[13px]">{opt.badge}</span>}
                 {opt.label}
               </div>
               {opt.meta && (

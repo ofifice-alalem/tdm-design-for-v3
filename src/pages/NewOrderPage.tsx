@@ -4,10 +4,18 @@ import { AppShell } from '../compenntes/layout';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 
+const ALL_PRODUCTS = ['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز', 'كابل الشحن السريع', 'باور بانك 20000'];
+
 export default function NewOrderPage() {
-  const [products, setProducts] = useState([{ id: 1 }, { id: 2 }]);
-  const addProduct = () => setProducts((p) => [...p, { id: Date.now() }]);
+  const [products, setProducts] = useState([{ id: 1, qty: 0, name: '' }, { id: 2, qty: 0, name: '' }]);
+  const addProduct = () => setProducts((p) => [...p, { id: Date.now(), qty: 0, name: '' }]);
   const removeProduct = (id: number) => setProducts((p) => p.filter((x) => x.id !== id));
+  const updateQty = (id: number, qty: number) => setProducts((p) => p.map((x) => x.id === id ? { ...x, qty } : x));
+  const updateName = (id: number, name: string) => setProducts((p) => p.map((x) => x.id === id ? { ...x, name } : x));
+
+  const selectedNames = products.map((p) => p.name).filter(Boolean);
+  const totalTypes = products.filter((p) => p.qty > 0).length;
+  const totalQty = products.reduce((s, p) => s + p.qty, 0);
   return (
     <AppShell>
       <div className="flex flex-col gap-6 h-full">
@@ -46,14 +54,19 @@ export default function NewOrderPage() {
                   <ProductRequestRow
                     key={p.id}
                     index={i + 1}
+                    currentName={p.name}
+                    availableOptions={ALL_PRODUCTS.filter((n) => n === p.name || !selectedNames.includes(n))}
                     onRemove={() => removeProduct(p.id)}
+                    onQtyChange={(qty) => updateQty(p.id, qty)}
+                    onNameChange={(name) => updateName(p.id, name)}
                   />
                 ))}
               </div>
 
               <button
                 onClick={addProduct}
-                className="mt-5 w-full h-13 py-3.5 rounded-[18px] bg-black/3 dark:bg-white/3 hover:bg-black/8 dark:hover:bg-white/8 border border-dashed border-black/15 dark:border-white/15 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
+                disabled={selectedNames.length >= ALL_PRODUCTS.length}
+                className="mt-5 w-full h-13 py-3.5 rounded-[18px] bg-black/3 dark:bg-white/3 hover:bg-black/8 dark:hover:bg-white/8 border border-dashed border-black/15 dark:border-white/15 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-bold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:pointer-events-none">
                 <span className="text-lg">+</span> إضافة منتج آخر
               </button>
             </SpatialCard>
@@ -78,7 +91,23 @@ export default function NewOrderPage() {
               />
             </SpatialCard>
 
-            {/* Action Buttons - Sticky on mobile */}
+            {/* Summary */}
+            <div className="bg-black/5 dark:bg-white/5 rounded-[24px] border border-black/5 dark:border-white/5 p-5 flex flex-col gap-3">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
+                <h3 className="text-[15px] font-black text-slate-800 dark:text-white">ملخص الطلب</h3>
+              </div>
+              <div className="flex items-center justify-between py-2.5 border-b border-black/5 dark:border-white/5">
+                <span className="text-[14px] font-bold text-slate-500 dark:text-white/50">عدد الأصناف</span>
+                <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{totalTypes}</span>
+              </div>
+              <div className="flex items-center justify-between py-2.5">
+                <span className="text-[14px] font-bold text-slate-500 dark:text-white/50">إجمالي عدد البضاعة</span>
+                <span className="text-[15px] font-black text-primary">{totalQty}</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
             <div className="
               flex flex-col gap-3 mt-auto 
               max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:p-6 
@@ -113,7 +142,14 @@ export default function NewOrderPage() {
 }
 
 /* ── Single product request row ── */
-function ProductRequestRow({ index, onRemove }: { index: number; onRemove: () => void }) {
+function ProductRequestRow({ index, onRemove, onQtyChange, onNameChange, availableOptions, currentName }: {
+  index: number;
+  onRemove: () => void;
+  onQtyChange: (qty: number) => void;
+  onNameChange: (name: string) => void;
+  availableOptions: string[];
+  currentName: string;
+}) {
   return (
     <div className="bg-black/5 dark:bg-black/20 p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-colors duration-500">
       <div className="flex justify-between items-center">
@@ -127,11 +163,13 @@ function ProductRequestRow({ index, onRemove }: { index: number; onRemove: () =>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
         <ModernSelect
           label="المنتج"
-          options={['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز', 'كابل الشحن السريع', 'باور بانك 20000']}
+          options={availableOptions}
           placeholder={`اختر المنتج ${index}...`}
           className="sm:col-span-2"
+          onSelect={onNameChange}
         />
-        <ModernInput label="الكمية" type="number" placeholder="0" />
+        <ModernInput label="الكمية" type="number" placeholder="0"
+          onChange={(v) => onQtyChange(Number(v) || 0)} />
       </div>
     </div>
   );
