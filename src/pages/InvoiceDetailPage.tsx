@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { ArrowRight, Printer, Upload, Clock, CheckCircle2, XCircle, Ban } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
@@ -51,12 +52,51 @@ function fmt(n: number) {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function UploadArea() {
+  const [file, setFile] = useState<File | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFile(e.target.files?.[0] ?? null);
+  }
+
+  if (file) {
+    return (
+      <div className="flex items-center justify-between px-4 py-3 rounded-[20px] bg-emerald-500/10 border border-emerald-500/25">
+        <div className="flex items-center gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">تم تحميل الصورة</span>
+            <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 truncate max-w-[160px]">{file.name}</span>
+          </div>
+        </div>
+        <button
+          onClick={() => setFile(null)}
+          className="text-[12px] font-black text-red-500 hover:text-red-600 transition-colors shrink-0"
+        >
+          إلغاء الصورة
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <label className="flex flex-col items-center justify-center gap-3 h-36 rounded-[20px] border-2 border-dashed border-black/15 dark:border-white/15 hover:border-primary/40 cursor-pointer transition-all group">
+      <input type="file" accept="image/png,image/jpg,image/jpeg" className="hidden" onChange={handleChange} />
+      <Upload className="w-8 h-8 text-slate-400 dark:text-white/30 group-hover:text-primary transition-colors" />
+      <div className="text-center">
+        <p className="text-[13px] font-black text-slate-600 dark:text-white/60 group-hover:text-primary transition-colors">اضغط للرفع أو اسحب الصورة</p>
+        <p className="text-[11px] font-bold text-slate-400 dark:text-white/30 mt-1">PNG, JPG أو JPEG (الحد الأقصى 2MB)</p>
+      </div>
+    </label>
+  );
+}
+
 export default function InvoiceDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const decodedId = id ? decodeURIComponent(id) : '';
+  const [showImageModal, setShowImageModal] = useState(false);
 
-  // Demo switcher للعرض فقط
   const [activeDemo, setActiveDemo] = useState<'pending' | 'verified'>(
     decodedId === INVOICES.verified.id ? 'verified' : 'pending'
   );
@@ -67,7 +107,7 @@ export default function InvoiceDetailPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-6 h-full overflow-y-auto custom-scroll pb-6">
+      <div className="flex flex-col gap-6 overflow-y-auto custom-scroll pb-32 lg:pb-6">
 
         {/* Demo switcher */}
         <div className="flex gap-2">
@@ -82,21 +122,19 @@ export default function InvoiceDetailPage() {
         </div>
 
         {/* Header */}
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/70 font-bold text-[14px] transition-all">
-              <ArrowRight className="w-4 h-4" />
-              عودة
-            </button>
-            <div className="flex flex-col">
-              <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">فاتورة بيع {inv.date} {inv.time}</span>
-              <span className="text-[18px] font-black text-slate-800 dark:text-white">فاتورة {inv.id}</span>
-            </div>
+        <div className="flex flex-col gap-3">
+          <button onClick={() => navigate(-1)} className="self-start flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/70 font-bold text-[14px] transition-all">
+            <ArrowRight className="w-4 h-4" />
+            عودة
+          </button>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">فاتورة بيع {inv.date} {inv.time}</span>
+            <span className="text-[20px] font-black text-slate-800 dark:text-white">فاتورة {inv.id}</span>
           </div>
         </div>
 
         {/* Main layout */}
-        <div className="flex flex-col lg:flex-row gap-6 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 lg:items-start w-full">
 
           {/* Right: main content */}
           <div className="flex-1 min-w-0 flex flex-col gap-5">
@@ -124,34 +162,58 @@ export default function InvoiceDetailPage() {
                 <span className="text-[12px] font-black text-primary bg-primary/10 px-2 py-0.5 rounded-full">{inv.products.length} أصناف</span>
               </div>
 
-              {/* Table header */}
-              <div className="hidden sm:grid grid-cols-5 gap-3 px-3 pb-2 border-b border-black/5 dark:border-white/5">
+              {/* Header - PC only */}
+              <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1.5fr_1.5fr] gap-3 px-4 pb-3 border-b border-black/10 dark:border-white/10">
                 {['المنتج', 'الكمية', 'مجاني', 'السعر', 'الإجمالي'].map((h) => (
                   <span key={h} className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{h}</span>
                 ))}
               </div>
 
+              {/* Rows */}
               {inv.products.map((p, i) => (
-                <div key={i} className="grid grid-cols-2 sm:grid-cols-5 gap-3 px-3 py-3 border-b border-black/5 dark:border-white/5 last:border-0">
-                  <div className="col-span-2 sm:col-span-1 flex flex-col gap-0.5">
-                    <span className="text-[14px] font-black text-slate-800 dark:text-white">{p.name}</span>
-                    <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{p.variant}</span>
+                <div key={i}>
+                  {/* PC row */}
+                  <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1.5fr_1.5fr] gap-3 px-4 py-4 items-center border-b border-black/5 dark:border-white/5 last:border-0">
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[14px] font-black text-slate-800 dark:text-white">{p.name}</span>
+                      <span className="text-[12px] font-bold text-slate-400 dark:text-white/30">{p.variant}</span>
+                    </div>
+                    <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{p.qty}</span>
+                    <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{p.free}</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{fmt(p.price)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/30">د</span>
+                    </div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-[15px] font-black text-primary">{fmt(p.total)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/30">د</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-0.5 sm:contents">
-                    <span className="sm:hidden text-[11px] font-bold text-slate-400 dark:text-white/40">الكمية</span>
-                    <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{p.qty}</span>
-                    <span className="sm:hidden text-[11px] font-bold text-slate-400 dark:text-white/40">مجاني</span>
-                    <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{p.free}</span>
-                    <span className="sm:hidden text-[11px] font-bold text-slate-400 dark:text-white/40">السعر</span>
-                    <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{fmt(p.price)} <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span></span>
-                    <span className="sm:hidden text-[11px] font-bold text-slate-400 dark:text-white/40">الإجمالي</span>
-                    <span className="text-[14px] font-black text-primary">{fmt(p.total)} <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span></span>
+
+                  {/* Mobile card */}
+                  <div className="sm:hidden spatial-card p-4 flex flex-col gap-3 mb-3 last:mb-0">
+                    <span className="text-[15px] font-black text-slate-800 dark:text-white">{p.name}</span>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[{l:'الكمية', v: String(p.qty)}, {l:'مجاني', v: String(p.free)}, {l:'السعر', v: fmt(p.price)+' د'}].map(({l,v}) => (
+                        <div key={l} className="flex flex-col gap-0.5">
+                          <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{l}</span>
+                          <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
+                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-[18px] font-black text-primary">{fmt(p.total)}</span>
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
 
               {/* Totals */}
-              <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-black/5 dark:border-white/5">
+              <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-black/10 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] font-bold text-slate-500 dark:text-white/50">عدد البضاعة</span>
                   <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{totalQty}</span>
@@ -163,10 +225,10 @@ export default function InvoiceDetailPage() {
                     <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
+                <div className="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/5">
                   <span className="text-[15px] font-black text-slate-700 dark:text-white/80">الإجمالي النهائي</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-[22px] font-black text-primary">{fmt(subtotal)}</span>
+                    <span className="text-[24px] font-black text-primary">{fmt(subtotal)}</span>
                     <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                   </div>
                 </div>
@@ -192,20 +254,32 @@ export default function InvoiceDetailPage() {
                   <Printer className="w-4 h-4" />
                   طباعة PDF
                 </button>
+                {inv.status === 'موثق' && (
+                  <button
+                    onClick={() => setShowImageModal(true)}
+                    className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white transition-all"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    عرض صورة التوثيق
+                  </button>
+                )}
               </div>
             </SpatialCard>
 
-            {/* رفع الصورة - فقط في قيد الانتظار */}
+            {/* رفع الصورة + أزرار التوثيق - فقط في قيد الانتظار */}
             {inv.status === 'قيد الانتظار' && (
               <SpatialCard title="صورة الفاتورة المختومة">
-                <label className="flex flex-col items-center justify-center gap-3 h-36 rounded-[20px] border-2 border-dashed border-black/15 dark:border-white/15 hover:border-primary/40 cursor-pointer transition-all group">
-                  <input type="file" accept="image/png,image/jpg,image/jpeg" className="hidden" />
-                  <Upload className="w-8 h-8 text-slate-400 dark:text-white/30 group-hover:text-primary transition-colors" />
-                  <div className="text-center">
-                    <p className="text-[13px] font-black text-slate-600 dark:text-white/60 group-hover:text-primary transition-colors">اضغط للرفع أو اسحب الصورة</p>
-                    <p className="text-[11px] font-bold text-slate-400 dark:text-white/30 mt-1">PNG, JPG أو JPEG (الحد الأقصى 2MB)</p>
-                  </div>
-                </label>
+                <UploadArea />
+                <div className="flex flex-col gap-2 mt-4">
+                  <button className="spatial-button w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px]">
+                    <CheckCircle2 className="w-4 h-4" />
+                    توثيق الفاتورة
+                  </button>
+                  <button className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-red-500/10 hover:bg-red-500 border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white transition-all">
+                    <XCircle className="w-4 h-4" />
+                    رفض الفاتورة
+                  </button>
+                </div>
               </SpatialCard>
             )}
 
@@ -241,6 +315,36 @@ export default function InvoiceDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal صورة التوثيق */}
+      {showImageModal && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setShowImageModal(false)}
+        >
+          <div
+            className="spatial-card p-5 w-[90vw] max-w-lg flex flex-col gap-4 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[15px] font-black text-slate-800 dark:text-white">صورة الفاتورة المختومة</span>
+              <button
+                onClick={() => setShowImageModal(false)}
+                className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/20 transition-all"
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="rounded-[20px] overflow-hidden bg-black/5 dark:bg-white/5 flex items-center justify-center min-h-[300px]">
+              <div className="flex flex-col items-center gap-3 text-slate-400 dark:text-white/30">
+                <CheckCircle2 className="w-12 h-12 text-emerald-500 opacity-50" />
+                <span className="text-[13px] font-bold">صورة التوثيق</span>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </AppShell>
   );
 }
