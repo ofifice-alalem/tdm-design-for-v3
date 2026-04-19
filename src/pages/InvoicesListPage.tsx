@@ -111,7 +111,7 @@ export default function InvoicesListPage() {
           <div className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto custom-scroll pb-6">
 
             {/* Status Tabs */}
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
               {STATUS_TABS.map((tab) => (
                 <button
                   key={tab}
@@ -136,12 +136,13 @@ export default function InvoicesListPage() {
             ) : (
               filtered.map((inv) => (
                 <div key={inv.id} className="spatial-card overflow-hidden flex flex-col sm:flex-row sm:items-stretch">
-                  {/* Status strip - ملاصق للحواف في pc */}
-                  <div className={`sm:w-24 shrink-0 flex items-center justify-center px-3 py-2 sm:py-0 ${
-                    inv.status === 'موثق'          ? 'bg-emerald-500/15 dark:bg-emerald-500/20'
-                    : inv.status === 'قيد الانتظار' ? 'bg-yellow-500/15 dark:bg-yellow-500/20'
-                    : inv.status === 'مرفوض'         ? 'bg-red-500/15 dark:bg-red-500/20'
-                    : 'bg-slate-500/10 dark:bg-slate-500/15'
+
+                  {/* Status strip - شريط في الاعلى موبايل / عمود في pc */}
+                  <div className={`flex sm:flex-col sm:w-24 shrink-0 items-center sm:justify-center justify-between px-4 py-2.5 sm:px-3 sm:py-0 border-b sm:border-b-0 sm:border-l border-black/5 dark:border-white/5 ${
+                    inv.status === 'موثق'          ? 'bg-emerald-500/10 dark:bg-emerald-500/15'
+                    : inv.status === 'قيد الانتظار' ? 'bg-yellow-500/10 dark:bg-yellow-500/15'
+                    : inv.status === 'مرفوض'         ? 'bg-red-500/10 dark:bg-red-500/15'
+                    : 'bg-slate-500/8 dark:bg-slate-500/10'
                   }`}>
                     <span className={`text-[13px] font-black ${
                       inv.status === 'موثق'          ? 'text-emerald-600 dark:text-emerald-400'
@@ -149,25 +150,28 @@ export default function InvoicesListPage() {
                       : inv.status === 'مرفوض'         ? 'text-red-500'
                       : 'text-slate-500 dark:text-white/40'
                     }`}>{inv.status}</span>
+                    {/* رقم الفاتورة يظهر بجانب الحالة في موبايل فقط */}
+                    <span className="sm:hidden text-[13px] font-black text-primary">{inv.id}</span>
                   </div>
 
                   {/* Info */}
-                  <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 px-5 py-4">
-                    <div className="flex-1 flex flex-col gap-0.5 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[15px] font-black text-primary">{inv.id}</span>
-                        <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{inv.date}</span>
-                      </div>
-                      <span className="text-[14px] font-bold text-slate-600 dark:text-white/60 truncate">{inv.client}</span>
+                  <div className="flex-1 flex flex-col gap-3 px-4 py-3 min-w-0">
+                    {/* السطر الاول: رقم الفاتورة + التاريخ - مخفي في موبايل لانه يظهر في الشريط */}
+                    <div className="hidden sm:flex items-center gap-3">
+                      <span className="text-[15px] font-black text-primary">{inv.id}</span>
+                      <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{inv.date}</span>
                     </div>
+                    {/* التاريخ في موبايل */}
+                    <span className="sm:hidden text-[12px] font-bold text-slate-400 dark:text-white/40">{inv.date}</span>
+                    <span className="text-[14px] font-bold text-slate-600 dark:text-white/60 truncate">{inv.client}</span>
 
                     {/* Amount + Action */}
-                    <div className="flex items-center gap-4 shrink-0">
+                    <div className="flex items-center justify-between gap-3">
                       <div className="flex items-baseline gap-1">
                         <span className="text-[17px] font-black text-slate-800 dark:text-white">{fmt(inv.amount)}</span>
                         <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                       </div>
-                      <button className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all">
+                      <button className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all shrink-0">
                         التفاصيل
                       </button>
                     </div>
