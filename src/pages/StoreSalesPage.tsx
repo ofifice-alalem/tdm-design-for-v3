@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Plus, List, FileText, Pencil, RotateCcw, ChevronLeft, Wallet } from 'lucide-react';
+import { Plus, List, FileText, Pencil, RotateCcw, ChevronLeft, Wallet, ReceiptText } from 'lucide-react';
 
 const ITEMS = [
   {
@@ -49,6 +49,22 @@ const ITEMS = [
     icon: <Wallet className="w-5 h-5" />,
     accent: 'bg-teal-500/10 text-teal-500',
     border: 'border-teal-500/20',
+  },
+  {
+    title: 'إيصالات القبض',
+    sub: 'استعراض وفلترة الإيصالات',
+    to: '/receipts',
+    icon: <ReceiptText className="w-5 h-5" />,
+    accent: 'bg-teal-500/10 text-teal-500',
+    border: 'border-teal-500/20',
+  },
+  {
+    title: 'فواتير الإرجاع',
+    sub: 'استعراض وفلترة الإرجاعات',
+    to: '/invoices/returns',
+    icon: <RotateCcw className="w-5 h-5" />,
+    accent: 'bg-rose-500/10 text-rose-500',
+    border: 'border-rose-500/20',
   },
 ];
 

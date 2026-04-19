@@ -16,6 +16,8 @@ import MarketersPage from './pages/MarketersPage';
 
 import OrderDetailPage from './pages/OrderDetailPage';
 
+import ReturnInvoicesListPage from './pages/ReturnInvoicesListPage';
+import ReceiptsListPage from './pages/ReceiptsListPage';
 import WithdrawListPage from './pages/WithdrawListPage';
 import WithdrawDetailPage from './pages/WithdrawDetailPage';
 
@@ -45,6 +47,8 @@ export default function App() {
         <Route path="/stock/orders/:id" element={<OrderDetailPage />} />
         <Route path="/receipt/create" element={<CreateReceiptPage />} />
         <Route path="/withdraw/new" element={<WithdrawPage />} />
+        <Route path="/invoices/returns" element={<ReturnInvoicesListPage />} />
+        <Route path="/receipts" element={<ReceiptsListPage />} />
         <Route path="/withdraw/list" element={<WithdrawListPage />} />
         <Route path="/withdraw/list/:id" element={<WithdrawDetailPage />} />
       </Route>
