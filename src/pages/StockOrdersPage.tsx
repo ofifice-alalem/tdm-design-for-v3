@@ -49,6 +49,7 @@ export default function StockOrdersPage() {
           </span>
         </div>
       ),
+      detailsHref: `/stock/orders/${encodeURIComponent(x.id)}`,
     }));
 
   const filterPanel = (

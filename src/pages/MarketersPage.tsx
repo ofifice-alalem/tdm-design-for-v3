@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, List, PackageX, ChevronLeft } from 'lucide-react';
+import { ShoppingCart, List, PackageX, FileText, ChevronLeft } from 'lucide-react';
 
 const ITEMS = [
   {
@@ -17,6 +17,14 @@ const ITEMS = [
     icon: <List className="w-5 h-5" />,
     accent: 'bg-emerald-500/10 text-emerald-500',
     border: 'border-emerald-500/20',
+  },
+  {
+    title: 'تفاصيل طلب',
+    sub: 'عرض تفاصيل طلب مسوق',
+    to: '/stock/orders/demo',
+    icon: <FileText className="w-5 h-5" />,
+    accent: 'bg-orange-500/10 text-orange-500',
+    border: 'border-orange-500/20',
   },
   {
     title: 'ارجاع البضاعة',

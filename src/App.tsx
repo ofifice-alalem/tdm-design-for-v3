@@ -14,6 +14,8 @@ import EditInvoicePage from './pages/EditInvoicePage';
 
 import MarketersPage from './pages/MarketersPage';
 
+import OrderDetailPage from './pages/OrderDetailPage';
+
 function Layout() {
   return (
     <AppShell>
@@ -37,6 +39,7 @@ export default function App() {
         <Route path="/marketers" element={<MarketersPage />} />
         <Route path="/stock/return" element={<ReturnStockPage />} />
         <Route path="/stock/orders" element={<StockOrdersPage />} />
+        <Route path="/stock/orders/:id" element={<OrderDetailPage />} />
         <Route path="/receipt/create" element={<CreateReceiptPage />} />
         <Route path="/withdraw/new" element={<WithdrawPage />} />
       </Route>
