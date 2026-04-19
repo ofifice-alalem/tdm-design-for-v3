@@ -33,7 +33,7 @@ export function ListPage({
   const filtered = activeTab === 'الكل' ? items : items.filter((x) => x.status === activeTab);
 
   return (
-    <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col gap-6">
 
         {/* Header */}
         <div className="flex items-center gap-2">
@@ -66,10 +66,10 @@ export function ListPage({
         </div>
 
         {/* Main Layout */}
-        <div className="flex gap-6 flex-1 min-h-0">
+        <div className="flex gap-6">
 
           {/* List */}
-          <div className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto custom-scroll pb-6">
+          <div className="flex-1 min-w-0 flex flex-col gap-4 pb-6">
 
             {/* Status Tabs */}
             <div className="flex items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">

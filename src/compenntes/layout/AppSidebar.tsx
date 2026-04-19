@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import {
   Home, Receipt, ShoppingCart, Users, LayoutGrid, Power, FileText,
-  PanelRightClose, PanelRightOpen, PackageX, Wallet, TrendingDown,
+  PanelRightClose, PanelRightOpen, PackageX, TrendingDown,
 } from 'lucide-react';
 
 interface AppSidebarProps {
@@ -16,7 +16,6 @@ const navItems = [
   { icon: <ShoppingCart className="w-5 h-5" />,  label: 'طلب بضاعة',        to: '/order/new' },
   { icon: <LayoutGrid className="w-5 h-5" />,    label: 'طلبات المسوقين',    to: '/stock/orders' },
   { icon: <PackageX className="w-5 h-5" />,      label: 'ارجاع بضاعة',       to: '/stock/return' },
-  { icon: <Wallet className="w-5 h-5" />,        label: 'إيصال قبض',         to: '/receipt/create' },
   { icon: <TrendingDown className="w-5 h-5" />,   label: 'طلب سحب',           to: '/withdraw/new' },
   { icon: <Users className="w-5 h-5" />,         label: 'العملاء',           to: '/customers' },
   { icon: <LayoutGrid className="w-5 h-5" />,    label: 'المخزون',           to: '/inventory' },
@@ -58,7 +57,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
       </div>
 
       {/* ── Navigation Links ── */}
-      <nav className="flex-1 flex flex-col gap-2 w-full px-4">
+      <nav className="flex-1 flex flex-col gap-2 w-full px-4 overflow-y-auto custom-scroll pb-14">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -99,12 +98,9 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
             )}
           </NavLink>
         ))}
-      </nav>
-
-      {/* ── Logout ── */}
-      <div className="px-4 w-full mt-auto pt-4 border-t border-black/5 dark:border-white/5">
+        <div className="h-px bg-black/20 dark:bg-white/20 my-3 mx-3" />
         <button className={`
-          flex items-center w-full p-2 rounded-[20px] transition-all duration-200 group
+          flex items-center w-full p-2 rounded-[20px] transition-all duration-200 group border-t border-black/10 dark:border-white/10 pt-3 mt-1
           ${!isOpen ? 'justify-center' : ''}
           hover:bg-red-500/10
         `}>
@@ -117,7 +113,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
             </span>
           )}
         </button>
-      </div>
+      </nav>
     </aside>
   );
 }
