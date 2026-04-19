@@ -67,6 +67,7 @@ export default function InvoicesListPage() {
         />
       </div>
       <ModernSelect label="المتجر" options={['المتجر الرئيسي - طرابلس', 'فرع بنغازي', 'فرع مصراتة']} placeholder="الكل" />
+      <ModernSelect label="المسوق" options={['أحمد علي', 'محمد حسن', 'سارة خالد']} placeholder="الكل" />
       <button className="spatial-button w-full h-12 rounded-[18px] flex items-center justify-center gap-2 font-bold text-[15px]">
         <Search className="w-4 h-4" />
         بحث
@@ -137,38 +138,52 @@ export default function InvoicesListPage() {
               filtered.map((inv) => (
                 <div key={inv.id} className="spatial-card overflow-hidden flex flex-col sm:flex-row sm:items-stretch">
 
-                  {/* Status strip - شريط في الاعلى موبايل / عمود في pc */}
-                  <div className={`flex sm:flex-col sm:w-24 shrink-0 items-center sm:justify-center justify-between px-4 py-2.5 sm:px-3 sm:py-0 border-b sm:border-b-0 sm:border-l border-black/5 dark:border-white/5 ${
+                  {/* Status strip */}
+                  <div className={`flex sm:flex-col sm:w-24 shrink-0 items-center sm:justify-center justify-between px-4 py-3 sm:px-3 sm:py-0 border-b sm:border-b-0 sm:border-l border-black/5 dark:border-white/5 ${
                     inv.status === 'موثق'          ? 'bg-emerald-500/10 dark:bg-emerald-500/15'
                     : inv.status === 'قيد الانتظار' ? 'bg-yellow-500/10 dark:bg-yellow-500/15'
                     : inv.status === 'مرفوض'         ? 'bg-red-500/10 dark:bg-red-500/15'
-                    : 'bg-slate-500/8 dark:bg-slate-500/10'
+                    : 'bg-slate-500/10 dark:bg-slate-500/10'
                   }`}>
-                    <span className={`text-[13px] font-black ${
-                      inv.status === 'موثق'          ? 'text-emerald-600 dark:text-emerald-400'
-                      : inv.status === 'قيد الانتظار' ? 'text-yellow-600 dark:text-yellow-400'
-                      : inv.status === 'مرفوض'         ? 'text-red-500'
-                      : 'text-slate-500 dark:text-white/40'
-                    }`}>{inv.status}</span>
-                    {/* رقم الفاتورة يظهر بجانب الحالة في موبايل فقط */}
+                    <div className="flex items-center gap-2">
+                      <span className={`w-2 h-2 rounded-full shrink-0 sm:hidden ${
+                        inv.status === 'موثق'          ? 'bg-emerald-500'
+                        : inv.status === 'قيد الانتظار' ? 'bg-yellow-500'
+                        : inv.status === 'مرفوض'         ? 'bg-red-500'
+                        : 'bg-slate-400'
+                      }`} />
+                      <span className={`text-[13px] font-black ${
+                        inv.status === 'موثق'          ? 'text-emerald-600 dark:text-emerald-400'
+                        : inv.status === 'قيد الانتظار' ? 'text-yellow-600 dark:text-yellow-400'
+                        : inv.status === 'مرفوض'         ? 'text-red-500'
+                        : 'text-slate-500 dark:text-white/40'
+                      }`}>{inv.status}</span>
+                    </div>
                     <span className="sm:hidden text-[13px] font-black text-primary">{inv.id}</span>
                   </div>
 
                   {/* Info */}
-                  <div className="flex-1 flex flex-col gap-3 px-4 py-3 min-w-0">
-                    {/* السطر الاول: رقم الفاتورة + التاريخ - مخفي في موبايل لانه يظهر في الشريط */}
-                    <div className="hidden sm:flex items-center gap-3">
-                      <span className="text-[15px] font-black text-primary">{inv.id}</span>
-                      <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{inv.date}</span>
-                    </div>
-                    {/* التاريخ في موبايل */}
-                    <span className="sm:hidden text-[12px] font-bold text-slate-400 dark:text-white/40">{inv.date}</span>
-                    <span className="text-[14px] font-bold text-slate-600 dark:text-white/60 truncate">{inv.client}</span>
+                  <div className="flex-1 flex flex-col sm:flex-row sm:items-center min-w-0 px-4 py-3 gap-2 sm:gap-5">
 
-                    {/* Amount + Action */}
-                    <div className="flex items-center justify-between gap-3">
+                    {/* PC: رقم + تاريخ + عميل */}
+                    <div className="hidden sm:flex flex-col gap-1 flex-1 min-w-0">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[15px] font-black text-primary">{inv.id}</span>
+                        <span className="text-[12px] font-bold text-slate-500 dark:text-white/60 bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-[8px]">{inv.date}</span>
+                      </div>
+                      <span className="text-[14px] font-bold text-slate-600 dark:text-white/60 truncate">{inv.client}</span>
+                    </div>
+
+                    {/* موبايل: تاريخ */}
+                    <span className="sm:hidden text-[12px] font-bold text-slate-500 dark:text-white/60 bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-[8px] self-start">{inv.date}</span>
+
+                    {/* اسم العميل - موبايل فقط */}
+                    <span className="sm:hidden text-[15px] font-black text-slate-800 dark:text-white truncate">{inv.client}</span>
+
+                    {/* المبلغ + زر */}
+                    <div className="flex items-center justify-between sm:justify-end gap-4 mt-1 sm:mt-0 shrink-0">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-[17px] font-black text-slate-800 dark:text-white">{fmt(inv.amount)}</span>
+                        <span className="text-[20px] font-black text-primary">{fmt(inv.amount)}</span>
                         <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                       </div>
                       <button className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all shrink-0">
