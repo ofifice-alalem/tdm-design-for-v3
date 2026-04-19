@@ -17,7 +17,9 @@ import MarketersPage from './pages/MarketersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 
 import ReturnInvoicesListPage from './pages/ReturnInvoicesListPage';
+import ReturnInvoiceDetailPage from './pages/ReturnInvoiceDetailPage';
 import ReceiptsListPage from './pages/ReceiptsListPage';
+import ReceiptDetailPage from './pages/ReceiptDetailPage';
 import WithdrawListPage from './pages/WithdrawListPage';
 import WithdrawDetailPage from './pages/WithdrawDetailPage';
 
@@ -48,7 +50,9 @@ export default function App() {
         <Route path="/receipt/create" element={<CreateReceiptPage />} />
         <Route path="/withdraw/new" element={<WithdrawPage />} />
         <Route path="/invoices/returns" element={<ReturnInvoicesListPage />} />
+        <Route path="/invoices/returns/:id" element={<ReturnInvoiceDetailPage />} />
         <Route path="/receipts" element={<ReceiptsListPage />} />
+        <Route path="/receipts/:id" element={<ReceiptDetailPage />} />
         <Route path="/withdraw/list" element={<WithdrawListPage />} />
         <Route path="/withdraw/list/:id" element={<WithdrawDetailPage />} />
       </Route>
