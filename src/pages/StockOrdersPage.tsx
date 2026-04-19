@@ -56,7 +56,7 @@ export default function StockOrdersPage() {
       <ModernInput label="رقم الطلب" placeholder="#MR-..." value={orderNum} onChange={setOrderNum} />
       <DateInput label="من تاريخ" value={fromDate} onChange={setFromDate} />
       <DateInput label="إلى تاريخ" value={toDate} onChange={setToDate} />
-      <ModernSelect label="المسوق" options={['محمد البحري', 'أحمد علي', 'سارة خالد']} placeholder="الكل" />
+      <ModernSelect label="المسوق" options={['الكل', 'محمد البحري', 'أحمد علي', 'سارة خالد']} placeholder="الكل" />
       <button className="spatial-button w-full h-12 rounded-[18px] flex items-center justify-center gap-2 font-bold text-[15px]">
         <Search className="w-4 h-4" />
         فلترة
