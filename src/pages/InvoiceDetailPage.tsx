@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { ArrowRight, Printer, Upload, Clock, CheckCircle2, XCircle, Ban } from 'lucide-react';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
 
 type Status = 'قيد الانتظار' | 'موثق' | 'مرفوض' | 'ملغي';
@@ -124,7 +124,7 @@ export default function InvoiceDetailPage() {
   const totalQty = inv.products.reduce((s, p) => s + p.qty, 0);
 
   return (
-    <AppShell>
+    <>
       <div className="flex flex-col gap-6 overflow-y-auto custom-scroll pb-32 lg:pb-6">
 
         {/* Demo switcher */}
@@ -363,6 +363,6 @@ export default function InvoiceDetailPage() {
         </div>,
         document.body
       )}
-    </AppShell>
+    </>
   );
 }

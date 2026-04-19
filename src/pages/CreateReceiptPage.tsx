@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, X, ReceiptText, Banknote, Building2, FileCheck } from 'lucide-react';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 type PaymentMethod = 'نقدي' | 'حوالة' | 'شيك';
@@ -37,7 +37,7 @@ export default function CreateReceiptPage() {
   const overpaid = selectedStore ? Math.max(0, paid - selectedStore.debt) : null;
 
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6 h-full">
 
         {/* Header */}
@@ -186,6 +186,6 @@ export default function CreateReceiptPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+
   );
 }

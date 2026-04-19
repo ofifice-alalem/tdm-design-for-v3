@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, Wallet, Send } from 'lucide-react';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard, ModernInput } from '../compenntes/ui/SpatialComponents';
 
 const AVAILABLE_BALANCE = 7423.76;
@@ -17,7 +17,7 @@ export default function WithdrawPage() {
   const remaining = Math.max(0, AVAILABLE_BALANCE - paid);
 
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6 h-full">
 
         {/* Header */}
@@ -131,6 +131,6 @@ export default function WithdrawPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+
   );
 }

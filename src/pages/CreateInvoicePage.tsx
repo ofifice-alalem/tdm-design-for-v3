@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Plus, FileText, ArrowRight, ReceiptText } from 'lucide-react';
 import { ProductRowShell } from '../compenntes/ui/ProductRowShell';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 const PRODUCTS = [
@@ -54,7 +54,7 @@ export default function CreateInvoicePage() {
   const finalTotal = useMemo(() => Math.max(0, totalPrice - discountProducts - discountInvoice), [totalPrice, discountProducts, discountInvoice]);
 
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6 h-full">
 
         {/* ── Page Header ── */}
@@ -177,7 +177,7 @@ export default function CreateInvoicePage() {
           </aside>
         </div>
       </div>
-    </AppShell>
+
   );
 }
 

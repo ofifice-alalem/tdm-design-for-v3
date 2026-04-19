@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Send, X } from 'lucide-react';
 import { ProductRowShell } from '../compenntes/ui/ProductRowShell';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 const STOCK_PRODUCTS = ['آيفون 15 برو ماكس', 'ماك بوك اير M3', 'سماعات ايربودز', 'كابل الشحن السريع', 'باور بانك 20000'];
@@ -19,7 +19,7 @@ export default function ReturnStockPage() {
   const totalQty = items.reduce((s, x) => s + x.qty, 0);
 
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6 h-full">
 
         {/* Header */}
@@ -123,7 +123,7 @@ export default function ReturnStockPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+
   );
 }
 

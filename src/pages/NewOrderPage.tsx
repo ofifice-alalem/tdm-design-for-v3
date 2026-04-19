@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Send, X } from 'lucide-react';
 import { ProductRowShell } from '../compenntes/ui/ProductRowShell';
-import { AppShell } from '../compenntes/layout';
+
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 
@@ -18,7 +18,7 @@ export default function NewOrderPage() {
   const totalTypes = products.filter((p) => p.qty > 0).length;
   const totalQty = products.reduce((s, p) => s + p.qty, 0);
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6 h-full">
 
         {/* ── Page Header ── */}
@@ -135,7 +135,7 @@ export default function NewOrderPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+
   );
 }
 

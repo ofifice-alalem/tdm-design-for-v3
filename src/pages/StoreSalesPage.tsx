@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Plus, List, FileText, Pencil } from 'lucide-react';
-import { AppShell } from '../compenntes/layout';
+
 
 const CARDS = [
   {
@@ -35,7 +35,7 @@ const CARDS = [
 
 export default function StoreSalesPage() {
   return (
-    <AppShell>
+
       <div className="flex flex-col gap-6">
         <span className="text-lg font-black text-slate-800 dark:text-white">بيع متاجر</span>
 
@@ -57,6 +57,6 @@ export default function StoreSalesPage() {
           ))}
         </div>
       </div>
-    </AppShell>
+
   );
 }

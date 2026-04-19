@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SlidersHorizontal, FileText, ChevronDown } from 'lucide-react';
-import { AppShell } from '../layout';
 import { SpatialCard } from '../ui/SpatialComponents';
 import type { StatusConfig, ListItem } from './listPage.types';
 
@@ -34,8 +33,7 @@ export function ListPage({
   const filtered = activeTab === 'الكل' ? items : items.filter((x) => x.status === activeTab);
 
   return (
-    <AppShell>
-      <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col gap-6 h-full">
 
         {/* Header */}
         <div className="flex items-center gap-2">
@@ -156,6 +154,5 @@ export function ListPage({
 
         </div>
       </div>
-    </AppShell>
   );
 }
