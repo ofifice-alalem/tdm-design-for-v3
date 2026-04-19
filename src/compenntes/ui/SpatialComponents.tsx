@@ -70,7 +70,7 @@ export function ModernInput({
         placeholder={placeholder}
         {...(value !== undefined ? { value } : {})}
         onChange={(e) => onChange?.(e.target.value)}
-        className="spatial-input h-14 rounded-[20px] px-5 text-[15px] font-bold w-full"
+        className="spatial-input h-14 rounded-[20px] px-5 text-[15px] font-bold w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
     </div>
   );

@@ -220,7 +220,7 @@ function ProductRow({ title, item, availableOptions, onRemove, onChange }: {
           </p>
         </div>
       )}
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-4">
         <ModernInput label="الكمية" type="number" placeholder="0"
           value={item.qty > 0 ? String(item.qty) : ''}
           onChange={(v) => onChange({ qty: Number(v) || 0 })} />
@@ -232,7 +232,7 @@ function ProductRow({ title, item, availableOptions, onRemove, onChange }: {
           className="opacity-70 pointer-events-none" />
         <ModernInput label="الإجمالي" type="text" placeholder="0.00"
           value={total > 0 ? fmt(total) : ''}
-          className="col-span-3 lg:col-span-1 opacity-60 pointer-events-none" />
+          className="col-span-3 lg:col-span-2 opacity-60 pointer-events-none" />
       </div>
     </ProductRowShell>
   );
