@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SlidersHorizontal, FileText, ChevronDown } from 'lucide-react';
 import { AppShell } from '../layout';
 import { SpatialCard } from '../ui/SpatialComponents';
@@ -129,9 +130,15 @@ export function ListPage({
                       {/* Meta + Action */}
                       <div className="flex items-center justify-between sm:justify-end gap-4 mt-1 sm:mt-0 shrink-0">
                         {item.meta}
-                        <button className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all shrink-0">
-                          التفاصيل
-                        </button>
+                        {item.detailsHref ? (
+                          <Link to={item.detailsHref} className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all shrink-0 flex items-center">
+                            التفاصيل
+                          </Link>
+                        ) : (
+                          <button className="px-4 h-9 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-primary hover:text-white border border-black/10 dark:border-white/10 hover:border-primary text-slate-600 dark:text-white/60 font-bold text-[13px] transition-all shrink-0">
+                            التفاصيل
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

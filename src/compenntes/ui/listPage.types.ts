@@ -10,4 +10,5 @@ export type ListItem = {
   status: string;
   subtitle: string;
   meta?: React.ReactNode;
+  detailsHref?: string;
 };

@@ -50,6 +50,7 @@ export default function InvoicesListPage() {
           <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">دينار</span>
         </div>
       ),
+      detailsHref: `/invoices/${encodeURIComponent(x.id)}`,
     }));
 
   const filterPanel = (
