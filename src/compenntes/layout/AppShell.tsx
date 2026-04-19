@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AppSidebar } from './AppSidebar';
 import { TopNav } from './TopNav';
 
@@ -19,7 +20,12 @@ interface AppShellProps {
  */
 export function AppShell({ children }: AppShellProps) {
   const [isDark, setIsDark] = useState(true);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
   // Initialise theme from localStorage / system preference
   useEffect(() => {
