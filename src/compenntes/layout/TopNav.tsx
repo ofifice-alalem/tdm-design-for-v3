@@ -36,7 +36,7 @@ export function TopNav({ isDark, onToggleTheme, pageTitle }: TopNavProps) {
           {/* Theme Toggle */}
           <button
             onClick={onToggleTheme}
-            className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,102,255,0.35)] transition-all hover:scale-105 active:scale-95"
+            className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95"
           >
             {isDark ? <Sun className="w-4 h-4 lg:w-5 lg:h-5" /> : <Moon className="w-4 h-4 lg:w-5 lg:h-5" />}
           </button>
@@ -50,7 +50,7 @@ export function TopNav({ isDark, onToggleTheme, pageTitle }: TopNavProps) {
           </div>
 
           {/* User Avatar */}
-          <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-full border-2 border-primary/20 overflow-hidden shadow-lg shrink-0">
+          <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-full border-2 border-primary/20 overflow-hidden shrink-0">
             <img src="https://i.pravatar.cc/150?img=11" alt="المستخدم" className="w-full h-full object-cover" />
           </div>
         </div>

@@ -60,7 +60,7 @@ export default function CreateInvoicePage() {
         {/* ── Page Header ── */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/8 dark:border-white/8 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all font-bold text-[14px]">
+            <button className="flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all font-bold text-[14px]">
               <ArrowRight className="w-4 h-4" />
               عودة
             </button>
@@ -132,10 +132,9 @@ export default function CreateInvoicePage() {
               max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:z-[100]
               max-lg:bg-white/95 max-lg:dark:bg-slate-900/95
               max-lg:px-5 max-lg:py-4
-              max-lg:shadow-[0_-1px_0_rgba(0,0,0,0.06),0_-20px_40px_rgba(0,0,0,0.08)]
               max-lg:backdrop-blur-xl
               max-lg:rounded-t-[24px]
-              max-lg:border-t max-lg:border-black/8 max-lg:dark:border-white/8
+              max-lg:border-t max-lg:border-black/10 max-lg:dark:border-white/10
             ">
               <div className="lg:hidden flex items-center justify-between gap-3">
                 <div className="flex flex-col gap-0.5">
@@ -145,7 +144,7 @@ export default function CreateInvoicePage() {
                     <span className="text-xs font-bold text-slate-400 dark:text-white/40">دينار</span>
                   </div>
                 </div>
-                <button className="spatial-button h-12 px-6 rounded-[20px] flex items-center gap-2.5 text-[15px] font-black shadow-[0_6px_24px_rgba(0,102,255,0.45)]">
+                <button className="spatial-button h-12 px-6 rounded-[20px] flex items-center gap-2.5 text-[15px] font-black">
                   <ReceiptText className="w-4 h-4" />
                   إنشاء الفاتورة
                 </button>
@@ -169,7 +168,7 @@ export default function CreateInvoicePage() {
                 </div>
               </SpatialCard>
 
-              <button className="hidden lg:flex spatial-button w-full h-16 rounded-[24px] items-center justify-center gap-2.5 text-lg shadow-[0_10px_30px_rgba(0,102,255,0.4)]">
+              <button className="hidden lg:flex spatial-button w-full h-16 rounded-[24px] items-center justify-center gap-2.5 text-lg">
                 <ReceiptText className="w-5 h-5" />
                 إنشاء الفاتورة
               </button>

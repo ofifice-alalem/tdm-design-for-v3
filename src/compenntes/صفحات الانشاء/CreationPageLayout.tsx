@@ -65,7 +65,7 @@ export function CreationPageLayout({
           <div className={`flex items-center w-full mb-8 ${isSidebarOpen ? 'justify-between px-5' : 'justify-center px-0'}`}>
             {isSidebarOpen && (
               <div className="flex items-center gap-3 animate-in fade-in transition-all">
-                <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-xl flex items-center justify-center font-bold tracking-tighter text-slate-800 dark:text-white transition-colors duration-500 text-lg shadow-inner">
+                <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-xl flex items-center justify-center font-bold tracking-tighter text-slate-800 dark:text-white transition-colors duration-500 text-lg">
                   M<span className="text-primary">+</span>
                 </div>
                 <span className="text-xl font-black text-slate-800 dark:text-white whitespace-nowrap">
@@ -87,43 +87,43 @@ export function CreationPageLayout({
           <nav className="flex-1 flex flex-col gap-3 mt-6 w-full px-4">
             
             <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} hover:bg-black/5 dark:hover:bg-white/5`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all shadow-sm">
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all">
                  <Home className="w-5 h-5" />
               </div>
               {isSidebarOpen && <span className="text-[15px] font-bold text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white mr-4 animate-in fade-in whitespace-nowrap">الرئيسية</span>}
             </button>
             
             <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} hover:bg-black/5 dark:hover:bg-white/5`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all shadow-sm">
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all">
                  <Heart className="w-5 h-5" />
               </div>
               {isSidebarOpen && <span className="text-[15px] font-bold text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white mr-4 animate-in fade-in whitespace-nowrap">المفضلة</span>}
             </button>
 
             <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} hover:bg-black/5 dark:hover:bg-white/5`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all shadow-sm">
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all">
                  <MessageCircle className="w-5 h-5" />
               </div>
               {isSidebarOpen && <span className="text-[15px] font-bold text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white mr-4 animate-in fade-in whitespace-nowrap">الرسائل</span>}
             </button>
             
             {/* Active Item - Sleek Glowing Blue */}
-            <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} bg-primary shadow-[0_4px_20px_rgba(0,102,255,0.4)]`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-white/20 text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)] backdrop-blur-md">
-                 <FileText className="w-5 h-5 drop-shadow-md" />
+            <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} bg-primary`}>
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-white/20 text-white">
+                 <FileText className="w-5 h-5" />
               </div>
-              {isSidebarOpen && <span className="text-[15px] font-bold text-white mr-4 animate-in fade-in whitespace-nowrap drop-shadow-sm">الفواتير العالقة</span>}
+              {isSidebarOpen && <span className="text-[15px] font-bold text-white mr-4 animate-in fade-in whitespace-nowrap">الفواتير العالقة</span>}
             </button>
 
             <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} hover:bg-black/5 dark:hover:bg-white/5`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all shadow-sm">
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all">
                  <User className="w-5 h-5" />
               </div>
               {isSidebarOpen && <span className="text-[15px] font-bold text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white mr-4 animate-in fade-in whitespace-nowrap">العملاء</span>}
             </button>
 
             <button className={`flex items-center w-full p-2 rounded-[20px] transition-all duration-300 group ${!isSidebarOpen && 'justify-center'} hover:bg-black/5 dark:hover:bg-white/5`}>
-              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all shadow-sm">
+              <div className="w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 text-slate-500 dark:text-white/50 group-hover:text-primary transition-all">
                  <LayoutGrid className="w-5 h-5" />
               </div>
               {isSidebarOpen && <span className="text-[15px] font-bold text-slate-600 dark:text-white/70 group-hover:text-slate-900 dark:group-hover:text-white mr-4 animate-in fade-in whitespace-nowrap">مخزون المنتجات</span>}
@@ -162,7 +162,7 @@ export function CreationPageLayout({
               {/* Theme Toggle Button replacing Phone */}
               <button 
                 onClick={toggleTheme}
-                className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,102,255,0.4)] transition-all"
+                className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white transition-all"
                 title="تغيير المظهر"
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -176,7 +176,7 @@ export function CreationPageLayout({
               </div>
               
               {/* User Avatar */}
-              <div className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/20 overflow-hidden shadow-lg">
+              <div className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/20 overflow-hidden">
                 <img src="https://i.pravatar.cc/150?img=11" alt="User" />
               </div>
             </div>
@@ -186,7 +186,7 @@ export function CreationPageLayout({
           <div className="flex flex-col lg:flex-row gap-10 items-start flex-1 h-full w-full">
             <main className="flex-1 w-full space-y-8">
               <div className="mb-4">
-                <h1 className="text-4xl lg:text-6xl font-black text-slate-800 dark:text-white leading-tight tracking-tight drop-shadow-sm dark:drop-shadow-lg transition-colors duration-500">
+                <h1 className="text-4xl lg:text-6xl font-black text-slate-800 dark:text-white leading-tight tracking-tight transition-colors duration-500">
                   {title}
                 </h1>
                 {subtitle && <p className="text-slate-500 dark:text-white/50 text-lg mt-6 max-w-sm transition-colors">{subtitle}</p>}
@@ -228,7 +228,7 @@ export function SpatialCard({
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-             {headerDot && <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_var(--primary)]"></span>}
+             {headerDot && <span className="w-2 h-2 rounded-full bg-primary"></span>}
             {icon && (
               <div className="text-slate-500 dark:text-white/70">
                 {icon}
@@ -291,13 +291,13 @@ export function ModernSelect({ label, options, className = "" }: { label: string
         </div>
         
         {isOpen && (
-          <div className="absolute z-[100] top-full mt-2 w-full rounded-[24px] bg-white/95 dark:bg-[#1c1c21]/90 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute z-[100] top-full mt-2 w-full rounded-[24px] bg-white/95 dark:bg-[#1c1c21]/90 backdrop-blur-xl border border-black/10 dark:border-white/10 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <ul className="max-h-56 overflow-auto p-2">
               {options.map((opt, i) => (
                 <li 
                   key={i} 
                   onClick={() => { setSelected(opt); setIsOpen(false); }}
-                  className={`px-4 py-3 rounded-xl cursor-pointer transition-colors text-[15px] font-bold ${selected === opt ? 'bg-primary text-white shadow-[0_0_15px_rgba(0,102,255,0.3)]' : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-4 py-3 rounded-xl cursor-pointer transition-colors text-[15px] font-bold ${selected === opt ? 'bg-primary text-white' : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   {opt}
                 </li>

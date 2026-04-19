@@ -23,7 +23,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
     <aside
       className={`
         ${isOpen ? 'w-64 translate-x-0' : 'w-[88px] max-lg:translate-x-full'}
-        max-lg:fixed max-lg:right-0 max-lg:top-0 max-lg:bottom-0 max-lg:h-screen max-lg:shadow-2xl
+        max-lg:fixed max-lg:right-0 max-lg:top-0 max-lg:bottom-0 max-lg:h-screen max-lg:border-l max-lg:border-black/10 dark:max-lg:border-white/10
         transition-all duration-500 overflow-hidden
         border-l border-black/5 dark:border-white/[0.08]
         flex flex-col py-8
@@ -36,7 +36,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
       <div className={`flex items-center w-full mb-8 ${isOpen ? 'justify-between px-5' : 'justify-center'}`}>
         {isOpen && (
           <div className="flex items-center gap-3 animate-in fade-in">
-            <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-xl flex items-center justify-center font-bold text-lg tracking-tighter text-slate-800 dark:text-white shadow-inner">
+            <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-xl flex items-center justify-center font-bold text-lg tracking-tighter text-slate-800 dark:text-white">
               M<span className="text-primary">+</span>
             </div>
             <span className="text-xl font-black text-slate-800 dark:text-white whitespace-nowrap">
@@ -64,7 +64,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
               flex items-center w-full p-2 rounded-[20px] transition-all duration-200 group
               ${!isOpen ? 'justify-center' : ''}
               ${isActive
-                ? 'bg-primary shadow-[0_4px_20px_rgba(0,102,255,0.35)]'
+                ? 'bg-primary'
                 : 'hover:bg-black/5 dark:hover:bg-white/5'
               }
             `}
@@ -74,8 +74,8 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
                 <div className={`
                   w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center transition-all
                   ${isActive
-                    ? 'bg-white/20 text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]'
-                    : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-white/50 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:text-primary shadow-sm'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-white/50 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:text-primary'
                   }
                 `}>
                   {item.icon}

@@ -25,7 +25,7 @@ export function SpatialCard({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               {headerDot && (
-                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,102,255,0.5)]" />
+                <span className="w-2 h-2 rounded-full bg-primary" />
               )}
               {icon && (
                 <div className="text-slate-500 dark:text-white/70">{icon}</div>
@@ -153,7 +153,7 @@ export function ModernSelect({
                 font-bold transition-all duration-150
                 ${size === 'lg' ? 'py-4 text-[16px]' : 'py-3 text-[15px]'}
                 ${selected === opt.label
-                  ? 'bg-primary text-white shadow-[0_4px_14px_rgba(0,102,255,0.35)]'
+                  ? 'bg-primary text-white'
                   : 'text-slate-700 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white'
                 }
               `}
@@ -252,8 +252,8 @@ export function ModernSelect({
             absolute z-[200] top-full mt-2 w-full
             rounded-[24px] overflow-hidden
             bg-white dark:bg-[#18181d]
-            border border-black/8 dark:border-white/10
-            shadow-[0_24px_60px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.6)]
+            border border-black/10 dark:border-white/10
+            shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]
             backdrop-blur-2xl
             animate-in fade-in zoom-in-95 duration-200
           ">

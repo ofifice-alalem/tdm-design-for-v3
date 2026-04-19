@@ -25,7 +25,7 @@ export default function NewOrderPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Back Button */}
-            <button className="flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/8 dark:border-white/8 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all font-bold text-[14px]">
+            <button className="flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all font-bold text-[14px]">
               <ArrowRight className="w-4 h-4" />
               عودة
             </button>
@@ -88,7 +88,7 @@ export default function NewOrderPage() {
               </label>
               <textarea
                 placeholder="أضف أي ملاحظات أو تعليمات إضافية للطلب..."
-                className="spatial-input w-full min-h-[400px] resize-none rounded-[20px] p-5 text-sm font-bold transition-all"
+                className="spatial-input w-full min-h-[120px] resize-none rounded-[20px] p-5 text-sm font-bold transition-all"
               />
             </SpatialCard>
 
@@ -111,7 +111,7 @@ export default function NewOrderPage() {
               max-lg:pb-10
               max-lg:bg-white/95 max-lg:dark:bg-slate-900/95 max-lg:backdrop-blur-xl 
               max-lg:border-t max-lg:border-black/5 max-lg:dark:border-white/10 max-lg:z-[100]
-              max-lg:rounded-[32px_32px_0px_0px] max-lg:shadow-[0_-20px_40px_rgba(0,0,0,0.1)]
+              max-lg:rounded-[32px_32px_0px_0px]
             ">
               {/* Submit */}
               <button className="spatial-button w-full h-14 rounded-[22px] flex items-center justify-center gap-2 text-[16px]">
@@ -122,7 +122,7 @@ export default function NewOrderPage() {
               {/* Cancel (Hidden or visible based on mobile preference) */}
               <button className="
                 w-full h-12 rounded-[18px] flex items-center justify-center gap-2 text-[15px] font-bold 
-                bg-black/5 dark:bg-white/5 hover:bg-red-500/10 border border-black/8 dark:border-white/8 
+                bg-black/5 dark:bg-white/5 hover:bg-red-500/10 border border-black/10 dark:border-white/10 
                 hover:border-red-500/30 text-slate-600 dark:text-white/60 hover:text-red-500 transition-all 
                 max-lg:hidden
               ">
