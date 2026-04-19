@@ -33,7 +33,7 @@ export function ListPage({
   const filtered = activeTab === 'الكل' ? items : items.filter((x) => x.status === activeTab);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 pb-32 lg:pb-0">
 
         {/* Header */}
         <div className="flex items-center gap-2">

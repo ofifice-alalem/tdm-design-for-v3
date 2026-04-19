@@ -59,7 +59,7 @@ export function AppShell({ children }: AppShellProps) {
 
         <AppSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen((prev) => !prev)} />
 
-        <div className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 overflow-y-auto min-w-0 h-full relative custom-scroll">
+        <div className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 pb-10 md:pb-12 lg:pb-12 overflow-y-auto min-w-0 h-full relative custom-scroll">
 
           <div className="lg:hidden flex items-center mb-6">
             <button

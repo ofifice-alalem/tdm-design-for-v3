@@ -221,16 +221,10 @@ export default function ReturnInvoiceDetailPage() {
                 </button>
               )}
               {ret.status === 'قيد الانتظار' && (
-                <>
-                  <button className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white transition-all">
-                    <CheckCircle2 className="w-4 h-4" />
-                    توثيق الإرجاع
-                  </button>
-                  <button className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-red-500/10 hover:bg-red-500 border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white transition-all">
-                    <XCircle className="w-4 h-4" />
-                    رفض الإرجاع
-                  </button>
-                </>
+                <button className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-red-500/10 hover:bg-red-500 border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white transition-all">
+                  <XCircle className="w-4 h-4" />
+                  رفض الإرجاع
+                </button>
               )}
             </div>
           </SpatialCard>
