@@ -50,8 +50,10 @@ export default function App() {
         <Route path="/receipt/create" element={<CreateReceiptPage />} />
         <Route path="/withdraw/new" element={<WithdrawPage />} />
         <Route path="/invoices/returns" element={<ReturnInvoicesListPage />} />
+        <Route path="/invoices/returns/demo" element={<ReturnInvoiceDetailPage />} />
         <Route path="/invoices/returns/:id" element={<ReturnInvoiceDetailPage />} />
         <Route path="/receipts" element={<ReceiptsListPage />} />
+        <Route path="/receipts/demo" element={<ReceiptDetailPage />} />
         <Route path="/receipts/:id" element={<ReceiptDetailPage />} />
         <Route path="/withdraw/list" element={<WithdrawListPage />} />
         <Route path="/withdraw/list/:id" element={<WithdrawDetailPage />} />

@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { ArrowRight, Printer, Clock, CheckCircle2, XCircle, Ban } from 'lucide-react';
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
+import { UploadArea } from '../compenntes/ui/UploadArea';
 
 type Status = 'قيد الانتظار' | 'موثق' | 'مرفوض' | 'ملغي';
 
@@ -55,12 +58,16 @@ function fmt(n: number) {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+const DEMO_KEYS = Object.keys(RETURNS) as (keyof typeof RETURNS)[];
+const DEMO_LABELS: Record<string, string> = { pending: 'قيد الانتظار', verified: 'موثق' };
+
 export default function ReturnInvoiceDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const decodedId = id ? decodeURIComponent(id) : '';
-
-  const activeKey = decodedId === RETURNS.verified.id ? 'verified' : 'pending';
+  const initKey = decodedId === RETURNS.verified.id ? 'verified' : 'pending';
+  const [activeKey, setActiveKey] = useState(initKey);
+  const [showImageModal, setShowImageModal] = useState(false);
   const ret = RETURNS[activeKey];
   const sc = STATUS_CONFIG[ret.status];
   const subtotal = ret.products.reduce((s, p) => s + p.total, 0);
@@ -68,6 +75,18 @@ export default function ReturnInvoiceDetailPage() {
 
   return (
     <div className="flex flex-col gap-6 overflow-y-auto custom-scroll pb-32 lg:pb-6">
+
+      {/* Demo tabs */}
+      <div className="flex gap-2">
+        {DEMO_KEYS.map((k) => (
+          <button key={k} onClick={() => setActiveKey(k)}
+            className={`px-4 h-9 rounded-[12px] font-bold text-[13px] border transition-all ${
+              activeKey === k ? 'bg-primary border-primary text-white' : 'spatial-input text-slate-600 dark:text-white/60'
+            }`}>
+            {DEMO_LABELS[k]}
+          </button>
+        ))}
+      </div>
 
       {/* Header */}
       <div className="flex flex-col gap-3">
@@ -192,6 +211,15 @@ export default function ReturnInvoiceDetailPage() {
                 <Printer className="w-4 h-4" />
                 طباعة PDF
               </button>
+              {ret.status === 'موثق' && (
+                <button
+                  onClick={() => setShowImageModal(true)}
+                  className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white transition-all"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  عرض صورة التوثيق
+                </button>
+              )}
               {ret.status === 'قيد الانتظار' && (
                 <>
                   <button className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white transition-all">
@@ -206,6 +234,13 @@ export default function ReturnInvoiceDetailPage() {
               )}
             </div>
           </SpatialCard>
+
+          {/* رفع الصورة - قيد الانتظار فقط */}
+          {ret.status === 'قيد الانتظار' && (
+            <SpatialCard title="صورة الإرجاع المختومة">
+              <UploadArea />
+            </SpatialCard>
+          )}
 
           {/* ملاحظات */}
           {ret.notes && (
@@ -242,6 +277,34 @@ export default function ReturnInvoiceDetailPage() {
 
         </div>
       </div>
+      {showImageModal && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setShowImageModal(false)}
+        >
+          <div
+            className="spatial-card p-5 w-[90vw] max-w-lg flex flex-col gap-4 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[15px] font-black text-slate-800 dark:text-white">صورة الإرجاع المختومة</span>
+              <button
+                onClick={() => setShowImageModal(false)}
+                className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/20 transition-all"
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="rounded-[20px] overflow-hidden bg-black/5 dark:bg-white/5 flex items-center justify-center min-h-[300px]">
+              <div className="flex flex-col items-center gap-3 text-slate-400 dark:text-white/30">
+                <CheckCircle2 className="w-12 h-12 text-emerald-500 opacity-50" />
+                <span className="text-[13px] font-bold">صورة التوثيق</span>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

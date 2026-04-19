@@ -16,6 +16,7 @@ const SECTIONS = [
     items: [
       { title: 'إيصال قبض',       sub: 'إنشاء إيصال قبض لمتجر',     to: '/receipt/create',     icon: <Wallet className="w-5 h-5" />,      accent: 'bg-teal-500/10 text-teal-500',         border: 'border-teal-500/20' },
       { title: 'إيصالات القبض',   sub: 'استعراض وفلترة الإيصالات',   to: '/receipts',           icon: <ReceiptText className="w-5 h-5" />, accent: 'bg-teal-500/10 text-teal-500',         border: 'border-teal-500/20' },
+      { title: 'تفاصيل إيصال',    sub: 'سجل العمليات والحالة',       to: '/receipts/demo',      icon: <FileText className="w-5 h-5" />,    accent: 'bg-orange-500/10 text-orange-500',     border: 'border-orange-500/20' },
     ],
   },
   {
@@ -23,6 +24,7 @@ const SECTIONS = [
     items: [
       { title: 'ارجاع من فاتورة', sub: 'إرجاع بضاعة من فاتورة',     to: '/invoice/return',     icon: <RotateCcw className="w-5 h-5" />,   accent: 'bg-rose-500/10 text-rose-500',         border: 'border-rose-500/20' },
       { title: 'فواتير الإرجاع',  sub: 'استعراض وفلترة الإرجاعات',   to: '/invoices/returns',   icon: <RotateCcw className="w-5 h-5" />,   accent: 'bg-rose-500/10 text-rose-500',         border: 'border-rose-500/20' },
+      { title: 'تفاصيل إرجاع',    sub: 'سجل العمليات والحالة',       to: '/invoices/returns/demo', icon: <FileText className="w-5 h-5" />, accent: 'bg-orange-500/10 text-orange-500',     border: 'border-orange-500/20' },
     ],
   },
 ];
