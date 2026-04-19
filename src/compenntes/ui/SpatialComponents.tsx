@@ -8,6 +8,7 @@ export function SpatialCard({
   action,
   headerDot = true,
   hideHeader = false,
+  transparent = false,
   className = "",
 }: {
   title: string;
@@ -16,10 +17,11 @@ export function SpatialCard({
   action?: React.ReactNode;
   headerDot?: boolean;
   hideHeader?: boolean;
+  transparent?: boolean;
   className?: string;
 }) {
   return (
-    <div className={`spatial-card ${className}`}>
+    <div className={`spatial-card ${transparent ? 'transparent' : ''} ${className}`}>
       <div className="p-6 flex flex-col h-full">
         {!hideHeader && (
           <div className="flex items-center justify-between mb-6">
@@ -93,7 +95,9 @@ export function ModernSelect({
   const [selected, setSelected] = useState('');
   const [search, setSearch] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number; width: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const normalized = (options as (string | { label: string; meta?: string; badge?: string })[]).map((o) =>
@@ -116,7 +120,10 @@ export function ModernSelect({
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (isMobile) return;
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+      if (
+        ref.current && !ref.current.contains(e.target as Node) &&
+        !(e.target as Element).closest('[data-dropdown-portal]')
+      ) {
         setIsOpen(false);
         setSearch('');
       }
@@ -226,7 +233,14 @@ export function ModernSelect({
 
         {/* Trigger */}
         <div
-          onClick={() => setIsOpen(!isOpen)}
+          ref={triggerRef}
+          onClick={() => {
+            if (!isOpen && !isMobile && triggerRef.current) {
+              const rect = triggerRef.current.getBoundingClientRect();
+              setDropdownPos({ top: rect.bottom + window.scrollY + 8, left: rect.left + window.scrollX, width: rect.width });
+            }
+            setIsOpen(!isOpen);
+          }}
           className={`
             spatial-input h-14 rounded-[20px] px-5 text-[15px] font-bold w-full
             flex items-center justify-between cursor-pointer select-none
@@ -246,20 +260,22 @@ export function ModernSelect({
           </div>
         </div>
 
-        {/* Desktop Dropdown */}
-        {isOpen && !isMobile && (
-          <div className="
-            absolute z-[200] top-full mt-2 w-full
-            rounded-[24px] overflow-hidden
-            bg-white dark:bg-[#0f1428]
-            border border-black/10 dark:border-white/10
-            shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]
-            backdrop-blur-2xl
-            animate-in fade-in zoom-in-95 duration-200
-          ">
+        {/* Desktop Dropdown - portal to escape stacking context */}
+        {isOpen && !isMobile && dropdownPos && createPortal(
+          <div
+            data-dropdown-portal
+            style={{ position: 'fixed', top: dropdownPos.top, left: dropdownPos.left, width: dropdownPos.width, zIndex: 9999 }}
+            className="
+              spatial-card
+              rounded-[24px] overflow-hidden
+              shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]
+              animate-in fade-in zoom-in-95 duration-200
+            "
+          >
             <div className="p-3 border-b border-black/5 dark:border-white/5">{searchInput}</div>
             {optionsList('sm')}
-          </div>
+          </div>,
+          document.body
         )}
 
         {/* Mobile Modal - rendered via portal to escape overflow:hidden parents */}

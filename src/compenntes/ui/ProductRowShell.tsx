@@ -10,7 +10,7 @@ export function ProductRowShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-black/5 dark:bg-black/20 p-4 lg:p-6 rounded-[24px] border border-black/5 dark:border-white/5 flex flex-col gap-3 lg:gap-4 transition-colors duration-500">
+    <div className="spatial-card p-4 lg:p-6 flex flex-col gap-3 lg:gap-4">
       <div className="flex justify-between items-center">
         <h3 className="text-slate-800 dark:text-white font-bold text-base">{title}</h3>
         <button

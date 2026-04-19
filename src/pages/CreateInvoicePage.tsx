@@ -81,7 +81,7 @@ export default function CreateInvoicePage() {
 
           {/* ── Main column ── */}
           <div className="flex-1 min-w-0 flex flex-col gap-6 w-full">
-            <SpatialCard title="" hideHeader>
+            <SpatialCard title="" hideHeader transparent>
               <div className="flex flex-col gap-4">
                 {items.map((item, i) => (
                   <ProductRow
@@ -96,7 +96,7 @@ export default function CreateInvoicePage() {
                 <button
                   onClick={addItem}
                   disabled={items.filter(x => x.name).length >= PRODUCTS.length}
-                  className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all mt-2 disabled:opacity-40 disabled:pointer-events-none">
+                  className="w-full h-14 rounded-[20px] bg-black/3 dark:bg-white/5 hover:bg-black/5 dark:hover:bg-white/10 border border-dashed border-black/15 dark:border-white/10 text-slate-800 dark:text-white font-bold text-base flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:pointer-events-none">
                   <Plus className="w-5 h-5" />
                   إضافة سطر منتج جديد
                 </button>
