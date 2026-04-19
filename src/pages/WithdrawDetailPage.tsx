@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { ArrowRight, Printer, Clock, CheckCircle2, XCircle, Ban, ThumbsUp, Upload } from 'lucide-react';
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
+import { UploadArea } from '../compenntes/ui/UploadArea';
 
 type Status = 'قيد الانتظار' | 'موثق' | 'مرفوض' | 'ملغي';
 
@@ -44,45 +45,11 @@ function fmt(n: number) {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function UploadArea({ onClose }: { onClose: () => void }) {
-  const [file, setFile] = useState<File | null>(null);
-  if (file) {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between px-4 py-3 rounded-[20px] bg-emerald-500/10 border border-emerald-500/25">
-          <div className="flex items-center gap-3">
-            <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">تم تحميل الصورة</span>
-              <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 truncate max-w-[200px]">{file.name}</span>
-            </div>
-          </div>
-          <button onClick={() => setFile(null)} className="text-[12px] font-black text-red-500 hover:text-red-600 transition-colors shrink-0">إلغاء</button>
-        </div>
-        <button onClick={onClose} className="spatial-button w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px]">
-          <CheckCircle2 className="w-4 h-4" />
-          تأكيد الرفع
-        </button>
-      </div>
-    );
-  }
-  return (
-    <label className="flex flex-col items-center justify-center gap-3 h-40 rounded-[20px] border-2 border-dashed border-black/15 dark:border-white/15 hover:border-primary/40 cursor-pointer transition-all group">
-      <input type="file" accept="image/png,image/jpg,image/jpeg" className="hidden" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
-      <Upload className="w-8 h-8 text-slate-400 dark:text-white/30 group-hover:text-primary transition-colors" />
-      <div className="text-center">
-        <p className="text-[13px] font-black text-slate-600 dark:text-white/60 group-hover:text-primary transition-colors">اضغط للرفع أو اسحب الصورة</p>
-        <p className="text-[11px] font-bold text-slate-400 dark:text-white/30 mt-1">PNG, JPG أو JPEG (الحد الأقصى 2MB)</p>
-      </div>
-    </label>
-  );
-}
 
 export default function WithdrawDetailPage() {
   const navigate = useNavigate();
   const [activeDemo, setActiveDemo] = useState<'pending' | 'approved' | 'rejected'>('pending');
   const [showRejectModal, setShowRejectModal] = useState(false);
-  const [showUploadModal, setShowUploadModal] = useState(false);
   const [showReceiptModal, setShowReceiptModal] = useState(false);
 
   const order = ORDERS[activeDemo];
@@ -187,14 +154,11 @@ export default function WithdrawDetailPage() {
             </SpatialCard>
 
             {/* قيد الانتظار */}
+            {/* رفع الصورة + أزرار الإجراءات - فقط في قيد الانتظار */}
             {order.status === 'قيد الانتظار' && (
-              <SpatialCard title="الإجراءات">
-                <div className="flex flex-col gap-2">
-                  <button onClick={() => setShowUploadModal(true)}
-                    className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/60 hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all">
-                    <Upload className="w-4 h-4" />
-                    رفع صورة التحويل
-                  </button>
+              <SpatialCard title="صورة إيصال التحويل">
+                <UploadArea />
+                <div className="flex flex-col gap-2 mt-4">
                   <button className="spatial-button w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px]">
                     <ThumbsUp className="w-4 h-4" />
                     الموافقة على الطلب
@@ -249,21 +213,6 @@ export default function WithdrawDetailPage() {
         </div>
       </div>
 
-      {/* Modal رفع صورة التحويل */}
-      {showUploadModal && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-md animate-in fade-in duration-200" onClick={() => setShowUploadModal(false)}>
-          <div className="spatial-card p-5 w-[90vw] max-w-md flex flex-col gap-4 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between">
-              <span className="text-[15px] font-black text-slate-800 dark:text-white">رفع صورة التحويل</span>
-              <button onClick={() => setShowUploadModal(false)} className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/20 transition-all">
-                <XCircle className="w-4 h-4" />
-              </button>
-            </div>
-            <UploadArea onClose={() => setShowUploadModal(false)} />
-          </div>
-        </div>,
-        document.body
-      )}
 
       {/* Modal إيصال الصرف */}
       {showReceiptModal && createPortal(
