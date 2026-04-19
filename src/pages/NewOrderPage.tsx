@@ -47,6 +47,7 @@ export default function NewOrderPage() {
             <SpatialCard
               title=""
               hideHeader
+              transparent
               className="flex-none lg:flex-1"
             >
 
