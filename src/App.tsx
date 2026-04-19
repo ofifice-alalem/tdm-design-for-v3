@@ -9,6 +9,7 @@ import InvoicesListPage from './pages/InvoicesListPage';
 import StockOrdersPage from './pages/StockOrdersPage';
 import StoreSalesPage from './pages/StoreSalesPage';
 import InvoiceDetailPage from './pages/InvoiceDetailPage';
+import EditInvoicePage from './pages/EditInvoicePage';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="/invoices" element={<InvoicesListPage />} />
       <Route path="/invoices/:id" element={<InvoiceDetailPage />} />
       <Route path="/invoice/create" element={<CreateInvoicePage />} />
+      <Route path="/invoice/edit/:id" element={<EditInvoicePage />} />
       <Route path="/invoice/return" element={<InvoiceReturnPage />} />
       <Route path="/order/new" element={<NewOrderPage />} />
       <Route path="/stock/return" element={<ReturnStockPage />} />

@@ -84,15 +84,17 @@ export function ModernSelect({
   className = '',
   placeholder = 'اختر...',
   onSelect,
+  defaultValue = '',
 }: {
   label: string;
   options: string[] | { label: string; meta?: string; badge?: string }[];
   className?: string;
   placeholder?: string;
   onSelect?: (value: string) => void;
+  defaultValue?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(defaultValue);
   const [search, setSearch] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number; width: number } | null>(null);

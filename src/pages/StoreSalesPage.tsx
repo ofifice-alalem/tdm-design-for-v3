@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Plus, List, FileText } from 'lucide-react';
+import { Plus, List, FileText, Pencil } from 'lucide-react';
 import { AppShell } from '../compenntes/layout';
 
 const CARDS = [
@@ -23,6 +23,13 @@ const CARDS = [
     icon: <FileText className="w-6 h-6" />,
     to: '/invoices/demo',
     color: 'text-orange-500 bg-orange-500/10',
+  },
+  {
+    title: 'تعديل فاتورة',
+    description: 'تعديل بيانات فاتورة قائمة',
+    icon: <Pencil className="w-6 h-6" />,
+    to: '/invoice/edit/demo',
+    color: 'text-violet-500 bg-violet-500/10',
   },
 ];
 
