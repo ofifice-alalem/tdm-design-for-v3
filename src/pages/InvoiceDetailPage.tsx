@@ -46,6 +46,23 @@ const INVOICES = {
       { label: 'تم التوثيق',          by: 'الحارث العالم',  date: '2026-04-06 10:27 AM' },
     ],
   },
+  rejected: {
+    id: '#SI-20260311-00167',
+    date: '2026-03-11',
+    time: '11:26 AM',
+    status: 'مرفوض' as Status,
+    store: 'القماطى / البحرى',
+    phone: '---',
+    marketer: 'محمد البحري',
+    products: [
+      { name: 'اكواب المتفوقون عبوة 2000', variant: '---', qty: 20, free: 0, price: 105, total: 2100 },
+      { name: 'صحون 19', variant: '---', qty: 6, free: 0, price: 93, total: 558 },
+    ],
+    log: [
+      { label: 'تم إنشاء الفاتورة', by: 'محمد البحري',   date: '2026-03-11 11:26 AM' },
+      { label: 'تم الرفض',          by: 'الحارث العالم', date: '2026-03-11 12:32 PM' },
+    ],
+  },
 };
 
 function fmt(n: number) {
@@ -97,8 +114,9 @@ export default function InvoiceDetailPage() {
   const decodedId = id ? decodeURIComponent(id) : '';
   const [showImageModal, setShowImageModal] = useState(false);
 
-  const [activeDemo, setActiveDemo] = useState<'pending' | 'verified'>(
-    decodedId === INVOICES.verified.id ? 'verified' : 'pending'
+  const [activeDemo, setActiveDemo] = useState<'pending' | 'verified' | 'rejected'>(
+    decodedId === INVOICES.verified.id ? 'verified' :
+    decodedId === INVOICES.rejected.id ? 'rejected' : 'pending'
   );
   const inv = INVOICES[activeDemo];
   const sc = STATUS_CONFIG[inv.status];
@@ -111,12 +129,12 @@ export default function InvoiceDetailPage() {
 
         {/* Demo switcher */}
         <div className="flex gap-2">
-          {(['pending', 'verified'] as const).map((k) => (
+          {(['pending', 'verified', 'rejected'] as const).map((k) => (
             <button key={k} onClick={() => setActiveDemo(k)}
               className={`px-4 h-9 rounded-[12px] font-bold text-[13px] border transition-all ${
                 activeDemo === k ? 'bg-primary border-primary text-white' : 'spatial-input text-slate-600 dark:text-white/60'
               }`}>
-              {k === 'pending' ? 'قيد الانتظار' : 'موثق'}
+              {k === 'pending' ? 'قيد الانتظار' : k === 'verified' ? 'موثق' : 'مرفوض'}
             </button>
           ))}
         </div>
@@ -191,7 +209,7 @@ export default function InvoiceDetailPage() {
                   </div>
 
                   {/* Mobile card */}
-                  <div className="sm:hidden spatial-card p-4 flex flex-col gap-3 mb-3 last:mb-0">
+                  <div className="sm:hidden spatial-card p-4 flex flex-col gap-3 mt-3 last:mb-0">
                     <span className="text-[15px] font-black text-slate-800 dark:text-white">{p.name}</span>
                     <div className="grid grid-cols-3 gap-2">
                       {[{l:'الكمية', v: String(p.qty)}, {l:'مجاني', v: String(p.free)}, {l:'السعر', v: fmt(p.price)+' د'}].map(({l,v}) => (
