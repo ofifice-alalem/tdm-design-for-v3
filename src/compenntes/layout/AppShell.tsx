@@ -59,7 +59,7 @@ export function AppShell({ children }: AppShellProps) {
 
         <AppSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen((prev) => !prev)} />
 
-        <div className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 pb-10 md:pb-12 lg:pb-12 overflow-y-auto min-w-0 h-full relative custom-scroll">
+        <div className="flex-1 flex flex-col p-4 pb-16 md:p-8 md:pb-16 lg:p-10 lg:pb-16 overflow-y-auto min-w-0 h-full relative custom-scroll">
 
           <div className="lg:hidden flex items-center mb-6">
             <button
@@ -75,7 +75,7 @@ export function AppShell({ children }: AppShellProps) {
 
           <div
             key={location.pathname}
-            className="flex-1 h-full animate-in fade-in slide-in-from-right-4 duration-300"
+            className="animate-in fade-in slide-in-from-right-4 duration-300"
           >
             {children}
           </div>
