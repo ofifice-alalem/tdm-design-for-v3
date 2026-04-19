@@ -5,6 +5,8 @@ import ReturnStockPage from './pages/ReturnStockPage';
 import InvoiceReturnPage from './pages/InvoiceReturnPage';
 import CreateReceiptPage from './pages/CreateReceiptPage';
 
+import WithdrawPage from './pages/WithdrawPage';
+
 export default function App() {
   return (
     <Routes>
@@ -14,6 +16,7 @@ export default function App() {
       <Route path="/stock/return" element={<ReturnStockPage />} />
       <Route path="/invoice/return" element={<InvoiceReturnPage />} />
       <Route path="/receipt/create" element={<CreateReceiptPage />} />
+      <Route path="/withdraw/new" element={<WithdrawPage />} />
     </Routes>
   );
 }

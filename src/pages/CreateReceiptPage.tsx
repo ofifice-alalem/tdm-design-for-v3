@@ -97,7 +97,7 @@ export default function CreateReceiptPage() {
                         <div className="flex items-baseline gap-1.5">
                           <span className={`text-[18px] font-black ${
                             selectedStore.debt > 0 ? 'text-red-500' : 'text-emerald-500'
-                          }`}>{fmt(selectedStore.debt)}</span>
+                          }`} style={{ WebkitTextStroke: '0.2px white', paintOrder: 'stroke fill' }}>{fmt(selectedStore.debt)}</span>
                           <span className="text-[13px] font-bold text-slate-400 dark:text-white/30">د.ل</span>
                         </div>
                       </div>
