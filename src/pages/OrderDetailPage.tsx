@@ -244,11 +244,17 @@ export default function OrderDetailPage() {
                     <CheckCircle2 className="w-4 h-4" />
                     توثيق الطلب
                   </button>
+                  <button
+                    onClick={() => setShowRejectModal(true)}
+                    className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-red-500/10 hover:bg-red-500 border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white transition-all"
+                  >
+                    <XCircle className="w-4 h-4" />
+                    رفض الطلب
+                  </button>
                 </div>
               </SpatialCard>
             )}
 
-            {/* عرض صورة التوثيق - موثق فقط */}
             {order.status === 'موثق' && (
               <SpatialCard title="صورة التسليم">
                 <button
