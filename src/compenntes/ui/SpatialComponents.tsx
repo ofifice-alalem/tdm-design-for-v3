@@ -251,7 +251,7 @@ export function ModernSelect({
           <div className="
             absolute z-[200] top-full mt-2 w-full
             rounded-[24px] overflow-hidden
-            bg-white dark:bg-[#18181d]
+            bg-white dark:bg-[#0f1428]
             border border-black/10 dark:border-white/10
             shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]
             backdrop-blur-2xl
@@ -264,7 +264,7 @@ export function ModernSelect({
 
         {/* Mobile Modal - rendered via portal to escape overflow:hidden parents */}
         {isOpen && isMobile && createPortal(
-          <div className="fixed inset-0 z-[500] flex flex-col bg-white dark:bg-[#18181d] animate-in fade-in duration-200">
+          <div className="fixed inset-0 z-[500] flex flex-col bg-white dark:bg-[#0f1428] animate-in fade-in duration-200">
             <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/5 shrink-0">
               <span className="text-base font-black text-slate-800 dark:text-white">{label}</span>
               <button

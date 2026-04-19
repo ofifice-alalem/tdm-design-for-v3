@@ -291,7 +291,7 @@ export function ModernSelect({ label, options, className = "" }: { label: string
         </div>
         
         {isOpen && (
-          <div className="absolute z-[100] top-full mt-2 w-full rounded-[24px] bg-white/95 dark:bg-[#1c1c21]/90 backdrop-blur-xl border border-black/10 dark:border-white/10 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute z-[100] top-full mt-2 w-full rounded-[24px] bg-white/95 dark:bg-[#0f1428] backdrop-blur-xl border border-black/10 dark:border-white/10 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <ul className="max-h-56 overflow-auto p-2">
               {options.map((opt, i) => (
                 <li 
