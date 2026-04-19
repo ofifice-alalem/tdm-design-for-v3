@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import {
   Home, Receipt, ShoppingCart, Users, LayoutGrid, Power,
-  PanelRightClose, PanelRightOpen,
+  PanelRightClose, PanelRightOpen, PackageX,
 } from 'lucide-react';
 
 interface AppSidebarProps {
@@ -14,6 +14,7 @@ const navItems = [
   { icon: <Home className="w-5 h-5" />,         label: 'الرئيسية',         to: '/' },
   { icon: <Receipt className="w-5 h-5" />,       label: 'إنشاء فاتورة',     to: '/invoice/create' },
   { icon: <ShoppingCart className="w-5 h-5" />,  label: 'طلب بضاعة',        to: '/order/new' },
+  { icon: <PackageX className="w-5 h-5" />,      label: 'ارجاع بضاعة',       to: '/stock/return' },
   { icon: <Users className="w-5 h-5" />,         label: 'العملاء',           to: '/customers' },
   { icon: <LayoutGrid className="w-5 h-5" />,    label: 'المخزون',           to: '/inventory' },
 ];
