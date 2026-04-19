@@ -56,10 +56,10 @@ export default function InvoicesListPage() {
   const filterPanel = (
     <div className="flex flex-col gap-4">
       <ModernInput label="رقم الفاتورة" placeholder="#SI-..." value={invoiceNum} onChange={setInvoiceNum} />
-      <DateInput label="من تاريخ" value={fromDate} onChange={setFromDate} />
-      <DateInput label="إلى تاريخ" value={toDate} onChange={setToDate} />
       <ModernSelect label="المتجر" options={['الكل', 'المتجر الرئيسي - طرابلس', 'فرع بنغازي', 'فرع مصراتة']} placeholder="الكل" />
       <ModernSelect label="المسوق" options={['الكل', 'أحمد علي', 'محمد حسن', 'سارة خالد']} placeholder="الكل" />
+      <DateInput label="من تاريخ" value={fromDate} onChange={setFromDate} />
+      <DateInput label="إلى تاريخ" value={toDate} onChange={setToDate} />
       <button className="spatial-button w-full h-12 rounded-[18px] flex items-center justify-center gap-2 font-bold text-[15px]">
         <Search className="w-4 h-4" />
         بحث
