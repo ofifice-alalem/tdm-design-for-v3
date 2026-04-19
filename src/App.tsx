@@ -12,6 +12,12 @@ import StoreSalesPage from './pages/StoreSalesPage';
 import InvoiceDetailPage from './pages/InvoiceDetailPage';
 import EditInvoicePage from './pages/EditInvoicePage';
 
+import WarehousePage from './pages/WarehousePage';
+import FactoryInvoicesListPage from './pages/FactoryInvoicesListPage';
+import FactoryInvoiceDetailPage from './pages/FactoryInvoiceDetailPage';
+import CreateFactoryInvoicePage from './pages/CreateFactoryInvoicePage';
+import EditFactoryInvoicePage from './pages/EditFactoryInvoicePage';
+
 import MarketersPage from './pages/MarketersPage';
 
 import OrderDetailPage from './pages/OrderDetailPage';
@@ -43,6 +49,13 @@ export default function App() {
         <Route path="/invoice/edit/:id" element={<EditInvoicePage />} />
         <Route path="/invoice/return" element={<InvoiceReturnPage />} />
         <Route path="/order/new" element={<NewOrderPage />} />
+        <Route path="/warehouse" element={<WarehousePage />} />
+        <Route path="/factory/invoices" element={<FactoryInvoicesListPage />} />
+        <Route path="/factory/invoices/demo" element={<FactoryInvoiceDetailPage />} />
+        <Route path="/factory/invoices/:id" element={<FactoryInvoiceDetailPage />} />
+        <Route path="/factory/invoice/create" element={<CreateFactoryInvoicePage />} />
+        <Route path="/factory/invoice/edit/demo" element={<EditFactoryInvoicePage />} />
+        <Route path="/factory/invoice/edit/:id" element={<EditFactoryInvoicePage />} />
         <Route path="/marketers" element={<MarketersPage />} />
         <Route path="/stock/return" element={<ReturnStockPage />} />
         <Route path="/stock/orders" element={<StockOrdersPage />} />
