@@ -42,6 +42,14 @@ const ITEMS = [
     accent: 'bg-violet-500/10 text-violet-500',
     border: 'border-violet-500/20',
   },
+  {
+    title: 'عرض طلبات السحب',
+    sub: 'استعراض وفلترة طلبات السحب',
+    to: '/withdraw/list',
+    icon: <List className="w-5 h-5" />,
+    accent: 'bg-teal-500/10 text-teal-500',
+    border: 'border-teal-500/20',
+  },
 ];
 
 export default function MarketersPage() {
