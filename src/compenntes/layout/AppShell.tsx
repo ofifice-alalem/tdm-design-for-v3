@@ -75,7 +75,7 @@ export function AppShell({ children }: AppShellProps) {
 
           <div
             key={location.pathname}
-            className="flex-1 animate-in fade-in slide-in-from-right-4 duration-300"
+            className="flex-1 h-full animate-in fade-in slide-in-from-right-4 duration-300"
           >
             {children}
           </div>
