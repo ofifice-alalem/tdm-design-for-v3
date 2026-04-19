@@ -46,22 +46,22 @@
     --background: 0 0% 0%; 
     --foreground: 0 0% 98%;
     
-    --card: 240 5% 15%; 
+    --card: 240 5% 18%; 
     --card-foreground: 0 0% 100%;
     
-    --popover: 240 5% 15%;
+    --popover: 240 5% 18%;
     --popover-foreground: 0 0% 100%;
     
-    --primary: 217 100% 50%; 
+    --primary: 217 100% 55%; 
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 240 4% 20%; 
+    --secondary: 240 4% 24%; 
     --secondary-foreground: 0 0% 98%;
     
-    --muted: 240 4% 20%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 240 4% 24%;
+    --muted-foreground: 240 5% 75%;
     
-    --accent: 217 100% 50%;
+    --accent: 217 100% 55%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 100% 65%; 
@@ -69,7 +69,7 @@
     
     --border: 0 0% 100%;
     --input: 0 0% 100%;
-    --ring: 217 100% 50%;
+    --ring: 217 100% 55%;
   }
 
   body {
@@ -96,7 +96,7 @@
 
 @layer utilities {
   .body-bg-dark {
-    background: radial-gradient(circle at 50% 0%, #2a2a35 0%, #0d0d12 100%) !important;
+    background: radial-gradient(circle at 50% 0%, #32323f 0%, #13131a 100%) !important;
     background-size: cover !important;
     background-attachment: fixed !important;
   }
@@ -108,16 +108,37 @@
   }
 
   .spatial-window {
-    @apply bg-white/40 dark:bg-slate-900/40 backdrop-blur-[80px] border border-black/10 dark:border-white/10 transition-colors duration-500 h-full;
+    @apply backdrop-blur-[80px] border border-black/10 dark:border-white/15 transition-colors duration-500 h-full;
+    background: rgba(255,255,255,0.45);
+  }
+  .dark .spatial-window {
+    background: linear-gradient(145deg, rgba(30,50,100,0.55) 0%, rgba(15,20,40,0.45) 100%);
   }
 
   
   .spatial-card {
-    @apply bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/[0.08] backdrop-blur-3xl rounded-[30px] border border-black/10 dark:border-white/[0.08] hover:border-black/15 dark:hover:border-white/[0.15] transition-all duration-300;
+    @apply backdrop-blur-3xl rounded-[30px] border border-black/10 dark:border-white/[0.12] hover:border-black/15 dark:hover:border-white/[0.20] transition-all duration-300;
+    background: rgba(255,255,255,0.65);
+  }
+  .dark .spatial-card {
+    background: linear-gradient(145deg, rgba(40,60,120,0.35) 0%, rgba(20,25,55,0.25) 100%);
+  }
+  .dark .spatial-card:hover {
+    background: linear-gradient(145deg, rgba(40,60,120,0.45) 0%, rgba(20,25,55,0.35) 100%);
   }
 
   .spatial-input {
-    @apply bg-black/5 dark:bg-black/20 hover:bg-black/10 dark:hover:bg-black/30 border border-black/10 dark:border-white/10 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-white/40 focus:bg-white dark:focus:bg-black/40 focus:ring-1 focus:ring-primary/50 dark:focus:ring-white/20 focus:border-primary/50 dark:focus:border-white/30 transition-all duration-200 outline-none;
+    @apply border border-black/10 dark:border-white/15 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-white/50 focus:ring-1 focus:ring-primary/50 dark:focus:ring-white/25 focus:border-primary/50 dark:focus:border-white/40 transition-all duration-200 outline-none;
+    background: rgba(0,0,0,0.05);
+  }
+  .dark .spatial-input {
+    background: linear-gradient(135deg, rgba(40,60,120,0.30) 0%, rgba(20,25,55,0.20) 100%);
+  }
+  .dark .spatial-input:hover {
+    background: linear-gradient(135deg, rgba(40,60,120,0.40) 0%, rgba(20,25,55,0.28) 100%);
+  }
+  .dark .spatial-input:focus {
+    background: linear-gradient(135deg, rgba(40,60,120,0.45) 0%, rgba(20,25,55,0.32) 100%);
   }
   
   .spatial-button {
