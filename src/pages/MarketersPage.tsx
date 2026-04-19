@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, List, PackageX, FileText, ChevronLeft } from 'lucide-react';
+import { ShoppingCart, List, PackageX, FileText, ChevronLeft, TrendingDown } from 'lucide-react';
 
 const ITEMS = [
   {
@@ -33,6 +33,14 @@ const ITEMS = [
     icon: <PackageX className="w-5 h-5" />,
     accent: 'bg-rose-500/10 text-rose-500',
     border: 'border-rose-500/20',
+  },
+  {
+    title: 'طلب سحب',
+    sub: 'سحب الأرباح المتاحة',
+    to: '/withdraw/new',
+    icon: <TrendingDown className="w-5 h-5" />,
+    accent: 'bg-violet-500/10 text-violet-500',
+    border: 'border-violet-500/20',
   },
 ];
 
