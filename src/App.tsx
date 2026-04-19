@@ -7,12 +7,14 @@ import CreateReceiptPage from './pages/CreateReceiptPage';
 import WithdrawPage from './pages/WithdrawPage';
 import InvoicesListPage from './pages/InvoicesListPage';
 import StockOrdersPage from './pages/StockOrdersPage';
+import StoreSalesPage from './pages/StoreSalesPage';
 import InvoiceDetailPage from './pages/InvoiceDetailPage';
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/invoices" replace />} />
+      <Route path="/" element={<Navigate to="/store-sales" replace />} />
+      <Route path="/store-sales" element={<StoreSalesPage />} />
       <Route path="/invoices" element={<InvoicesListPage />} />
       <Route path="/invoices/:id" element={<InvoiceDetailPage />} />
       <Route path="/invoice/create" element={<CreateInvoicePage />} />
