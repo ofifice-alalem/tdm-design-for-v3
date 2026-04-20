@@ -29,6 +29,7 @@ import CreateStorePage from './pages/CreateStorePage';
 import CreateCompanyPage from './pages/CreateCompanyPage';
 import CreateBranchPage from './pages/CreateBranchPage';
 import CompanyActivityPage from './pages/CompanyActivityPage';
+import EditCompanyPage from './pages/EditCompanyPage';
 import StoreDetailPage from './pages/StoreDetailPage';
 import EditStorePage from './pages/EditStorePage';
 import MarketersPage from './pages/MarketersPage';
@@ -82,7 +83,7 @@ export default function App() {
         <Route path="/companies/create" element={<CreateCompanyPage />} />
         <Route path="/branches/create" element={<CreateBranchPage />} />
         <Route path="/companies/:id/activity" element={<CompanyActivityPage />} />
-        <Route path="/companies/:id/edit" element={<EditStorePage />} />
+        <Route path="/companies/:id/edit" element={<EditCompanyPage />} />
         <Route path="/branches/:id" element={<StoreDetailPage />} />
         <Route path="/branches/:id/edit" element={<EditStorePage />} />
         <Route path="/stores/:id" element={<StoreDetailPage />} />
