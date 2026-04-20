@@ -170,20 +170,16 @@ export default function StoresPage() {
         </div>
 
         {/* Mobile cards */}
-        <div className="lg:hidden flex flex-col divide-y divide-black/5 dark:divide-white/[0.06]">
+        <div className="lg:hidden flex flex-col gap-3 p-4">
           {filtered.map((store) => (
-            <div key={store.id} className="p-4 flex flex-col gap-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <div className="w-9 h-9 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0">
-                    <Store className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex flex-col gap-0.5 min-w-0">
-                    <span className="text-[13px] font-black text-slate-800 dark:text-white leading-tight">{store.name}</span>
-                    <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{store.marketer}</span>
-                  </div>
+            <div key={store.id} className="spatial-card p-4 flex flex-col gap-3">
+              {/* Row 1: name + badges */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                  <span className="text-[14px] font-black text-slate-800 dark:text-white leading-snug">{store.name}</span>
+                  <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{store.marketer}</span>
                 </div>
-                <div className="flex items-center gap-1.5 shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
                   <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${store.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-500/10 text-slate-500'}`}>
                     {store.active ? 'نشط' : 'موقوف'}
                   </span>
@@ -192,29 +188,31 @@ export default function StoresPage() {
                   </span>
                 </div>
               </div>
+
+              {/* Row 2: financial summary */}
               <div className="grid grid-cols-3 gap-2">
-                {[
-                  { l: 'معتمد',   v: fmt(store.approved), c: 'text-emerald-600 dark:text-emerald-400' },
-                  { l: 'معلق',    v: store.pending !== 0 ? fmt(store.pending) : '—', c: store.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20' },
-                  { l: 'الإجمالي', v: fmt(store.total) + ' د', c: 'text-slate-800 dark:text-white' },
-                ].map(({ l, v, c }) => (
-                  <div key={l} className="flex flex-col gap-0.5 bg-black/[0.02] dark:bg-white/[0.03] rounded-[12px] p-2.5">
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{l}</span>
-                    <span className={`text-[13px] font-black ${c}`}>{v}</span>
-                  </div>
-                ))}
+                <div className="flex flex-col gap-0.5 rounded-[12px] bg-emerald-500/5 border border-emerald-500/10 p-2.5">
+                  <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
+                  <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">{fmt(store.approved)}</span>
+                </div>
+                <div className="flex flex-col gap-0.5 rounded-[12px] bg-rose-500/5 border border-rose-500/10 p-2.5">
+                  <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
+                  <span className={`text-[13px] font-black ${store.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20'}`}>
+                    {store.pending !== 0 ? fmt(store.pending) : '—'}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-0.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5">
+                  <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
+                  <span className="text-[13px] font-black text-slate-800 dark:text-white">{fmt(store.total)}</span>
+                </div>
               </div>
+
+              {/* Row 3: actions */}
               <div className="flex gap-2">
-                <Link
-                  to={`/stores/${store.id}`}
-                  className="flex-1 h-9 rounded-[12px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5"
-                >
+                <Link to={`/stores/${store.id}`} className="flex-1 h-9 rounded-[12px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
                   <Eye className="w-3.5 h-3.5" />عرض
                 </Link>
-                <Link
-                  to={`/stores/${store.id}/edit`}
-                  className="flex-1 h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-1.5"
-                >
+                <Link to={`/stores/${store.id}/edit`} className="flex-1 h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
                   <Settings className="w-3.5 h-3.5" />تعديل
                 </Link>
               </div>

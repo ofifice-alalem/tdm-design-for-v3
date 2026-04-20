@@ -68,48 +68,8 @@ export default function StoreDetailPage() {
       {/* Layout */}
       <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
 
-        {/* Main — transactions */}
-        <div className="flex-1 min-w-0">
-          <SpatialCard title="سجل الحركات المالية">
-            <div className="flex flex-col gap-0">
-              {store.transactions.map((tx, i) => {
-                const cfg = TX_CONFIG[tx.type];
-                const isPositive = tx.amount > 0;
-                return (
-                  <div key={i} className={`flex items-center gap-4 py-4 ${i < store.transactions.length - 1 ? 'border-b border-black/5 dark:border-white/[0.05]' : ''}`}>
-                    {/* Icon */}
-                    <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center shrink-0 ${cfg.bg} ${cfg.text}`}>
-                      {cfg.icon}
-                    </div>
-                    {/* Info */}
-                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                      <span className={`text-[12px] font-black ${cfg.text}`}>{tx.type}</span>
-                      <span className="text-[14px] font-black text-slate-800 dark:text-white">{tx.id}</span>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.date}</span>
-                        <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-white/20" />
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.marketer}</span>
-                      </div>
-                    </div>
-                    {/* Amount */}
-                    <div className="flex flex-col items-end gap-0.5 shrink-0">
-                      <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">المبلغ الإجمالي</span>
-                      <div className="flex items-baseline gap-1">
-                        <span className={`text-[16px] font-black ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
-                          {isPositive ? '+' : '-'}{fmt(tx.amount)}
-                        </span>
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </SpatialCard>
-        </div>
-
         {/* Sidebar */}
-        <div className="w-full lg:w-[320px] xl:w-[360px] shrink-0 flex flex-col gap-5">
+        <div className="w-full lg:w-[320px] xl:w-[360px] shrink-0 flex flex-col gap-5 lg:order-2">
 
           {/* بيانات المتجر */}
           <SpatialCard title="بيانات المتجر">
@@ -162,38 +122,38 @@ export default function StoreDetailPage() {
                 </div>
               ))}
 
-              <div className="mt-3 pt-3 border-t border-black/10 dark:border-white/10 flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">إيصالات معلقة</span>
+              <div className="mt-3 pt-3 border-t border-black/10 dark:border-white/10 flex flex-col gap-0">
+                <div className="flex items-center justify-between py-3 border-b border-black/5 dark:border-white/5">
+                  <span className="text-[13px] font-bold text-slate-500 dark:text-white/50">إيصالات معلقة</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-[13px] font-black text-rose-500">- {fmt(s.pendingReceipts)}</span>
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-white/30">دينار</span>
+                    <span className="text-[14px] font-black text-rose-500">- {fmt(s.pendingReceipts)}</span>
+                    <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
-                  <span className="text-[14px] font-black text-slate-700 dark:text-white/80">إجمالي الدين</span>
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-[13px] font-bold text-slate-500 dark:text-white/50">إجمالي الدين</span>
                   <div className="flex items-center gap-2">
-                    <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${s.type === 'دائن' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
+                    <span className={`text-[11px] font-black px-2.5 py-1 rounded-[8px] ${s.type === 'دائن' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
                       {s.type}
                     </span>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-[18px] font-black text-slate-800 dark:text-white">{fmt(s.totalDebt)}</span>
-                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
+                      <span className="text-[20px] font-black text-slate-800 dark:text-white">{fmt(s.totalDebt)}</span>
+                      <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">دينار</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-black/10 dark:border-white/10 grid grid-cols-2 gap-3">
+              <div className="mt-1 pt-3 border-t border-black/10 dark:border-white/10 grid grid-cols-2 gap-3">
                 {[
-                  { label: 'معتمد', value: s.approved, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/5' },
-                  { label: 'معلق',  value: s.pending,  color: 'text-rose-500',                          bg: 'bg-rose-500/5' },
+                  { label: 'معتمد', value: s.approved, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/8 dark:bg-emerald-500/10', border: 'border border-emerald-500/15' },
+                  { label: 'معلق',  value: s.pending,  color: 'text-rose-500',                          bg: 'bg-rose-500/8 dark:bg-rose-500/10',       border: 'border border-rose-500/15' },
                 ].map((item) => (
-                  <div key={item.label} className={`flex flex-col gap-1 p-3 rounded-[14px] ${item.bg}`}>
+                  <div key={item.label} className={`flex flex-col gap-1.5 p-3 rounded-[16px] ${item.bg} ${item.border}`}>
                     <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{item.label}</span>
                     <div className="flex items-baseline gap-1">
-                      <span className={`text-[15px] font-black ${item.color}`}>{fmt(item.value)}</span>
-                      <span className="text-[10px] font-bold text-slate-400 dark:text-white/30">د</span>
+                      <span className={`text-[16px] font-black ${item.color}`}>{fmt(item.value)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/30">دينار</span>
                     </div>
                   </div>
                 ))}
@@ -202,6 +162,44 @@ export default function StoreDetailPage() {
           </SpatialCard>
 
         </div>
+
+        {/* Main — transactions */}
+        <div className="flex-1 min-w-0 lg:order-1">
+          <SpatialCard title="سجل الحركات المالية">
+            <div className="flex flex-col gap-0">
+              {store.transactions.map((tx, i) => {
+                const cfg = TX_CONFIG[tx.type];
+                const isPositive = tx.amount > 0;
+                return (
+                  <div key={i} className={`flex items-center gap-4 py-4 ${i < store.transactions.length - 1 ? 'border-b border-black/5 dark:border-white/[0.05]' : ''}`}>
+                    <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center shrink-0 ${cfg.bg} ${cfg.text}`}>
+                      {cfg.icon}
+                    </div>
+                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                      <span className={`text-[12px] font-black ${cfg.text}`}>{tx.type}</span>
+                      <span className="text-[14px] font-black text-slate-800 dark:text-white">{tx.id}</span>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.date}</span>
+                        <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-white/20" />
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.marketer}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-0.5 shrink-0">
+                      <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">المبلغ الإجمالي</span>
+                      <div className="flex items-baseline gap-1">
+                        <span className={`text-[16px] font-black ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {isPositive ? '+' : '-'}{fmt(tx.amount)}
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </SpatialCard>
+        </div>
+
       </div>
     </div>
   );
