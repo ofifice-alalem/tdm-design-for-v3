@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowRight, Building2, Store, TrendingUp, TrendingDown, Wallet, FileText, Calendar, Filter } from 'lucide-react';
+import { ArrowRight, Building2, Store, CheckCircle, Clock, DollarSign, FileText, Calendar } from 'lucide-react';
+import { ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 function fmt(n: number) {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -79,7 +80,7 @@ export default function CompanyActivityPage() {
             {/* معتمد - Top Left */}
             <div className="p-7 flex flex-col gap-4 border-l border-b border-black/[0.08] dark:border-white/[0.08] hover:bg-emerald-500/5 transition-all group cursor-pointer">
               <div className="w-12 h-12 rounded-[16px] bg-emerald-500/10 group-hover:bg-emerald-500 group-hover:scale-110 flex items-center justify-center transition-all shadow-sm group-hover:shadow-lg group-hover:shadow-emerald-500/20">
-                <span className="text-[20px] group-hover:text-white transition-colors">✅</span>
+                <CheckCircle className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
@@ -93,7 +94,7 @@ export default function CompanyActivityPage() {
             {/* معلق - Top Right */}
             <div className="p-7 flex flex-col gap-4 border-b border-black/[0.08] dark:border-white/[0.08] hover:bg-rose-500/5 transition-all group cursor-pointer">
               <div className="w-12 h-12 rounded-[16px] bg-rose-500/10 group-hover:bg-rose-500 group-hover:scale-110 flex items-center justify-center transition-all shadow-sm group-hover:shadow-lg group-hover:shadow-rose-500/20">
-                <span className="text-[20px] group-hover:text-white transition-colors">⏳</span>
+                <Clock className="w-6 h-6 text-rose-500 group-hover:text-white transition-colors" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
@@ -107,7 +108,7 @@ export default function CompanyActivityPage() {
             {/* الإجمالي - Bottom Left */}
             <div className="p-7 flex flex-col gap-4 border-l border-black/[0.08] dark:border-white/[0.08] hover:bg-primary/5 transition-all group cursor-pointer">
               <div className="w-12 h-12 rounded-[16px] bg-primary/10 group-hover:bg-primary group-hover:scale-110 flex items-center justify-center transition-all shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
-                <span className="text-[20px] group-hover:text-white transition-colors">💰</span>
+                <DollarSign className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
@@ -121,7 +122,7 @@ export default function CompanyActivityPage() {
             {/* عدد الفروع - Bottom Right */}
             <div className="p-7 flex flex-col gap-4 hover:bg-blue-500/5 transition-all group cursor-pointer">
               <div className="w-12 h-12 rounded-[16px] bg-blue-500/10 group-hover:bg-blue-500 group-hover:scale-110 flex items-center justify-center transition-all shadow-sm group-hover:shadow-lg group-hover:shadow-blue-500/20">
-                <span className="text-[20px] group-hover:text-white transition-colors">🏪</span>
+                <Store className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">عدد الفروع</span>
@@ -179,7 +180,7 @@ export default function CompanyActivityPage() {
       <div className="lg:hidden grid grid-cols-2 gap-3">
         <div className="spatial-card p-4 flex flex-col gap-2.5">
           <div className="w-10 h-10 rounded-[14px] bg-emerald-500/10 flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-emerald-600" />
+            <CheckCircle className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest leading-tight">معتمد</span>
@@ -191,7 +192,7 @@ export default function CompanyActivityPage() {
         </div>
         <div className="spatial-card p-4 flex flex-col gap-2.5">
           <div className="w-10 h-10 rounded-[14px] bg-rose-500/10 flex items-center justify-center">
-            <TrendingDown className="w-5 h-5 text-rose-500" />
+            <Clock className="w-5 h-5 text-rose-500" />
           </div>
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest leading-tight">معلق</span>
@@ -203,7 +204,7 @@ export default function CompanyActivityPage() {
         </div>
         <div className="spatial-card p-4 flex flex-col gap-2.5">
           <div className="w-10 h-10 rounded-[14px] bg-primary/10 flex items-center justify-center">
-            <Wallet className="w-5 h-5 text-primary" />
+            <DollarSign className="w-5 h-5 text-primary" />
           </div>
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest leading-tight">الإجمالي</span>
@@ -272,40 +273,28 @@ export default function CompanyActivityPage() {
 
       {/* Activities */}
       <div className="spatial-card overflow-hidden">
-        <div className="p-4 border-b border-black/5 dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
-            <h2 className="text-[15px] lg:text-[16px] font-black text-slate-800 dark:text-white">سجل الحركات ({filteredActivities.length})</h2>
+        <div className="p-4 border-b border-black/5 dark:border-white/[0.06] flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              <h2 className="text-[15px] lg:text-[16px] font-black text-slate-800 dark:text-white">سجل الحركات ({filteredActivities.length})</h2>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <div className="relative">
-              <select
-                value={selectedBranch}
-                onChange={(e) => setSelectedBranch(e.target.value)}
-                className="spatial-input h-10 rounded-[14px] pr-10 pl-4 text-[13px] font-bold appearance-none cursor-pointer"
-              >
-                <option value="الكل">كل الفروع</option>
-                {BRANCHES.map((b) => (
-                  <option key={b.id} value={b.name}>
-                    {b.name}
-                  </option>
-                ))}
-              </select>
-              <Filter className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/40 pointer-events-none" />
-            </div>
-            <div className="relative">
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="spatial-input h-10 rounded-[14px] pr-10 pl-4 text-[13px] font-bold appearance-none cursor-pointer"
-              >
-                <option value="الكل">كل الأنواع</option>
-                <option value="فاتورة">فاتورة</option>
-                <option value="دفعة">دفعة</option>
-                <option value="مرتجع">مرتجع</option>
-              </select>
-              <Filter className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/40 pointer-events-none" />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <ModernSelect
+              label="الفرع"
+              options={['الكل', ...BRANCHES.map(b => b.name)]}
+              placeholder="اختر الفرع"
+              defaultValue={selectedBranch}
+              onSelect={(value) => setSelectedBranch(value)}
+            />
+            <ModernSelect
+              label="نوع العملية"
+              options={['الكل', 'فاتورة', 'دفعة', 'مرتجع']}
+              placeholder="اختر النوع"
+              defaultValue={selectedType}
+              onSelect={(value) => setSelectedType(value)}
+            />
           </div>
         </div>
 
