@@ -73,9 +73,9 @@ export default function CompanyActivityPage() {
       </div>
 
       {/* Stats & Branches - Desktop Layout */}
-      <div className="hidden lg:grid lg:grid-cols-[1fr_1.2fr] gap-6">
-        {/* Left: Stats in Plus Shape */}
-        <div className="spatial-card overflow-hidden p-0">
+      <div className="hidden lg:grid lg:grid-cols-[1fr_1.2fr] gap-6 items-start">
+        {/* Left: Stats in Plus Shape - Sticky */}
+        <div className="spatial-card overflow-hidden p-0 sticky top-6">
           <div className="grid grid-cols-2 grid-rows-2">
             {/* معتمد - Top Left */}
             <div className="p-7 flex flex-col gap-4 border-l border-b border-black/[0.08] dark:border-white/[0.08] hover:bg-emerald-500/5 transition-all group cursor-pointer">
@@ -85,7 +85,7 @@ export default function CompanyActivityPage() {
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-[26px] font-black text-emerald-600 dark:text-emerald-400 leading-none">{fmt(COMPANY.approved)}</span>
+                  <span className="text-[26px] font-black text-emerald-600 dark:text-emerald-400">{fmt(COMPANY.approved)}</span>
                   <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">د</span>
                 </div>
               </div>
@@ -99,7 +99,7 @@ export default function CompanyActivityPage() {
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-[26px] font-black text-rose-500 leading-none">{fmt(COMPANY.pending)}</span>
+                  <span className="text-[26px] font-black text-rose-500">{fmt(COMPANY.pending)}</span>
                   <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">د</span>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function CompanyActivityPage() {
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-[26px] font-black text-primary leading-none">{fmt(COMPANY.total)}</span>
+                  <span className="text-[26px] font-black text-primary">{fmt(COMPANY.total)}</span>
                   <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">د</span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function CompanyActivityPage() {
               <div className="flex flex-col gap-1.5">
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">عدد الفروع</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-[26px] font-black text-blue-600 dark:text-blue-400 leading-none">{BRANCHES.length}</span>
+                  <span className="text-[26px] font-black text-blue-600 dark:text-blue-400">{BRANCHES.length}</span>
                   <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">فرع</span>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function CompanyActivityPage() {
               <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">{BRANCHES.length} فرع</span>
             </div>
           </div>
-          <div className="p-5 flex flex-col gap-3 overflow-y-auto flex-1" style={{ maxHeight: '520px' }}>
+          <div className="p-5 flex flex-col gap-3">
             {BRANCHES.map((branch, idx) => (
               <div 
                 key={branch.id} 
