@@ -6,13 +6,15 @@ import { ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 import { DateInput } from '../compenntes/ui/DateInput';
 
 const STATUS_CONFIG: Record<string, StatusConfig> = {
+  'قيد الانتظار': { bg: 'bg-yellow-500/10 dark:bg-yellow-500/15',  text: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-500' },
   'مكتمل': { bg: 'bg-emerald-500/10 dark:bg-emerald-500/15', text: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
   'ملغي':  { bg: 'bg-slate-500/10 dark:bg-slate-500/10',     text: 'text-slate-500 dark:text-white/40',     dot: 'bg-slate-400' },
 };
 
-const TABS = ['الكل', 'مكتمل', 'ملغي'];
+const TABS = ['الكل', 'قيد الانتظار', 'مكتمل', 'ملغي'];
 
 const RAW = [
+  { id: '#WM-20260408-00007', date: '2026-04-08', warehouse: 'المستودع الرئيسي', type: 'إدخال',  qty: 260, status: 'قيد الانتظار' },
   { id: '#WM-20260406-00006', date: '2026-04-06', warehouse: 'المستودع الرئيسي', type: 'إدخال',  qty: 150, status: 'مكتمل' },
   { id: '#WM-20260329-00005', date: '2026-03-29', warehouse: 'مستودع طرابلس',    type: 'إخراج',  qty: 80,  status: 'مكتمل' },
   { id: '#WM-20260320-00004', date: '2026-03-20', warehouse: 'مستودع بنغازي',    type: 'تحويل',  qty: 200, status: 'مكتمل' },
