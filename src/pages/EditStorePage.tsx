@@ -28,7 +28,7 @@ export default function EditStorePage() {
   const [active,   setActive]   = useState(store.active);
 
   return (
-    <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col gap-6">
 
       {/* Header */}
       <div className="flex flex-col gap-3">
@@ -42,17 +42,17 @@ export default function EditStorePage() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 items-start w-full pb-32 lg:pb-0">
+      <div className="flex flex-col lg:flex-row gap-6 items-start w-full pb-36 lg:pb-0">
 
         {/* Main */}
-        <div className="flex-1 min-w-0">
+        <div className="w-full lg:flex-1 lg:min-w-0 flex flex-col gap-5">
           <SpatialCard title="بيانات المتجر">
             <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ModernInput label="اسم المتجر *" placeholder="اسم المتجر" value={name} onChange={setName} />
                 <ModernInput label="اسم المالك *" placeholder="اسم المالك" value={owner} onChange={setOwner} />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ModernInput label="رقم الهاتف" placeholder="09XXXXXXXX" value={phone} onChange={setPhone} />
                 <ModernInput label="الموقع" placeholder="المدينة / المنطقة" value={location} onChange={setLocation} />
               </div>
