@@ -39,10 +39,10 @@ export default function StoresPage() {
           <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">بيع متاجر</span>
           <span className="text-[22px] font-black text-slate-800 dark:text-white">إدارة المتاجر</span>
         </div>
-        <button className="spatial-button h-11 px-5 rounded-[16px] flex items-center gap-2 font-bold text-[14px]">
+        <Link to="/stores/create" className="spatial-button h-11 px-5 rounded-[16px] flex items-center gap-2 font-bold text-[14px]">
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">إضافة متجر</span>
-        </button>
+        </Link>
       </div>
 
       {/* Stats */}

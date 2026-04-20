@@ -25,6 +25,7 @@ import EditFactoryInvoicePage from './pages/EditFactoryInvoicePage';
 
 import StoresMenuPage from './pages/StoresMenuPage';
 import StoresPage from './pages/StoresPage';
+import CreateStorePage from './pages/CreateStorePage';
 import StoreDetailPage from './pages/StoreDetailPage';
 import EditStorePage from './pages/EditStorePage';
 import MarketersPage from './pages/MarketersPage';
@@ -74,6 +75,7 @@ export default function App() {
         <Route path="/factory/invoice/edit/:id" element={<EditFactoryInvoicePage />} />
         <Route path="/stores" element={<StoresMenuPage />} />
         <Route path="/stores/list" element={<StoresPage />} />
+        <Route path="/stores/create" element={<CreateStorePage />} />
         <Route path="/stores/:id" element={<StoreDetailPage />} />
         <Route path="/stores/:id/edit" element={<EditStorePage />} />
         <Route path="/marketers" element={<MarketersPage />} />
