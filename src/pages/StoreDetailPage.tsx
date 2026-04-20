@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowRight, Receipt, Wallet, TrendingUp, TrendingDown, Store, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Receipt, Wallet, TrendingUp, TrendingDown, Store, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
 
 function fmt(n: number) {
@@ -166,36 +166,79 @@ export default function StoreDetailPage() {
         {/* Main — transactions */}
         <div className="flex-1 min-w-0 lg:order-1">
           <SpatialCard title="سجل الحركات المالية">
-            <div className="flex flex-col gap-0">
+            {/* Mobile */}
+            <div className="flex flex-col gap-2 lg:hidden -mx-2">
               {store.transactions.map((tx, i) => {
                 const cfg = TX_CONFIG[tx.type];
                 const isPositive = tx.amount > 0;
                 return (
-                  <div key={i} className={`flex items-center gap-4 py-4 ${i < store.transactions.length - 1 ? 'border-b border-black/5 dark:border-white/[0.05]' : ''}`}>
-                    <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center shrink-0 ${cfg.bg} ${cfg.text}`}>
+                  <div key={i} className="spatial-card p-3 flex items-center gap-3">
+                    <div className={`w-9 h-9 rounded-[12px] flex items-center justify-center shrink-0 ${cfg.bg} ${cfg.text}`}>
                       {cfg.icon}
                     </div>
-                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                      <span className={`text-[12px] font-black ${cfg.text}`}>{tx.type}</span>
-                      <span className="text-[14px] font-black text-slate-800 dark:text-white">{tx.id}</span>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.date}</span>
-                        <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-white/20" />
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.marketer}</span>
+                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${cfg.bg} ${cfg.text}`}>{tx.type}</span>
+                        <span className="text-[12px] font-black text-slate-800 dark:text-white truncate">{tx.id}</span>
                       </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-0.5 shrink-0">
-                      <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">المبلغ الإجمالي</span>
-                      <div className="flex items-baseline gap-1">
-                        <span className={`text-[16px] font-black ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
-                          {isPositive ? '+' : '-'}{fmt(tx.amount)}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.date}</span>
+                        <span className={`text-[14px] font-black ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {isPositive ? '+' : '-'}{fmt(tx.amount)} <span className="text-[10px] font-bold text-slate-400 dark:text-white/40">د</span>
                         </span>
-                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">دينار</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-bold text-slate-400 dark:text-white/40">{tx.marketer}</span>
+                        <button className={`w-5 h-5 rounded-full flex items-center justify-center ${cfg.bg} ${cfg.text}`}>
+                          <ChevronLeft className="w-3 h-3" />
+                        </button>
                       </div>
                     </div>
                   </div>
                 );
               })}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden lg:block overflow-hidden rounded-[16px] border border-black/5 dark:border-white/[0.08]">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-black/5 dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
+                    {['نوع العملية', 'رقم العملية', 'التاريخ', 'المسوق', 'المبلغ', ''].map((h) => (
+                      <th key={h} className="px-5 py-4 text-right text-[12px] font-black text-slate-400 dark:text-white/40 uppercase tracking-widest whitespace-nowrap">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {store.transactions.map((tx, i) => {
+                    const cfg = TX_CONFIG[tx.type];
+                    const isPositive = tx.amount > 0;
+                    return (
+                      <tr key={i} className="border-b border-black/5 dark:border-white/[0.04] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors last:border-0">
+                        <td className="px-5 py-4">
+                          <span className={`text-[11px] font-black px-2.5 py-1 rounded-[8px] flex items-center gap-1.5 w-fit ${cfg.bg} ${cfg.text}`}>
+                            {cfg.icon}{tx.type}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 text-[14px] font-black text-slate-800 dark:text-white">{tx.id}</td>
+                        <td className="px-5 py-4 text-[13px] font-bold text-slate-400 dark:text-white/40 whitespace-nowrap">{tx.date}</td>
+                        <td className="px-5 py-4 text-[13px] font-bold text-slate-500 dark:text-white/50">{tx.marketer}</td>
+                        <td className="px-5 py-4">
+                          <span className={`text-[15px] font-black ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
+                            {isPositive ? '+' : '-'}{fmt(tx.amount)}
+                            <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 mr-1">د</span>
+                          </span>
+                        </td>
+                        <td className="px-5 py-4">
+                          <button className={`w-7 h-7 rounded-full flex items-center justify-center ${cfg.bg} ${cfg.text} hover:opacity-80 transition-opacity`}>
+                            <ChevronLeft className="w-3.5 h-3.5" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </SpatialCard>
         </div>
