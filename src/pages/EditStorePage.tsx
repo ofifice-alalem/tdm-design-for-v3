@@ -1,27 +1,22 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowRight, Save } from 'lucide-react';
+import { ArrowRight, Save, Store } from 'lucide-react';
 import { SpatialCard, ModernInput, ModernSelect } from '../compenntes/ui/SpatialComponents';
 
 const STORES_DATA: Record<string, {
-  name: string; owner: string; phone: string; location: string; address: string; marketer: string; active: boolean;
+  name: string; company: string; phone: string; location: string; address: string; marketer: string; active: boolean;
 }> = {
-  '1': { name: 'الصحن الفضى / محمد البحلرى',                   owner: 'محمد البحلرى',      phone: '0912345678', location: 'طرابلس',   address: 'شارع الجمهورية',    marketer: 'محمد البحري', active: true },
-  '2': { name: 'شركة طريق المطار احمد على',                     owner: 'احمد على',           phone: '0921234567', location: 'طرابلس',   address: 'طريق المطار',       marketer: 'محمد البحري', active: true },
-  '3': { name: 'غوط الديس 1',                                   owner: 'عبدالله الورفلي',   phone: '0934567890', location: 'طرابلس',   address: 'غوط الديس',         marketer: 'محمد البحري', active: true },
-  '4': { name: 'محل المتفوق محمد البحرى',                       owner: 'محمد البحرى',        phone: '0945678901', location: 'طرابلس',   address: 'سوق الجمعة',        marketer: 'محمد البحري', active: true },
-  '5': { name: 'مصطفى ابو جطيلة / البحرى',                     owner: 'مصطفى ابو جطيلة',  phone: '0956789012', location: 'طرابلس',   address: 'البحرى',            marketer: 'محمد البحري', active: true },
-  '6': { name: 'سوق غوط الديس 2 / البحرى',                     owner: 'خالد الورفلي',      phone: '0967890123', location: 'طرابلس',   address: 'غوط الديس 2',       marketer: 'محمد البحري', active: true },
-  '7': { name: 'محل المجموعة عبدالسلام المرغنى/0913790911',     owner: 'عبدالسلام المرغنى', phone: '0913790911', location: 'طرابلس',   address: 'سوق الجمعة',        marketer: 'محمد البحري', active: true },
+  '101': { name: 'فرع تاجوراء',        company: 'شركة العالم', phone: '0912345678', location: 'تاجوراء',  address: 'شارع الجمهورية',    marketer: 'محمد البحري', active: true },
+  '102': { name: 'فرع طريق المطار',    company: 'شركة العالم', phone: '0921234567', location: 'طرابلس',   address: 'طريق المطار',       marketer: 'محمد البحري', active: true },
+  '103': { name: 'فرع غوط الديس',      company: 'شركة النجاح', phone: '0934567890', location: 'طرابلس',   address: 'غوط الديس',         marketer: 'أحمد علي', active: true },
 };
 
 export default function EditStorePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const store = STORES_DATA[id ?? '1'] ?? STORES_DATA['1'];
+  const store = STORES_DATA[id ?? '101'] ?? STORES_DATA['101'];
 
   const [name,     setName]     = useState(store.name);
-  const [owner,    setOwner]    = useState(store.owner);
   const [phone,    setPhone]    = useState(store.phone);
   const [location, setLocation] = useState(store.location);
   const [address,  setAddress]  = useState(store.address);
@@ -35,10 +30,15 @@ export default function EditStorePage() {
         <button onClick={() => navigate(-1)} className="self-start flex items-center gap-2 px-4 h-11 rounded-[16px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-600 dark:text-white/70 font-bold text-[14px] transition-all">
           <ArrowRight className="w-4 h-4" />عودة
         </button>
-        <div className="flex flex-col gap-0.5">
-          <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">تعديل البيانات</span>
-          <span className="text-[20px] font-black text-slate-800 dark:text-white">تعديل بيانات المتجر</span>
-          <span className="text-[13px] font-bold text-primary mt-0.5">{store.name}</span>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-[16px] bg-emerald-500/10 flex items-center justify-center">
+            <Store className="w-6 h-6 text-emerald-600" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[13px] font-bold text-slate-400 dark:text-white/40">تعديل البيانات</span>
+            <span className="text-[20px] font-black text-slate-800 dark:text-white">تعديل بيانات الفرع</span>
+            <span className="text-[13px] font-bold text-primary mt-0.5">{store.name}</span>
+          </div>
         </div>
       </div>
 
@@ -46,15 +46,17 @@ export default function EditStorePage() {
 
         {/* Main */}
         <div className="w-full lg:flex-1 lg:min-w-0 flex flex-col gap-5">
-          <SpatialCard title="بيانات المتجر">
+          <SpatialCard title="بيانات الفرع">
             <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ModernInput label="اسم المتجر *" placeholder="اسم المتجر" value={name} onChange={setName} />
-                <ModernInput label="اسم المالك *" placeholder="اسم المالك" value={owner} onChange={setOwner} />
-              </div>
+              <ModernSelect
+                label="الشركة الأم *"
+                defaultValue={store.company}
+                options={['شركة العالم', 'شركة النجاح', 'شركة الأمل']}
+              />
+              <ModernInput label="اسم الفرع *" placeholder="مثال: فرع تاجوراء" value={name} onChange={setName} />
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ModernInput label="رقم الهاتف" placeholder="09XXXXXXXX" value={phone} onChange={setPhone} />
-                <ModernInput label="الموقع" placeholder="المدينة / المنطقة" value={location} onChange={setLocation} />
+                <ModernInput label="الموقع" placeholder="المنطقة" value={location} onChange={setLocation} />
               </div>
               <ModernInput label="العنوان التفصيلي" placeholder="الشارع، الحي..." value={address} onChange={setAddress} />
             </div>
@@ -64,19 +66,19 @@ export default function EditStorePage() {
         {/* Sidebar */}
         <aside className="w-full lg:w-[340px] xl:w-[380px] shrink-0 flex flex-col gap-5 lg:sticky lg:top-0 lg:self-start">
           <ModernSelect
-            label="المسوق المخصص"
+            label="المسوق المخصص *"
             defaultValue={store.marketer}
             options={['محمد البحري', 'أحمد علي', 'محمد حسن', 'سارة خالد']}
           />
 
-          <SpatialCard title="حالة المتجر">
+          <SpatialCard title="حالة الفرع">
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-0.5">
                 <span className="text-[14px] font-black text-slate-800 dark:text-white">
-                  {active ? 'المتجر نشط' : 'المتجر موقوف'}
+                  {active ? 'الفرع نشط' : 'الفرع موقوف'}
                 </span>
                 <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">
-                  تفعيل أو إلغاء تفعيل المتجر
+                  تفعيل أو إلغاء تفعيل الفرع
                 </span>
               </div>
               <button
