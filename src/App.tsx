@@ -23,6 +23,8 @@ import FactoryInvoiceDetailPage from './pages/FactoryInvoiceDetailPage';
 import CreateFactoryInvoicePage from './pages/CreateFactoryInvoicePage';
 import EditFactoryInvoicePage from './pages/EditFactoryInvoicePage';
 
+import StoresPage from './pages/StoresPage';
+import EditStorePage from './pages/EditStorePage';
 import MarketersPage from './pages/MarketersPage';
 
 import OrderDetailPage from './pages/OrderDetailPage';
@@ -68,6 +70,8 @@ export default function App() {
         <Route path="/factory/invoice/create" element={<CreateFactoryInvoicePage />} />
         <Route path="/factory/invoice/edit/demo" element={<EditFactoryInvoicePage />} />
         <Route path="/factory/invoice/edit/:id" element={<EditFactoryInvoicePage />} />
+        <Route path="/stores" element={<StoresPage />} />
+        <Route path="/stores/:id/edit" element={<EditStorePage />} />
         <Route path="/marketers" element={<MarketersPage />} />
         <Route path="/stock/return" element={<ReturnStockPage />} />
         <Route path="/stock/orders" element={<StockOrdersPage />} />
