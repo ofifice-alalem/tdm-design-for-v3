@@ -41,7 +41,7 @@ export default function CreateFactoryInvoicePage() {
           <ArrowRight className="w-4 h-4" />عودة
         </button>
         <div className="flex items-center gap-2 text-sm text-slate-400 dark:text-white/30 font-bold">
-          <span>المخزن</span><span>/</span>
+          <span>المشتريات</span><span>/</span>
           <span className="text-slate-700 dark:text-white/80">إنشاء فاتورة مشتريات</span>
         </div>
       </div>

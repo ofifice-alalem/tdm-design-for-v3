@@ -47,7 +47,7 @@ export default function EditFactoryInvoicePage() {
           <ArrowRight className="w-4 h-4" />عودة
         </button>
         <div className="flex items-center gap-2 text-sm text-slate-400 dark:text-white/30 font-bold">
-          <span>المخزن</span><span>/</span>
+          <span>المشتريات</span><span>/</span>
           <span className="text-slate-700 dark:text-white/80">تعديل فاتورة مشتريات</span><span>/</span>
           <span className="text-primary font-black">{INVOICE_DATA.id}</span>
         </div>

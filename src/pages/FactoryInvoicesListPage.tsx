@@ -66,7 +66,7 @@ export default function FactoryInvoicesListPage() {
 
   return (
     <ListPage
-      title="المخزن"
+      title="المشتريات"
       breadcrumb="فواتير المشتريات"
       tabs={TABS}
       statusConfig={STATUS_CONFIG}

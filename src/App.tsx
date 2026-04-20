@@ -13,6 +13,11 @@ import InvoiceDetailPage from './pages/InvoiceDetailPage';
 import EditInvoicePage from './pages/EditInvoicePage';
 
 import WarehousePage from './pages/WarehousePage';
+import WarehouseMovementsListPage from './pages/WarehouseMovementsListPage';
+import WarehouseMovementDetailPage from './pages/WarehouseMovementDetailPage';
+import CreateWarehouseMovementPage from './pages/CreateWarehouseMovementPage';
+import EditWarehouseMovementPage from './pages/EditWarehouseMovementPage';
+import PurchasesPage from './pages/PurchasesPage';
 import FactoryInvoicesListPage from './pages/FactoryInvoicesListPage';
 import FactoryInvoiceDetailPage from './pages/FactoryInvoiceDetailPage';
 import CreateFactoryInvoicePage from './pages/CreateFactoryInvoicePage';
@@ -49,7 +54,14 @@ export default function App() {
         <Route path="/invoice/edit/:id" element={<EditInvoicePage />} />
         <Route path="/invoice/return" element={<InvoiceReturnPage />} />
         <Route path="/order/new" element={<NewOrderPage />} />
+        <Route path="/purchases" element={<PurchasesPage />} />
         <Route path="/warehouse" element={<WarehousePage />} />
+        <Route path="/warehouse/movements" element={<WarehouseMovementsListPage />} />
+        <Route path="/warehouse/movements/demo" element={<WarehouseMovementDetailPage />} />
+        <Route path="/warehouse/movements/:id" element={<WarehouseMovementDetailPage />} />
+        <Route path="/warehouse/movement/create" element={<CreateWarehouseMovementPage />} />
+        <Route path="/warehouse/movement/edit/demo" element={<EditWarehouseMovementPage />} />
+        <Route path="/warehouse/movement/edit/:id" element={<EditWarehouseMovementPage />} />
         <Route path="/factory/invoices" element={<FactoryInvoicesListPage />} />
         <Route path="/factory/invoices/demo" element={<FactoryInvoiceDetailPage />} />
         <Route path="/factory/invoices/:id" element={<FactoryInvoiceDetailPage />} />
