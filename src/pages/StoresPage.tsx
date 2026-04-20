@@ -197,7 +197,7 @@ export default function StoresPage() {
                 </svg>
               </button>
             </div>
-            <div className="p-4 border-b border-black/5 dark:border-white/5 shrink-0">
+            <div className="p-4 border-b border-black/5 dark:border-white/5 shrink-0 flex flex-col gap-3">
               <div className="relative">
                 <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/40 pointer-events-none" />
                 <input
@@ -208,6 +208,28 @@ export default function StoresPage() {
                   placeholder="بحث باسم المتجر أو المسوق..."
                   className="w-full rounded-[14px] pr-11 pl-4 bg-black/5 dark:bg-white/5 border border-transparent focus:border-primary/30 font-bold text-slate-700 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none transition-all h-11 text-[14px]"
                 />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setViewMode('companies')}
+                  className={`flex-1 h-9 rounded-[12px] font-bold text-[13px] transition-all ${
+                    viewMode === 'companies'
+                      ? 'bg-primary text-white'
+                      : 'bg-black/5 dark:bg-white/5 text-slate-600 dark:text-white/60'
+                  }`}
+                >
+                  الشركات
+                </button>
+                <button
+                  onClick={() => setViewMode('branches')}
+                  className={`flex-1 h-9 rounded-[12px] font-bold text-[13px] transition-all ${
+                    viewMode === 'branches'
+                      ? 'bg-primary text-white'
+                      : 'bg-black/5 dark:bg-white/5 text-slate-600 dark:text-white/60'
+                  }`}
+                >
+                  الفروع
+                </button>
               </div>
             </div>
             <div className="overflow-y-auto flex-1 p-4">
@@ -220,50 +242,124 @@ export default function StoresPage() {
                 ) : (
                   <div className="flex flex-col gap-3">
                     {filteredCompanies.map((company) => (
-                      <div key={company.id} className="spatial-card p-4 flex flex-col gap-3">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0">
-                              <Building2 className="w-5 h-5 text-primary" />
+                      <div key={company.id} className="flex flex-col gap-3">
+                        <div className="spatial-card p-4 flex flex-col gap-3">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0">
+                                <Building2 className="w-5 h-5 text-primary" />
+                              </div>
+                              <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                                <span className="text-[14px] font-black text-slate-800 dark:text-white leading-snug">{company.name}</span>
+                                <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{company.owner}</span>
+                              </div>
                             </div>
-                            <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                              <span className="text-[14px] font-black text-slate-800 dark:text-white leading-snug">{company.name}</span>
-                              <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{company.owner}</span>
+                            <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
+                              <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${company.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-500/10 text-slate-500'}`}>
+                                {company.active ? 'نشط' : 'موقوف'}
+                              </span>
+                              <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${company.type === 'دائن' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
+                                {company.type}
+                              </span>
                             </div>
                           </div>
-                          <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
-                            <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${company.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-500/10 text-slate-500'}`}>
-                              {company.active ? 'نشط' : 'موقوف'}
-                            </span>
-                            <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${company.type === 'دائن' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
-                              {company.type}
-                            </span>
+                          <div className="grid grid-cols-3 gap-2">
+                            <div className="flex flex-col gap-0.5 rounded-[12px] bg-emerald-500/5 border border-emerald-500/10 p-2.5">
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
+                              <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">{fmt(company.approved)}</span>
+                            </div>
+                            <div className="flex flex-col gap-0.5 rounded-[12px] bg-rose-500/5 border border-rose-500/10 p-2.5">
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
+                              <span className={`text-[13px] font-black ${company.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20'}`}>
+                                {company.pending !== 0 ? fmt(company.pending) : '—'}
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-0.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5">
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
+                              <span className="text-[13px] font-black text-slate-800 dark:text-white">{fmt(company.total)}</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => toggleCompany(company.id)}
+                              className="flex-1 h-9 rounded-[12px] bg-gradient-to-r from-blue-500/10 to-blue-600/10 hover:from-blue-500/20 hover:to-blue-600/20 text-blue-600 dark:text-blue-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5 border border-blue-500/20"
+                            >
+                              {expandedCompanies.includes(company.id) ? (
+                                <>
+                                  <ChevronDown className="w-4 h-4" />
+                                  إخفاء الفروع
+                                </>
+                              ) : (
+                                <>
+                                  <Store className="w-4 h-4" />
+                                  الفروع ({company.branches.length})
+                                </>
+                              )}
+                            </button>
+                            <Link to={`/companies/${company.id}/activity`} onClick={() => setIsSearchOpen(false)} className="h-9 px-3 rounded-[12px] bg-blue-500/10 hover:bg-blue-500 hover:text-white text-blue-600 dark:text-blue-400 text-[13px] font-black transition-all flex items-center justify-center">
+                              <Activity className="w-3.5 h-3.5" />
+                            </Link>
+                            <Link to={`/companies/${company.id}/edit`} onClick={() => setIsSearchOpen(false)} className="h-9 px-3 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center">
+                              <Settings className="w-3.5 h-3.5" />
+                            </Link>
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
-                          <div className="flex flex-col gap-0.5 rounded-[12px] bg-emerald-500/5 border border-emerald-500/10 p-2.5">
-                            <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
-                            <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">{fmt(company.approved)}</span>
+
+                        {/* Branches - Expanded */}
+                        {expandedCompanies.includes(company.id) && (
+                          <div className="flex flex-col gap-2.5 pr-3 relative">
+                            {/* Vertical Line */}
+                            <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500/30 via-emerald-500/20 to-transparent rounded-full" />
+                            
+                            {company.branches.map((branch) => (
+                              <div key={branch.id} className="relative">
+                                {/* Horizontal connector */}
+                                <div className="absolute right-0 top-5 w-3 h-0.5 bg-emerald-500/20" />
+                                
+                                <div className="spatial-card p-3.5 flex flex-col gap-2.5 bg-gradient-to-br from-white to-emerald-50/30 dark:from-slate-800/50 dark:to-emerald-900/5 border-r-2 border-emerald-500/30">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                                      <div className="w-9 h-9 rounded-[11px] bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20">
+                                        <Store className="w-4 h-4 text-white" />
+                                      </div>
+                                      <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                                        <span className="text-[13px] font-black text-slate-800 dark:text-white leading-snug">{branch.name}</span>
+                                        <span className="text-[11px] font-bold text-slate-500 dark:text-white/50">{branch.marketer}</span>
+                                      </div>
+                                    </div>
+                                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-[5px] shrink-0 ${branch.active ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' : 'bg-slate-500/10 text-slate-500'}`}>
+                                      {branch.active ? 'نشط' : 'موقوف'}
+                                    </span>
+                                  </div>
+                                  <div className="grid grid-cols-3 gap-1.5">
+                                    <div className="flex flex-col gap-0.5 rounded-[10px] bg-emerald-500/8 border border-emerald-500/15 p-2">
+                                      <span className="text-[9px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
+                                      <span className="text-[11px] font-black text-emerald-600 dark:text-emerald-400">{fmt(branch.approved)}</span>
+                                    </div>
+                                    <div className="flex flex-col gap-0.5 rounded-[10px] bg-rose-500/8 border border-rose-500/15 p-2">
+                                      <span className="text-[9px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
+                                      <span className={`text-[11px] font-black ${branch.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20'}`}>
+                                        {branch.pending !== 0 ? fmt(branch.pending) : '—'}
+                                      </span>
+                                    </div>
+                                    <div className="flex flex-col gap-0.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 p-2">
+                                      <span className="text-[9px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
+                                      <span className="text-[11px] font-black text-slate-800 dark:text-white">{fmt(branch.total)}</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex gap-1.5">
+                                    <Link to={`/branches/${branch.id}`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-8 rounded-[10px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 text-[12px] font-black transition-all flex items-center justify-center gap-1">
+                                      <Eye className="w-3 h-3" />عرض
+                                    </Link>
+                                    <Link to={`/branches/${branch.id}/edit`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-8 rounded-[10px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[12px] font-black transition-all flex items-center justify-center gap-1">
+                                      <Settings className="w-3 h-3" />تعديل
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div className="flex flex-col gap-0.5 rounded-[12px] bg-rose-500/5 border border-rose-500/10 p-2.5">
-                            <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
-                            <span className={`text-[13px] font-black ${company.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20'}`}>
-                              {company.pending !== 0 ? fmt(company.pending) : '—'}
-                            </span>
-                          </div>
-                          <div className="flex flex-col gap-0.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5">
-                            <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
-                            <span className="text-[13px] font-black text-slate-800 dark:text-white">{fmt(company.total)}</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-2">
-                          <Link to={`/companies/${company.id}/activity`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-9 rounded-[12px] bg-blue-500/10 hover:bg-blue-500 hover:text-white text-blue-600 dark:text-blue-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
-                            <Activity className="w-3.5 h-3.5" />الحركة
-                          </Link>
-                          <Link to={`/companies/${company.id}/edit`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
-                            <Settings className="w-3.5 h-3.5" />تعديل
-                          </Link>
-                        </div>
+                        )}
                       </div>
                     ))}
                   </div>
