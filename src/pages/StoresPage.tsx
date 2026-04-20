@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Search, Store, TrendingDown, TrendingUp, Wallet, AlertCircle, Settings } from 'lucide-react';
+import { Plus, Search, Store, TrendingDown, TrendingUp, Wallet, AlertCircle, Settings, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function fmt(n: number) {
@@ -146,13 +146,22 @@ export default function StoresPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3.5">
-                    <Link
-                      to={`/stores/${store.id}/edit`}
-                      className="w-8 h-8 rounded-[10px] bg-primary/10 hover:bg-primary hover:text-white text-primary transition-all flex items-center justify-center"
-                      title="تعديل البيانات"
-                    >
-                      <Settings className="w-4 h-4" />
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        to={`/stores/${store.id}`}
+                        className="w-8 h-8 rounded-[10px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 transition-all flex items-center justify-center"
+                        title="عرض التفاصيل"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        to={`/stores/${store.id}/edit`}
+                        className="w-8 h-8 rounded-[10px] bg-primary/10 hover:bg-primary hover:text-white text-primary transition-all flex items-center justify-center"
+                        title="تعديل البيانات"
+                      >
+                        <Settings className="w-4 h-4" />
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -195,12 +204,20 @@ export default function StoresPage() {
                   </div>
                 ))}
               </div>
-              <Link
-                to={`/stores/${store.id}/edit`}
-                className="w-full h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-2"
-              >
-                <Settings className="w-3.5 h-3.5" />تعديل البيانات
-              </Link>
+              <div className="flex gap-2">
+                <Link
+                  to={`/stores/${store.id}`}
+                  className="flex-1 h-9 rounded-[12px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Eye className="w-3.5 h-3.5" />عرض
+                </Link>
+                <Link
+                  to={`/stores/${store.id}/edit`}
+                  className="flex-1 h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Settings className="w-3.5 h-3.5" />تعديل
+                </Link>
+              </div>
             </div>
           ))}
         </div>
