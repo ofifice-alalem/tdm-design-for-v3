@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import { ArrowRight, Printer, CheckCircle2, XCircle, Ban } from 'lucide-react';
+import { ArrowRight, Printer, CheckCircle2, XCircle, Ban, Pencil } from 'lucide-react';
 import { SpatialCard } from '../compenntes/ui/SpatialComponents';
 
 type Status = 'مكتمل' | 'ملغي';
@@ -107,23 +107,19 @@ export default function FactoryInvoiceDetailPage() {
               </div>
 
               {/* PC header */}
-              <div className="hidden sm:grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.5fr] gap-3 px-4 pb-3 border-b border-black/10 dark:border-white/10">
-                {['المنتج', 'الكمية', 'سعر الشراء', 'سعر الوحدة', 'الإجمالي'].map((h) => (
+              <div className="hidden sm:grid grid-cols-[2fr_1fr_1.5fr_1.5fr] gap-3 px-4 pb-3 border-b border-black/10 dark:border-white/10">
+                {['المنتج', 'الكمية', 'سعر الشراء', 'الإجمالي'].map((h) => (
                   <span key={h} className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{h}</span>
                 ))}
               </div>
 
               {inv.products.map((p, i) => (
                 <div key={i}>
-                  <div className="hidden sm:grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.5fr] gap-3 px-4 py-4 items-center border-b border-black/5 dark:border-white/5 last:border-0">
+                  <div className="hidden sm:grid grid-cols-[2fr_1fr_1.5fr_1.5fr] gap-3 px-4 py-4 items-center border-b border-black/5 dark:border-white/5 last:border-0">
                     <span className="text-[14px] font-black text-slate-800 dark:text-white">{p.name}</span>
                     <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{p.qty}</span>
                     <div className="flex items-baseline gap-1">
                       <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{fmt(p.buyPrice)}</span>
-                      <span className="text-[11px] font-bold text-slate-400 dark:text-white/30">د</span>
-                    </div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-[15px] font-black text-slate-700 dark:text-white/80">{fmt(p.unitPrice)}</span>
                       <span className="text-[11px] font-bold text-slate-400 dark:text-white/30">د</span>
                     </div>
                     <div className="flex items-baseline gap-1">
@@ -135,7 +131,7 @@ export default function FactoryInvoiceDetailPage() {
                   <div className="sm:hidden spatial-card p-4 flex flex-col gap-3 mt-3">
                     <span className="text-[15px] font-black text-slate-800 dark:text-white">{p.name}</span>
                     <div className="grid grid-cols-2 gap-2">
-                      {[{l:'الكمية',v:String(p.qty)},{l:'سعر الشراء',v:fmt(p.buyPrice)+' د'},{l:'سعر الوحدة',v:fmt(p.unitPrice)+' د'},{l:'الإجمالي',v:fmt(p.total)+' د'}].map(({l,v})=>(
+                      {[{l:'الكمية',v:String(p.qty)},{l:'سعر الشراء',v:fmt(p.buyPrice)+' د'},{l:'الإجمالي',v:fmt(p.total)+' د'}].map(({l,v})=>(
                         <div key={l} className="flex flex-col gap-0.5">
                           <span className="text-[11px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">{l}</span>
                           <span className="text-[14px] font-black text-slate-700 dark:text-white/80">{v}</span>
@@ -174,6 +170,12 @@ export default function FactoryInvoiceDetailPage() {
                 <button className="spatial-button w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px]">
                   <Printer className="w-4 h-4" />طباعة PDF
                 </button>
+                <Link
+                  to={`/factory/invoice/edit/${encodeURIComponent(inv.id)}`}
+                  className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-violet-500/10 hover:bg-violet-500 border border-violet-500/30 hover:border-violet-500 text-violet-600 dark:text-violet-400 hover:text-white transition-all"
+                >
+                  <Pencil className="w-4 h-4" />تعديل الفاتورة
+                </Link>
                 {inv.status === 'مكتمل' && (
                   <button onClick={() => setShowImageModal(true)} className="w-full h-11 rounded-[16px] flex items-center justify-center gap-2 font-bold text-[14px] bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:text-white transition-all">
                     <CheckCircle2 className="w-4 h-4" />عرض صورة التوثيق

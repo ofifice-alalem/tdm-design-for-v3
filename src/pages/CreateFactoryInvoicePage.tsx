@@ -61,16 +61,13 @@ export default function CreateFactoryInvoicePage() {
                     options={PRODUCTS.filter((p) => p.name === item.name || !selectedNames.includes(p.name)).map((p) => ({ label: p.name, meta: fmt(p.price) + ' د' }))}
                     onSelect={(name) => { const found = PRODUCTS.find(p => p.name === name); if (found) updateItem(item.id, { name: found.name, unitPrice: found.price }); }}
                   />
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-[1fr_1fr_2fr] gap-2 lg:gap-4">
                     <ModernInput label="الكمية" type="number" placeholder="0"
                       value={item.qty > 0 ? String(item.qty) : ''}
                       onChange={(v) => updateItem(item.id, { qty: Number(v) || 0 })} />
                     <ModernInput label="سعر الشراء" type="number" placeholder="0.00"
                       value={item.buyPrice > 0 ? String(item.buyPrice) : ''}
                       onChange={(v) => updateItem(item.id, { buyPrice: Number(v) || 0 })} />
-                    <ModernInput label="سعر الوحدة" type="text" placeholder="0.00"
-                      value={item.unitPrice > 0 ? fmt(item.unitPrice) : ''}
-                      className="opacity-70 pointer-events-none" />
                     <ModernInput label="الإجمالي" type="text" placeholder="0.00"
                       value={item.buyPrice * item.qty > 0 ? fmt(item.buyPrice * item.qty) : ''}
                       className="opacity-60 pointer-events-none" />
