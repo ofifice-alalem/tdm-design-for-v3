@@ -26,6 +26,9 @@ import EditFactoryInvoicePage from './pages/EditFactoryInvoicePage';
 import StoresMenuPage from './pages/StoresMenuPage';
 import StoresPage from './pages/StoresPage';
 import CreateStorePage from './pages/CreateStorePage';
+import CreateCompanyPage from './pages/CreateCompanyPage';
+import CreateBranchPage from './pages/CreateBranchPage';
+import CompanyActivityPage from './pages/CompanyActivityPage';
 import StoreDetailPage from './pages/StoreDetailPage';
 import EditStorePage from './pages/EditStorePage';
 import MarketersPage from './pages/MarketersPage';
@@ -76,6 +79,12 @@ export default function App() {
         <Route path="/stores" element={<StoresMenuPage />} />
         <Route path="/stores/list" element={<StoresPage />} />
         <Route path="/stores/create" element={<CreateStorePage />} />
+        <Route path="/companies/create" element={<CreateCompanyPage />} />
+        <Route path="/branches/create" element={<CreateBranchPage />} />
+        <Route path="/companies/:id/activity" element={<CompanyActivityPage />} />
+        <Route path="/companies/:id/edit" element={<EditStorePage />} />
+        <Route path="/branches/:id" element={<StoreDetailPage />} />
+        <Route path="/branches/:id/edit" element={<EditStorePage />} />
         <Route path="/stores/:id" element={<StoreDetailPage />} />
         <Route path="/stores/:id/edit" element={<EditStorePage />} />
         <Route path="/marketers" element={<MarketersPage />} />
