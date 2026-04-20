@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Plus, Search, Store, TrendingDown, TrendingUp, Wallet, AlertCircle, Settings, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 
 function fmt(n: number) {
   return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -25,6 +26,22 @@ const STORES = [
 
 export default function StoresPage() {
   const [search, setSearch] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    if (isSearchOpen && isMobile) {
+      setTimeout(() => searchRef.current?.focus(), 50);
+    }
+  }, [isSearchOpen, isMobile]);
 
   const filtered = STORES.filter((s) =>
     s.name.includes(search) || s.marketer.includes(search)
@@ -74,11 +91,100 @@ export default function StoresPage() {
               placeholder="بحث باسم المتجر أو المسوق..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              onClick={() => isMobile && setIsSearchOpen(true)}
+              readOnly={isMobile}
               className="spatial-input w-full h-10 rounded-[14px] pr-10 pl-4 text-[13px] font-bold"
             />
           </div>
           <span className="text-[12px] font-bold text-slate-400 dark:text-white/40 shrink-0">{filtered.length} متجر</span>
         </div>
+
+        {/* Mobile Search Modal */}
+        {isSearchOpen && isMobile && createPortal(
+          <div className="fixed inset-0 z-[500] flex flex-col bg-white dark:bg-[#0f1428] animate-in fade-in duration-200">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/5 shrink-0">
+              <span className="text-base font-black text-slate-800 dark:text-white">بحث في المتاجر</span>
+              <button
+                onClick={() => setIsSearchOpen(false)}
+                className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/60"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 border-b border-black/5 dark:border-white/5 shrink-0">
+              <div className="relative">
+                <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-white/40 pointer-events-none" />
+                <input
+                  ref={searchRef}
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="بحث باسم المتجر أو المسوق..."
+                  className="w-full rounded-[14px] pr-11 pl-4 bg-black/5 dark:bg-white/5 border border-transparent focus:border-primary/30 font-bold text-slate-700 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none transition-all h-11 text-[14px]"
+                />
+              </div>
+            </div>
+            <div className="overflow-y-auto flex-1 p-4">
+              {filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-3 py-16 text-slate-400 dark:text-white/30">
+                  <Store className="w-10 h-10 opacity-40" />
+                  <span className="text-[14px] font-bold">لا توجد نتائج</span>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {filtered.map((store) => (
+                    <div
+                      key={store.id}
+                      className="spatial-card p-4 flex flex-col gap-3"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                          <span className="text-[14px] font-black text-slate-800 dark:text-white leading-snug">{store.name}</span>
+                          <span className="text-[12px] font-bold text-slate-400 dark:text-white/40">{store.marketer}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
+                          <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${store.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-500/10 text-slate-500'}`}>
+                            {store.active ? 'نشط' : 'موقوف'}
+                          </span>
+                          <span className={`text-[11px] font-black px-2 py-0.5 rounded-[6px] ${store.type === 'دائن' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
+                            {store.type}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="flex flex-col gap-0.5 rounded-[12px] bg-emerald-500/5 border border-emerald-500/10 p-2.5">
+                          <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معتمد</span>
+                          <span className="text-[13px] font-black text-emerald-600 dark:text-emerald-400">{fmt(store.approved)}</span>
+                        </div>
+                        <div className="flex flex-col gap-0.5 rounded-[12px] bg-rose-500/5 border border-rose-500/10 p-2.5">
+                          <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">معلق</span>
+                          <span className={`text-[13px] font-black ${store.pending !== 0 ? 'text-rose-500' : 'text-slate-300 dark:text-white/20'}`}>
+                            {store.pending !== 0 ? fmt(store.pending) : '—'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col gap-0.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5">
+                          <span className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-widest">الإجمالي</span>
+                          <span className="text-[13px] font-black text-slate-800 dark:text-white">{fmt(store.total)}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Link to={`/stores/${store.id}`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-9 rounded-[12px] bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
+                          <Eye className="w-3.5 h-3.5" />عرض
+                        </Link>
+                        <Link to={`/stores/${store.id}/edit`} onClick={() => setIsSearchOpen(false)} className="flex-1 h-9 rounded-[12px] bg-primary/10 hover:bg-primary hover:text-white text-primary text-[13px] font-black transition-all flex items-center justify-center gap-1.5">
+                          <Settings className="w-3.5 h-3.5" />تعديل
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
 
         {/* Desktop table */}
         <div className="hidden lg:block overflow-x-auto">
